@@ -5,11 +5,16 @@ import SchoolLogo from "../../assets/buyongLogo.png";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
+  Badge,
+  Box,
+  Button,
   FormControl,
+  IconButton,
   InputLabel,
   MenuItem,
   MenuList,
   Select,
+  Stack,
 } from "@mui/material";
 
 const menu = (
@@ -40,23 +45,40 @@ const Navbar = () => {
         <MenuLink href=''>About</MenuLink>
         <MenuLink href=''>Faculty</MenuLink>
 
-        <FormControl fullWidth>
-          <InputLabel id='simple-select-label'> Student Task </InputLabel>
-          <Select
-            labelId='demo-simple-select-label'
-            id='demo-simple-select'
-            label='Age'
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
+        <MenuLink>
+          {/* <FormControl fullWidth>
+            <InputLabel id='simple-select-label'> Student Task </InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              label='Age'
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl> */}
 
-        <User className='user'>
-          <NotificationsIcon style={{ fontSize: "30px" }} />
+          <Button
+            variant='outlined'
+            endIcon={<ArrowDropDownIcon />}
+            // color='#000000'
+            sx={{ color: "black" }}
+          >
+            Student Task
+          </Button>
+        </MenuLink>
+        <Stack direction={"row"} spacing={3}>
+          <IconButton>
+            <Box>
+              <Badge color='primary' badgeContent={0} showZero>
+                <NotificationsIcon sx={{ width: "30px", height: "30px" }} />
+              </Badge>
+            </Box>
+          </IconButton>
+
           <Avatar />
-        </User>
+        </Stack>
       </Menus>
     </Nav>
   );
@@ -84,11 +106,12 @@ const Nav = styled.div`
   align-items: center;
   flex-wrap: wrap;
   background: white;
-  position: absolute;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
   box-shadow: 4px 2px 2px black;
+  z-index: 5;
 `;
 
 const Logo = styled.a`

@@ -1,66 +1,131 @@
-import { Box, Grid, Typography } from "@mui/material";
-import React from "react";
-import styled from "@emotion/styled";
-import Logo from "../assets/buyongLogo.png";
-import Logpic from "../assets/Loginpic.png";
+import * as React from "react";
+import { Link } from "react-router-dom/";
+import Avatar from "@mui/material/Avatar";
+import { PrimaryButton, Cover } from "../components/Login.style";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Links from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Fab from "@mui/material/Fab";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 
-function Login() {
+function Copyright(props) {
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        width: "100%",
-        backgroundColor: "gray",
-        textAlign: "center",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+    <Typography
+      variant='body2'
+      color='text.secondary'
+      align='center'
+      {...props}
     >
-      <Box
-        sx={{
-          height: "100vh",
-          width: "100%",
-          display: "inline-block",
-          margin: "auto",
-          padding: "100px",
-          backgroundColor: "white",
-        }}
-      >
-        <FlexBox2>
-          <Box sx={{ width: "10vw", padding: "20px" }}>
-            <img src={Logo} alt='Logo' width={"150px"} />
-          </Box>
-          <Box>
-            <Typography variant='h3'>Buyong High School</Typography>
-            <Typography variant='h5'>Web Portal</Typography>
-          </Box>
-        </FlexBox2>
-        <FlexBox>
-          <img src={Logpic} alt='Logo' width={"600px"} />
-
-          <Box sx={{ width: "10vw", padding: "20px" }}>
-            <Typography variant='h2'>Hatdpg</Typography>
-          </Box>
-        </FlexBox>
-      </Box>
-    </Box>
+      {"Copyright © "}
+      <Links color='inherit' href='https://mui.com/'>
+        E-Skwela
+      </Links>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
   );
 }
 
-const FlexBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  flex-grow: 1;
-  justify-content: center;
-`;
+export default function Login() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
+  };
 
-const FlexBox2 = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-`;
+  return (
+    <Grid container component='main' sx={{ height: "100vh" }}>
+      <CssBaseline />
+      <Cover xs={false} sm={2} md={7} />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Box
+          sx={{
+            my: 8,
+            mx: 4,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar
+            src='https://i.ibb.co/xFWmPt9/logo.png'
+            sx={{ width: 80, height: 80 }}
+          />
+          <Typography component='h1' variant='h5'>
+            Buyong High School Portal
+          </Typography>
+          <Box
+            component='form'
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              id='email'
+              label='Student ID'
+              name='email'
+              autoComplete='email'
+              autoFocus
+            />
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              name='password'
+              label='Password'
+              type='password'
+              id='password'
+              autoComplete='current-password'
+            />
+            <FormControlLabel
+              control={<Checkbox value='remember' color='primary' />}
+              label='Remember me'
+            />
+            <Link to={"/Home"}>
+              <PrimaryButton variant='contained'>Sign in</PrimaryButton>
+            </Link>
 
-export default Login;
+            <Grid container>
+              <Grid item xs>
+                <Links href='#' variant='body2'>
+                  Forgot password?
+                </Links>
+              </Grid>
+              <Grid item>
+                <Links href='#' variant='body2'>
+                  {"Don't have an account? Sign Up"}
+                </Links>
+              </Grid>
+            </Grid>
+            <Copyright sx={{ mt: 5 }} />
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            position: "absolute",
+            right: "0",
+            bottom: "0",
+            paddingBottom: "20px",
+            paddingRight: "20px",
+          }}
+        >
+          <Fab>
+            <QuestionMarkIcon />
+          </Fab>
+        </Box>
+      </Grid>
+    </Grid>
+  );
+}
