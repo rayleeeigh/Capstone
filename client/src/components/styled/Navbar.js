@@ -76,7 +76,6 @@ const Navbar = () => {
               </Badge>
             </Box>
           </IconButton>
-
           <Avatar />
         </Stack>
       </Menus>
