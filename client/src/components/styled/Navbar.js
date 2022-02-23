@@ -2,34 +2,23 @@ import Avatar from "@mui/material/Avatar";
 import React, { useState } from "react";
 import styled from "styled-components";
 import SchoolLogo from "../../assets/buyongLogo.png";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   Badge,
   Box,
-  Button,
   FormControl,
   IconButton,
   InputLabel,
   MenuItem,
-  MenuList,
   Select,
   Stack,
 } from "@mui/material";
-
-const menu = (
-  <MenuList>
-    <MenuItem>1st menu item</MenuItem>
-    <MenuItem>2nd Item</MenuItem>
-    <MenuItem>a danger item</MenuItem>
-  </MenuList>
-);
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Nav>
-      <Logo className='Logo' href=''>
+      <Logo className='Logo' href='/home'>
         <div>
           <img className='img' src={SchoolLogo} alt='School Logo' />
         </div>
@@ -41,33 +30,18 @@ const Navbar = () => {
         <span />
       </Hamburger>
       <Menus isOpen={isOpen}>
-        <MenuLink href=''>Announcements</MenuLink>
-        <MenuLink href=''>About</MenuLink>
+        <MenuLink href='/home'>Announcements</MenuLink>
+        <MenuLink href='/about'>About</MenuLink>
         <MenuLink href=''>Faculty</MenuLink>
-
-        <MenuLink>
-          {/* <FormControl fullWidth>
-            <InputLabel id='simple-select-label'> Student Task </InputLabel>
-            <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              label='Age'
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl> */}
-
-          <Button
-            variant='outlined'
-            endIcon={<ArrowDropDownIcon />}
-            // color='#000000'
-            sx={{ color: "black" }}
+        <FormControl sx={{width: "9rem"}}>
+          <InputLabel>Student Task</InputLabel>
+          <Select
+            label='Student Task'
           >
-            Student Task
-          </Button>
-        </MenuLink>
+            <a href="/grades"><MenuItem>Grades</MenuItem></a>
+            <a href="/schedule"><MenuItem>Schedule</MenuItem></a>
+          </Select>
+        </FormControl>
         <Stack direction={"row"} spacing={3}>
           <IconButton>
             <Box>
@@ -105,7 +79,7 @@ const Nav = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  background: white;
+  background: ghostwhite;
   position: sticky;
   top: 0;
   left: 0;
@@ -183,8 +157,4 @@ const Hamburger = styled.div`
       background-color: black;
     }
   }
-`;
-
-const User = styled.div`
-  display: flex;
 `;
