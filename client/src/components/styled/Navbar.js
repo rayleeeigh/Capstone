@@ -33,13 +33,18 @@ const Navbar = () => {
         <MenuLink href='/home'>Announcements</MenuLink>
         <MenuLink href='/about'>About</MenuLink>
         <MenuLink href=''>Faculty</MenuLink>
-        <FormControl sx={{width: "9rem"}}>
+        <FormControl sx={{ width: "9rem" }}>
           <InputLabel>Student Task</InputLabel>
-          <Select
-            label='Student Task'
-          >
-            <a href="/grades"><MenuItem>Grades</MenuItem></a>
-            <a href="/schedule"><MenuItem>Schedule</MenuItem></a>
+          <Select label='Student Task'>
+            <a href='/grades'>
+              <MenuItem>Grades</MenuItem>
+            </a>
+            <a href='/schedule'>
+              <MenuItem>Schedule</MenuItem>
+            </a>
+            <a href='/Admin'>
+              <MenuItem>Admin Dashboard</MenuItem>
+            </a>
           </Select>
         </FormControl>
         <Stack direction={"row"} spacing={3}>
@@ -50,7 +55,6 @@ const Navbar = () => {
               </Badge>
             </Box>
           </IconButton>
-
           <Avatar />
         </Stack>
       </Menus>
@@ -75,6 +79,7 @@ const MenuLink = styled.a`
 
 const Nav = styled.div`
   padding: 0 2rem;
+  width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
