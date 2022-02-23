@@ -1,13 +1,12 @@
-import React, { createContext } from "react";
+import React from "react";
 import AuthProvider from "./context/auth";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import NavigationData from "./data/Navigations";
 import Login from "./pages/Login";
-import { Typography } from "@mui/material";
-import Navigations from "./data/Navigations";
-import Navbar from "./components/styled/Navbar";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
+import About from "./pages/About";
+import Grades from "./pages/Grades";
+import Schedule from "./pages/Schedule";
 
 export default function App() {
   return (
@@ -16,8 +15,11 @@ export default function App() {
         {/* <Navbar /> */}
         <Routes>
           <Route path='/' element={<Login />} />
-          <Route path='/Home' element={<Home />} />
           <Route path='/Admin' element={<Admin />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/grades' element={<Grades />} />
+          <Route path='/schedule' element={<Schedule />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
