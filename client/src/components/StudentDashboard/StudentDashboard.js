@@ -5,61 +5,63 @@ import {
   IconButton,
   Stack,
   Typography,
-} from '@mui/material';
-import React from 'react';
-import AdminDashboardCard from '../AdminDashboard/AdminDashboardCard';
-import AdminContentCards from '../AdminDashboard/AdminContentCards';
-import { ContentBox, MainGrid } from '../AdminDashboard/AdminDashboard.styled';
-import styled from 'styled-components';
-import GridViewIcon from '@mui/icons-material/GridView';
-import ViewListIcon from '@mui/icons-material/ViewList';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import DeleteIcon from '@mui/icons-material/Delete';
+} from "@mui/material";
+import React, { useState } from "react";
+import AdminDashboardCard from "../AdminDashboard/AdminDashboardCard";
+import AdminContentCards from "../AdminDashboard/AdminContentCards";
+import {
+  ContentBox,
+  FlexibleBox,
+  MainGrid,
+} from "../AdminDashboard/AdminDashboard.styled";
+import styled from "styled-components";
+import GridViewIcon from "@mui/icons-material/GridView";
+import ViewListIcon from "@mui/icons-material/ViewList";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import DeleteIcon from "@mui/icons-material/Delete";
+import StudentCardDashboard from "./StudentCardDashboard";
+import StudentListDashboard from "./StudentListDashboard";
 
 function StudentDashboard() {
+  const [dataView, setDataView] = useState(false);
+
   return (
     <Container sx={{ padding: 5 }}>
       <Grid container spacing={5}>
         <Grid item xs={12}>
-          <Typography variant={'h4'}>DASHBOARD</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container justifyContent={'center'} spacing={4}>
-            <Grid item>
-              <AdminDashboardCard />
-            </Grid>
-            <Grid item>
-              <AdminDashboardCard />
-            </Grid>
-            <Grid item>
-              <AdminDashboardCard />
-            </Grid>
-          </Grid>
+          <FlexibleBox>
+            <Typography variant={"h4"} fontWeight='bold'>
+              DASHBOARD
+            </Typography>
+            <Typography variant={"h6"} color='blue'>
+              Back to Dashboard
+            </Typography>
+          </FlexibleBox>
         </Grid>
         <Grid item xs={12}>
           <MainGrid container>
             <ContentBox>
               <Stack spacing={5}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    p: 1,
-                    m: 1,
-                    bgcolor: 'background.paper',
-                    borderRadius: 1,
-                  }}>
+                <FlexibleBox>
                   <Box>
-                    <Typography variant="h5" fontWeight={'bold'}>
+                    <Typography variant='h5' fontWeight={"bold"}>
                       STUDENTS
                     </Typography>
                   </Box>
                   <Box></Box>
                   <Box>
-                    <IconButton>
+                    <IconButton
+                      onClick={() => {
+                        setDataView(false);
+                      }}
+                    >
                       <GridViewIcon />
                     </IconButton>
-                    <IconButton>
+                    <IconButton
+                      onClick={() => {
+                        setDataView(true);
+                      }}
+                    >
                       <ViewListIcon />
                     </IconButton>
                     <IconButton>
@@ -69,34 +71,12 @@ function StudentDashboard() {
                       <DeleteIcon />
                     </IconButton>
                   </Box>
-                </Box>
-
-                <Box
-                  sx={{
-                    justifyItems: 'center',
-                    width: '100%',
-                  }}>
-                  <Grid container spacing={3}>
-                    <Grid item>
-                      <AdminContentCards />
-                    </Grid>
-                    <Grid item>
-                      <AdminContentCards />
-                    </Grid>
-                    <Grid item>
-                      <AdminContentCards />
-                    </Grid>
-                    <Grid item>
-                      <AdminContentCards />
-                    </Grid>
-                    <Grid item>
-                      <AdminContentCards />
-                    </Grid>
-                    <Grid item>
-                      <AdminContentCards />
-                    </Grid>
-                  </Grid>
-                </Box>
+                </FlexibleBox>
+                {dataView == false ? (
+                  <StudentCardDashboard />
+                ) : (
+                  <StudentListDashboard />
+                )}
               </Stack>
             </ContentBox>
           </MainGrid>
