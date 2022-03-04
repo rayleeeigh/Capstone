@@ -11,25 +11,25 @@ import {
   Paper,
   Stack,
   Typography,
-} from "@mui/material";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import React from "react";
-import AdminDashboardCard from "./AdminDashboardCard";
-import AdminContentCards from "./AdminContentCards";
-import { ContentBox, MainGrid } from "./AdminDashboard.styled";
+} from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import React from 'react';
+import AdminDashboardCard from './AdminDashboardCard';
+import AdminContentCards from './AdminContentCards';
+import { ContentBox, MainGrid } from './AdminDashboard.styled';
 
 function AdminDashboard() {
   return (
     <Container sx={{ padding: 5 }}>
       <Grid container spacing={5}>
         <Grid item xs={12}>
-          <Typography variant={"h4"}>DASHBOARD</Typography>
+          <Typography variant={'h4'}>DASHBOARD</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Grid container justifyContent={"center"} spacing={4}>
+          <Grid container justifyContent={'center'} spacing={4}>
             <Grid item>
               <AdminDashboardCard />
             </Grid>
@@ -49,25 +49,23 @@ function AdminDashboard() {
 
                 <Box
                   sx={{
-                    justifyItems: "center",
-                    width: "100%",
-                  }}
-                >
+                    justifyItems: 'center',
+                    width: '100%',
+                  }}>
                   <Accordion>
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}
-                      aria-controls='panel1bh-content'
-                      id='panel1bh-header'
-                    >
-                      <Typography sx={{ width: "25%", flexShrink: 0 }}>
+                      aria-controls="panel1bh-content"
+                      id="panel1bh-header">
+                      <Typography sx={{ width: '25%', flexShrink: 0 }}>
                         General settings
                       </Typography>
-                      <Typography sx={{ color: "text.secondary" }}>
+                      <Typography sx={{ color: 'text.secondary' }}>
                         200 students
                       </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Grid container spacing={5} justifyContent='center'>
+                      <Grid container spacing={5} justifyContent="center">
                         <Grid item>
                           <AdminContentCards />
                         </Grid>
@@ -80,18 +78,17 @@ function AdminDashboard() {
                   <Accordion>
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}
-                      aria-controls='panel1bh-content'
-                      id='panel1bh-header'
-                    >
-                      <Typography sx={{ width: "25%", flexShrink: 0 }}>
+                      aria-controls="panel1bh-content"
+                      id="panel1bh-header">
+                      <Typography sx={{ width: '25%', flexShrink: 0 }}>
                         General settings
                       </Typography>
-                      <Typography sx={{ color: "text.secondary" }}>
+                      <Typography sx={{ color: 'text.secondary' }}>
                         200 students
                       </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Grid container spacing={5} justifyContent='center'>
+                      <Grid container spacing={5} justifyContent="center">
                         <Grid item>
                           <AdminContentCards />
                         </Grid>

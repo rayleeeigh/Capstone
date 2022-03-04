@@ -7,6 +7,7 @@ import Admin from "./pages/Admin";
 import About from "./pages/About";
 import Grades from "./pages/Grades";
 import Schedule from "./pages/Schedule";
+import AdminStudents from "./pages/AdminStudents";
 
 export default function App() {
   return (
@@ -15,11 +16,12 @@ export default function App() {
         {/* <Navbar /> */}
         <Routes>
           <Route path='/' element={<Login />} />
-          <Route path='/Admin' element={<Admin />} />
+          <Route path='/admin' element={<Admin />} />
           <Route path='/home' element={<Home />} />
           <Route path='/about' element={<About />} />
           <Route path='/grades' element={<Grades />} />
           <Route path='/schedule' element={<Schedule />} />
+          <Route path='/admin/students' element={<AdminStudents />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
