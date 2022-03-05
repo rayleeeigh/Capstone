@@ -8,6 +8,8 @@ import About from "./pages/About";
 import Grades from "./pages/Grades";
 import Schedule from "./pages/Schedule";
 import AdminStudents from "./pages/AdminStudents";
+import AccountVerifications from "./pages/AccountVerifications";
+import LoginTrail from "./pages/LoginTrail";
 
 export default function App() {
   return (
@@ -17,6 +19,16 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/admin' element={<Admin />} />
+          <Route
+            path='/admin/accountverification'
+            element={<AccountVerifications />}
+          />
+          <Route path='/admin/logintrail' element={<LoginTrail />} />
+          {/* <Route
+            path='/admin/accountverify'
+            element={<AccountVerifications />}
+          /> */}
+
           <Route path='/home' element={<Home />} />
           <Route path='/about' element={<About />} />
           <Route path='/grades' element={<Grades />} />

@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import ModalProfile from "../ModalProfile";
 
-function AdminContentCards({ Cardcontent }) {
+function AccountCards() {
   const breakpoint = useMediaQuery("(min-width:550px)");
   const [open, setOpen] = React.useState(false);
   return (
@@ -32,16 +32,16 @@ function AdminContentCards({ Cardcontent }) {
           Lizard
         </Typography>
         <Typography variant='body2' color='text.secondary'>
-          {Cardcontent} group of squamate reptiles, with over 6,000 species,
-          ranging across all continents except Antarctica
+          group of squamate reptiles, with over 6,000 species, ranging across
+          all continents except Antarctica
         </Typography>
       </CardContent>
       <CardActions>
         <Button size='small'>Share</Button>
-        <ModalProfile CardContent={Cardcontent} open={open} setOpen={setOpen} />
+        <ModalProfile open={open} setOpen={setOpen} />
       </CardActions>
     </Card>
   );
 }
 
-export default AdminContentCards;
+export default AccountCards;

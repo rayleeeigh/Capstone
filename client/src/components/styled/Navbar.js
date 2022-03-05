@@ -1,8 +1,8 @@
-import Avatar from '@mui/material/Avatar';
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import SchoolLogo from '../../assets/buyongLogo.png';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import Avatar from "@mui/material/Avatar";
+import React, { useState } from "react";
+import styled from "styled-components";
+import SchoolLogo from "../../assets/buyongLogo.png";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   Badge,
   Box,
@@ -12,17 +12,17 @@ import {
   MenuItem,
   Select,
   Stack,
-} from '@mui/material';
+} from "@mui/material";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Nav>
-      <Logo className="Logo" href="/home">
+      <Logo className='Logo' href='/home'>
         <div>
-          <img className="img" src={SchoolLogo} alt="School Logo" />
+          <img className='img' src={SchoolLogo} alt='School Logo' />
         </div>
-        <div className="text">BUYONG NATIONAL HIGHSCHOOL</div>
+        <div className='text'>BUYONG NATIONAL HIGHSCHOOL</div>
       </Logo>
       <Hamburger onClick={() => setIsOpen(!isOpen)}>
         <span />
@@ -30,28 +30,34 @@ const Navbar = () => {
         <span />
       </Hamburger>
       <Menus isOpen={isOpen}>
-        <MenuLink href="/home">Announcements</MenuLink>
-        <MenuLink href="/about">About</MenuLink>
-        <MenuLink href="">Faculty</MenuLink>
-        <FormControl sx={{ width: '9rem' }}>
+        <MenuLink href='/home'>Announcements</MenuLink>
+        <MenuLink href='/about'>About</MenuLink>
+        <MenuLink href=''>Faculty</MenuLink>
+        <FormControl sx={{ width: "9rem" }}>
           <InputLabel>Student Task</InputLabel>
-          <Select label="Student Task">
-            <a href="/grades">
+          <Select label='Student Task'>
+            <a href='/grades'>
               <MenuItem>Grades</MenuItem>
             </a>
-            <a href="/schedule">
+            <a href='/schedule'>
               <MenuItem>Schedule</MenuItem>
             </a>
-            <a href="/Admin">
+            <a href='/admin'>
               <MenuItem>Admin Dashboard</MenuItem>
+            </a>
+            <a href='/admin/accountverification'>
+              <MenuItem>Account Verifications</MenuItem>
+            </a>
+            <a href='/admin/logintrail'>
+              <MenuItem>Login Trail</MenuItem>
             </a>
           </Select>
         </FormControl>
-        <Stack direction={'row'} spacing={3}>
+        <Stack direction={"row"} spacing={3}>
           <IconButton>
             <Box>
-              <Badge color="primary" badgeContent={0} showZero>
-                <NotificationsIcon sx={{ width: '30px', height: '30px' }} />
+              <Badge color='primary' badgeContent={0} showZero>
+                <NotificationsIcon sx={{ width: "30px", height: "30px" }} />
               </Badge>
             </Box>
           </IconButton>
@@ -99,7 +105,7 @@ const Logo = styled.a`
   text-decoration: none;
   font-weight: 900 !important;
   font-size: 1rem;
-  font-family: 'lato', sans-serif;
+  font-family: "lato", sans-serif;
   display: flex;
   span {
     font-weight: 300;
@@ -131,7 +137,7 @@ const Menus = styled.div`
   @media (max-width: 850px) {
     overflow: hidden;
     flex-direction: column;
-    max-height: ${({ isOpen }) => (isOpen ? '300px' : '0')};
+    max-height: ${({ isOpen }) => (isOpen ? "300px" : "0")};
     transition: max-height 0.3s ease-in;
     width: 100%;
 

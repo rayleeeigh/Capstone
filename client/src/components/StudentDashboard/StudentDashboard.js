@@ -21,9 +21,11 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 import StudentCardDashboard from "./StudentCardDashboard";
 import StudentListDashboard from "./StudentListDashboard";
+import { Link } from "react-router-dom";
 
 function StudentDashboard() {
   const [dataView, setDataView] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Container sx={{ padding: 5 }}>
@@ -33,9 +35,11 @@ function StudentDashboard() {
             <Typography variant={"h4"} fontWeight='bold'>
               DASHBOARD
             </Typography>
-            <Typography variant={"h6"} color='blue'>
-              Back to Dashboard
-            </Typography>
+            <Link to={"/Admin"}>
+              <Typography variant={"h6"} color='blue'>
+                Back to Dashboard
+              </Typography>
+            </Link>
           </FlexibleBox>
         </Grid>
         <Grid item xs={12}>
@@ -48,7 +52,6 @@ function StudentDashboard() {
                       STUDENTS
                     </Typography>
                   </Box>
-                  <Box></Box>
                   <Box>
                     <IconButton
                       onClick={() => {
