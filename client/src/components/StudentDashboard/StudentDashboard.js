@@ -5,23 +5,23 @@ import {
   IconButton,
   Stack,
   Typography,
-} from "@mui/material";
-import React, { useState } from "react";
-import AdminDashboardCard from "../AdminDashboard/AdminDashboardCard";
-import AdminContentCards from "../AdminDashboard/AdminContentCards";
+} from '@mui/material';
+import React, { useState } from 'react';
+import AdminDashboardCard from '../AdminDashboard/AdminDashboardCard';
+import AdminContentCards from '../AdminDashboard/AdminContentCards';
 import {
   ContentBox,
   FlexibleBox,
   MainGrid,
-} from "../AdminDashboard/AdminDashboard.styled";
-import styled from "styled-components";
-import GridViewIcon from "@mui/icons-material/GridView";
-import ViewListIcon from "@mui/icons-material/ViewList";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import DeleteIcon from "@mui/icons-material/Delete";
-import StudentCardDashboard from "./StudentCardDashboard";
-import StudentListDashboard from "./StudentListDashboard";
-import { Link } from "react-router-dom";
+} from '../AdminDashboard/AdminDashboard.styled';
+import styled from 'styled-components';
+import GridViewIcon from '@mui/icons-material/GridView';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import DeleteIcon from '@mui/icons-material/Delete';
+import StudentCardDashboard from './StudentCardDashboard';
+import StudentListDashboard from './StudentListDashboard';
+import { Link } from 'react-router-dom';
 
 function StudentDashboard() {
   const [dataView, setDataView] = useState(false);
@@ -32,11 +32,11 @@ function StudentDashboard() {
       <Grid container spacing={5}>
         <Grid item xs={12}>
           <FlexibleBox>
-            <Typography variant={"h4"} fontWeight='bold'>
+            <Typography variant={'h4'} fontWeight="bold">
               DASHBOARD
             </Typography>
-            <Link to={"/Admin"}>
-              <Typography variant={"h6"} color='blue'>
+            <Link to={'/Admin'}>
+              <Typography variant={'h6'} color="blue">
                 Back to Dashboard
               </Typography>
             </Link>
@@ -48,7 +48,7 @@ function StudentDashboard() {
               <Stack spacing={5}>
                 <FlexibleBox>
                   <Box>
-                    <Typography variant='h5' fontWeight={"bold"}>
+                    <Typography variant="h5" fontWeight={'bold'}>
                       STUDENTS
                     </Typography>
                   </Box>
@@ -56,15 +56,13 @@ function StudentDashboard() {
                     <IconButton
                       onClick={() => {
                         setDataView(false);
-                      }}
-                    >
+                      }}>
                       <GridViewIcon />
                     </IconButton>
                     <IconButton
                       onClick={() => {
                         setDataView(true);
-                      }}
-                    >
+                      }}>
                       <ViewListIcon />
                     </IconButton>
                     <IconButton>
