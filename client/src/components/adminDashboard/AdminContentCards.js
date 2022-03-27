@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -14,10 +14,13 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
+import ModalProfile from "../ModalProfile";
 
-function AdminContentCards() {
+function AdminContentCards({ Cardcontent }) {
+  const breakpoint = useMediaQuery("(min-width:550px)");
+  const [open, setOpen] = React.useState(false);
   return (
-    <Card sx={{ maxWidth: 200 }}>
+    <Card sx={{ maxWidth: breakpoint ? 200 : "100%" }}>
       <CardMedia
         component='img'
         height='140'
@@ -29,13 +32,13 @@ function AdminContentCards() {
           Lizard
         </Typography>
         <Typography variant='body2' color='text.secondary'>
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          {Cardcontent} group of squamate reptiles, with over 6,000 species,
+          ranging across all continents except Antarctica
         </Typography>
       </CardContent>
       <CardActions>
         <Button size='small'>Share</Button>
-        <Button size='small'>Learn More</Button>
+        <ModalProfile CardContent={Cardcontent} open={open} setOpen={setOpen} />
       </CardActions>
     </Card>
   );

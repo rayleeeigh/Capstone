@@ -7,22 +7,22 @@ function StudentCardDashboard() {
     <Box>
       <Grid container spacing={3}>
         <Grid item>
-          <AdminContentCards />
+          <AdminContentCards Cardcontent={"Hatdogi ni oh"} />
         </Grid>
         <Grid item>
-          <AdminContentCards />
+          <AdminContentCards Cardcontent={"Layata ni oh"} />
         </Grid>
         <Grid item>
-          <AdminContentCards />
+          <AdminContentCards Cardcontent={"Baragi ni oh"} />
         </Grid>
         <Grid item>
-          <AdminContentCards />
+          <AdminContentCards Cardcontent={"Redhorsi ni oh"} />
         </Grid>
         <Grid item>
-          <AdminContentCards />
+          <AdminContentCards Cardcontent={"Hatdogi ni oh"} />
         </Grid>
         <Grid item>
-          <AdminContentCards />
+          <AdminContentCards Cardcontent={"Hatdogi ni oh"} />
         </Grid>
       </Grid>
     </Box>

@@ -8,6 +8,7 @@ import {
   CardMedia,
   Container,
   Grid,
+  IconButton,
   Paper,
   Stack,
   Typography,
@@ -19,7 +20,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React from 'react';
 import AdminDashboardCard from './AdminDashboardCard';
 import AdminContentCards from './AdminContentCards';
-import { ContentBox, MainGrid } from './AdminDashboard.styled';
+import { ContentBox, FlexibleBox, MainGrid } from './AdminDashboard.styled';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function AdminDashboard() {
   return (
@@ -31,13 +34,22 @@ function AdminDashboard() {
         <Grid item xs={12}>
           <Grid container justifyContent={'center'} spacing={4}>
             <Grid item>
-              <AdminDashboardCard />
+              <AdminDashboardCard
+                CardHeader={'Students'}
+                CardContents={'200 students'}
+              />
             </Grid>
             <Grid item>
-              <AdminDashboardCard />
+              <AdminDashboardCard
+                CardHeader={'Teachers'}
+                CardContents={'20 teachers'}
+              />
             </Grid>
             <Grid item>
-              <AdminDashboardCard />
+              <AdminDashboardCard
+                CardHeader={'Subjects'}
+                CardContents={'8 subjects'}
+              />
             </Grid>
           </Grid>
         </Grid>
@@ -45,7 +57,17 @@ function AdminDashboard() {
           <MainGrid container>
             <ContentBox>
               <Stack spacing={5}>
-                <Typography>Year Levels</Typography>
+                <FlexibleBox>
+                  <Typography variant="h5">Year Levels</Typography>
+                  <Box>
+                    <IconButton>
+                      <AddCircleOutlineIcon />
+                    </IconButton>
+                    <IconButton>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box>
+                </FlexibleBox>
 
                 <Box
                   sx={{
@@ -67,10 +89,10 @@ function AdminDashboard() {
                     <AccordionDetails>
                       <Grid container spacing={5} justifyContent="center">
                         <Grid item>
-                          <AdminContentCards />
+                          <AdminContentCards Cardcontent={'Rayl ni oh'} />
                         </Grid>
                         <Grid item>
-                          <AdminContentCards />
+                          <AdminContentCards Cardcontent={'Cloya ni oh'} />
                         </Grid>
                       </Grid>
                     </AccordionDetails>
@@ -90,10 +112,19 @@ function AdminDashboard() {
                     <AccordionDetails>
                       <Grid container spacing={5} justifyContent="center">
                         <Grid item>
-                          <AdminContentCards />
+                          <AdminContentCards
+                            Cardcontent={
+                              <>
+                                <Typography variant="h6">
+                                  Hello I Am Arnan
+                                </Typography>
+                                <Typography>I am once</Typography>
+                              </>
+                            }
+                          />
                         </Grid>
                         <Grid item>
-                          <AdminContentCards />
+                          <AdminContentCards Cardcontent={'Chuya ni oh'} />
                         </Grid>
                       </Grid>
                     </AccordionDetails>
