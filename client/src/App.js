@@ -10,6 +10,7 @@ import Schedule from './pages/Schedule';
 import AdminStudents from './pages/AdminStudents';
 import AccountVerifications from './pages/AccountVerifications';
 import LoginTrail from './pages/LoginTrail';
+import RegisterSample from './pages/RegisterSample';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/register" element={<RegisterSample />} />
           <Route
             path="/admin/accountverification"
             element={<AccountVerifications />}
