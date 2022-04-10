@@ -17,14 +17,41 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import AdminDashboardCard from './AdminDashboardCard';
 import AdminContentCards from './AdminContentCards';
 import { ContentBox, FlexibleBox, MainGrid } from './AdminDashboard.styled';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import ModalContent from './Modal';
+import { db, auth, storage } from '../../firebase';
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+  addDoc,
+  Timestamp,
+  orderBy,
+  setDoc,
+  doc,
+  getDoc,
+  updateDoc,
+} from 'firebase/firestore';
+import { AuthContext } from '../../context/auth';
 function AdminDashboard() {
+  const [open, setOpen] = useState(false);
+  const [sections, setSections] = useState([]);
+  const { user } = useContext(AuthContext);
+  const secRef = collection(db, 'admin', user.uid, 'sections');
+  const q = query(secRef, orderBy('createdAt', 'asc'));
+  onSnapshot(q, (querySnapshot) => {
+    let sections = [];
+    querySnapshot.forEach((doc) => {
+      sections.push(doc.data());
+    });
+    setSections(sections);
+  });
   return (
     <Container sx={{ padding: 5 }}>
       <Grid container spacing={5}>
@@ -60,9 +87,24 @@ function AdminDashboard() {
                 <FlexibleBox>
                   <Typography variant="h5">Year Levels</Typography>
                   <Box>
-                    <IconButton>
+                    <IconButton
+                      onClick={() => {
+                        setOpen(true);
+                      }}>
                       <AddCircleOutlineIcon />
                     </IconButton>
+                    <ModalContent
+                      open={open}
+                      handleClose={() => {
+                        setOpen(false);
+                      }}
+                      content={
+                        <Box>
+                          <Typography>Hatdog</Typography>
+                        </Box>
+                      }
+                      title="Add a section"
+                    />
                     <IconButton>
                       <DeleteIcon />
                     </IconButton>
@@ -88,6 +130,13 @@ function AdminDashboard() {
                     </AccordionSummary>
                     <AccordionDetails>
                       <Grid container spacing={5} justifyContent="center">
+                        {sections.map((section) => (
+                          <Grid item key={section}>
+                            <AdminContentCards
+                              Cardcontent={section.sectionName}
+                            />
+                          </Grid>
+                        ))}
                         <Grid item>
                           <AdminContentCards Cardcontent={'Rayl ni oh'} />
                         </Grid>

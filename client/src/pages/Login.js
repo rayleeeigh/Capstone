@@ -65,6 +65,10 @@ export default function Login() {
       // await updateDoc(doc(db, 'users', result.user.uid), {
       //   isOnline: true,
       // });
+
+      if (result.user.isAuthenticated === false) {
+        console.log('not authenticated');
+      }
       setData({
         email: '',
         password: '',
