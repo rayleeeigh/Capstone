@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import Navbar from "../components/styled/Navbar";
 import Footer from "../components/styled/Footer";
 import Announcements from "../components/Announcements";
-import AdminDashboard from "../components/AdminDashboard/AdminDashboard";
+import AdminDashboard from "../components/adminDashboard/AdminDashboard";
 function Admin() {
   return (
     <>

@@ -6,14 +6,14 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React, { useState, useContext } from 'react';
-import AdminDashboardCard from '../AdminDashboard/AdminDashboardCard';
-import AdminContentCards from '../AdminDashboard/AdminContentCards';
+import React, { useState, useContext, useEffect } from 'react';
+import AdminDashboardCard from '../adminDashboard/AdminDashboardCard';
+import AdminContentCards from '../adminDashboard/AdminContentCards';
 import {
   ContentBox,
   FlexibleBox,
   MainGrid,
-} from '../AdminDashboard/AdminDashboard.styled';
+} from '../adminDashboard/AdminDashboard.styled';
 import styled from 'styled-components';
 import GridViewIcon from '@mui/icons-material/GridView';
 import ViewListIcon from '@mui/icons-material/ViewList';
@@ -46,13 +46,20 @@ function StudentDashboard() {
   const { user } = useContext(AuthContext);
   const secRef = collection(db, 'students');
   const q = query(secRef, orderBy('createdAt', 'asc'));
-  onSnapshot(q, (querySnapshot) => {
-    let students = [];
-    querySnapshot.forEach((doc) => {
-      students.push(doc.data());
+
+  useEffect(() => {
+    onSnapshot(q, (querySnapshot) => {
+      let students = [];
+      querySnapshot.forEach((doc) => {
+        students.push(doc.data());
+      });
+      console.log(students);
+      setStudents(students);
     });
-    setStudents(students);
-  });
+  }, [])
+  
+  
+
   return (
     <Container sx={{ padding: 5 }}>
       <Grid container spacing={5}>
@@ -114,18 +121,18 @@ function StudentDashboard() {
                     </IconButton>
                   </Box>
                 </FlexibleBox>
-                {/* {dataView == false ? (
+                {dataView == false ? (
                   <StudentCardDashboard students={students} />
                 ) : (
                   <StudentListDashboard />
-                )} */}
-                <Grid container spacing={3}>
+                )}
+                {/* <Grid container spacing={3}>
                   {students.map((stud) => (
                     <Grid item key={stud}>
-                      <AdminContentCards Cardcontent={stud.firstname} />
+                      <AdminContentCards Cardcontent={stud.firstname + ' '+ stud.id} />
                     </Grid>
                   ))}
-                </Grid>
+                </Grid> */}
               </Stack>
             </ContentBox>
           </MainGrid>

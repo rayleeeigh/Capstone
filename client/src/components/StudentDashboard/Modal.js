@@ -7,6 +7,7 @@ import {
   Snackbar,
   Alert,
   IconButton,
+  TextField,
 } from '@mui/material';
 import { db, auth, storage } from '../../firebase';
 import {
@@ -25,6 +26,7 @@ import {
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { AuthContext } from '../../context/auth';
 import { Close } from '@mui/icons-material';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const style = {
   position: 'absolute',
@@ -40,7 +42,7 @@ const style = {
 function ModalContent({ open, handleClose, content, title }) {
   const { user } = useContext(AuthContext);
   const [opens, setOpen] = React.useState(false);
-
+  const [userData,setUserData] = React.useState('');
   const handleClick = () => {
     setOpen(true);
   };
@@ -73,6 +75,7 @@ function ModalContent({ open, handleClose, content, title }) {
     await addDoc(collection(db, 'students'), {
       firstname: 'arnani',
       lastname: 'sayokuya',
+      email:userData,
       createdBy: user.uid,
       approvedBy: null,
       createdAt: Timestamp.fromDate(new Date()),
@@ -80,7 +83,19 @@ function ModalContent({ open, handleClose, content, title }) {
       setOpen(true);
       console.log(res);
     });
-
+    const result = await createUserWithEmailAndPassword(
+      auth,
+      userData,
+      'password',
+    );
+    await setDoc(doc(db, 'users', result.user.uid), {
+      uid: result.user.uid,
+      name:'nani',
+      email:userData,
+      createdAt: Timestamp.fromDate(new Date()),
+      isAuthenticated: false,
+      userType: 0,
+    });
     // await setDoc(collection(db,'students'),{
 
     // })
@@ -99,6 +114,7 @@ function ModalContent({ open, handleClose, content, title }) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {content}
           </Typography>
+          <TextField value={userData} onChange={(e)=>{setUserData(e.target.value)}}>Email</TextField>
           <Button onClick={handleSubmit}>Add Section</Button>
         </Box>
       </Modal>

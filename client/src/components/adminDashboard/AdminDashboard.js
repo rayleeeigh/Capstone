@@ -17,7 +17,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AdminDashboardCard from './AdminDashboardCard';
 import AdminContentCards from './AdminContentCards';
 import { ContentBox, FlexibleBox, MainGrid } from './AdminDashboard.styled';
@@ -45,13 +45,19 @@ function AdminDashboard() {
   const { user } = useContext(AuthContext);
   const secRef = collection(db, 'admin', user.uid, 'sections');
   const q = query(secRef, orderBy('createdAt', 'asc'));
-  onSnapshot(q, (querySnapshot) => {
-    let sections = [];
-    querySnapshot.forEach((doc) => {
-      sections.push(doc.data());
+
+  useEffect(() => {
+    onSnapshot(q, (querySnapshot) => {
+      let sections = [];
+      querySnapshot.forEach((doc) => {
+        sections.push(doc.data());
+      });
+      setSections(sections);
     });
-    setSections(sections);
-  });
+  }, [])
+  
+ 
+
   return (
     <Container sx={{ padding: 5 }}>
       <Grid container spacing={5}>
