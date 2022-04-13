@@ -6,14 +6,14 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
-import AdminDashboardCard from '../AdminDashboard/AdminDashboardCard';
-import AdminContentCards from '../AdminDashboard/AdminContentCards';
+import React, { useState, useContext, useEffect } from 'react';
+import AdminDashboardCard from '../adminDashboard/AdminDashboardCard';
+import AdminContentCards from '../adminDashboard/AdminContentCards';
 import {
   ContentBox,
   FlexibleBox,
   MainGrid,
-} from '../AdminDashboard/AdminDashboard.styled';
+} from '../adminDashboard/AdminDashboard.styled';
 import styled from 'styled-components';
 import GridViewIcon from '@mui/icons-material/GridView';
 import ViewListIcon from '@mui/icons-material/ViewList';
@@ -22,10 +22,43 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import StudentCardDashboard from './StudentCardDashboard';
 import StudentListDashboard from './StudentListDashboard';
 import { Link } from 'react-router-dom';
+import { db, auth, storage } from '../../firebase';
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+  addDoc,
+  Timestamp,
+  orderBy,
+  setDoc,
+  doc,
+  getDoc,
+  updateDoc,
+} from 'firebase/firestore';
+import { AuthContext } from '../../context/auth';
+import ModalContent from './Modal';
 
 function StudentDashboard() {
   const [dataView, setDataView] = useState(false);
   const [open, setOpen] = useState(false);
+  const [students, setStudents] = useState([]);
+  const { user } = useContext(AuthContext);
+  const secRef = collection(db, 'students');
+  const q = query(secRef, orderBy('createdAt', 'asc'));
+
+  useEffect(() => {
+    onSnapshot(q, (querySnapshot) => {
+      let students = [];
+      querySnapshot.forEach((doc) => {
+        students.push(doc.data());
+      });
+      console.log(students);
+      setStudents(students);
+    });
+  }, [])
+  
+  
 
   return (
     <Container sx={{ padding: 5 }}>
@@ -65,19 +98,41 @@ function StudentDashboard() {
                       }}>
                       <ViewListIcon />
                     </IconButton>
-                    <IconButton>
+                    <IconButton
+                      onClick={() => {
+                        setOpen(true);
+                      }}>
                       <AddCircleOutlineIcon />
                     </IconButton>
+                    <ModalContent
+                      open={open}
+                      handleClose={() => {
+                        setOpen(false);
+                      }}
+                      content={
+                        <Box>
+                          <Typography>Hatdog</Typography>
+                        </Box>
+                      }
+                      title="Add a section"
+                    />
                     <IconButton>
                       <DeleteIcon />
                     </IconButton>
                   </Box>
                 </FlexibleBox>
                 {dataView == false ? (
-                  <StudentCardDashboard />
+                  <StudentCardDashboard students={students} />
                 ) : (
                   <StudentListDashboard />
                 )}
+                {/* <Grid container spacing={3}>
+                  {students.map((stud) => (
+                    <Grid item key={stud}>
+                      <AdminContentCards Cardcontent={stud.firstname + ' '+ stud.id} />
+                    </Grid>
+                  ))}
+                </Grid> */}
               </Stack>
             </ContentBox>
           </MainGrid>

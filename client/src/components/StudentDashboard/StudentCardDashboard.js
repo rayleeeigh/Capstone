@@ -1,29 +1,21 @@
-import React from "react";
-import { Box, Grid } from "@mui/material";
-import AdminContentCards from "../AdminDashboard/AdminContentCards";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
+import { Box, Grid } from '@mui/material';
+import AdminContentCards from '../adminDashboard/AdminContentCards';
 
-function StudentCardDashboard() {
+function StudentCardDashboard({ students }) {
+  useEffect(() => {
+    console.log(students);
+  }, [])
+  
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item>
-          <AdminContentCards Cardcontent={"Hatdogi ni oh"} />
-        </Grid>
-        <Grid item>
-          <AdminContentCards Cardcontent={"Layata ni oh"} />
-        </Grid>
-        <Grid item>
-          <AdminContentCards Cardcontent={"Baragi ni oh"} />
-        </Grid>
-        <Grid item>
-          <AdminContentCards Cardcontent={"Redhorsi ni oh"} />
-        </Grid>
-        <Grid item>
-          <AdminContentCards Cardcontent={"Hatdogi ni oh"} />
-        </Grid>
-        <Grid item>
-          <AdminContentCards Cardcontent={"Hatdogi ni oh"} />
-        </Grid>
+        {students.map((stud) => (
+          <Grid item key={stud.id}>
+            <AdminContentCards Cardcontent={stud.id +' '+stud.firstname} />
+          </Grid>
+        ))}
       </Grid>
     </Box>
   );
