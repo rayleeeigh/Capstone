@@ -1,30 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   Modal,
   Box,
   Typography,
   Button,
   Snackbar,
-  Alert,
   IconButton,
   TextField,
   Stack,
 } from '@mui/material';
-import { db, auth, storage } from '../../../firebase';
-import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-  addDoc,
-  Timestamp,
-  orderBy,
-  setDoc,
-  doc,
-  getDoc,
-  updateDoc,
-} from 'firebase/firestore';
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { db, auth } from '../../../firebase';
+import { collection, addDoc, Timestamp, setDoc, doc } from 'firebase/firestore';
 import { AuthContext } from '../../../context/auth';
 import { Close } from '@mui/icons-material';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -46,14 +32,6 @@ function ModalContent({ open, handleClose, content, title }) {
   const [email, setEmail] = React.useState('');
   const [firstname, setFirstname] = React.useState('');
   const [lastname, setLastname] = React.useState('');
-  const [name, setName] = React.useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-  });
-  const handleClick = () => {
-    setOpen(true);
-  };
 
   const handleCloses = (event, reason) => {
     if (reason === 'clickaway') {
@@ -79,7 +57,6 @@ function ModalContent({ open, handleClose, content, title }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(name);
     setOpen(true);
     await addDoc(collection(db, 'teachers'), {
       firstname: firstname,

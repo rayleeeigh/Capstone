@@ -6,9 +6,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React, { useState, useContext, useEffect } from 'react';
-import AdminDashboardCard from '../adminDashboard/AdminDashboardCard';
-import AdminContentCards from '../adminDashboard/AdminContentCards';
+import React, { useState, useEffect } from 'react';
 import {
   ContentBox,
   FlexibleBox,
@@ -24,28 +22,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import TeacherCardDashboard from './TeacherCardDashboard';
 
 import { Link } from 'react-router-dom';
-import { db, auth, storage } from '../../../firebase';
-import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-  addDoc,
-  Timestamp,
-  orderBy,
-  setDoc,
-  doc,
-  getDocs,
-  updateDoc,
-} from 'firebase/firestore';
-import { AuthContext } from '../../../context/auth';
+import { db } from '../../../firebase';
+import { collection, getDocs } from 'firebase/firestore';
 import ModalContent from './Modal';
 
 function SubjectDashboard() {
   const [dataView, setDataView] = useState(false);
   const [open, setOpen] = useState(false);
   const [teachers, setTeachers] = useState([]);
-  const { user } = useContext(AuthContext);
   const aRef = collection(db, 'teachers');
 
   const getAll = async () => {

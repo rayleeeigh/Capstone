@@ -1,32 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   Modal,
   Box,
   Typography,
   Button,
   Snackbar,
-  Alert,
   IconButton,
   TextField,
 } from '@mui/material';
-import { db, auth, storage } from '../../../firebase';
-import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-  addDoc,
-  Timestamp,
-  orderBy,
-  setDoc,
-  doc,
-  getDoc,
-  updateDoc,
-} from 'firebase/firestore';
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { db } from '../../../firebase';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { AuthContext } from '../../../context/auth';
 import { Close } from '@mui/icons-material';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const style = {
   position: 'absolute',
@@ -43,9 +28,6 @@ function ModalContent({ open, handleClose, content, title, getAll }) {
   const { user } = useContext(AuthContext);
   const [opens, setOpen] = React.useState(false);
   const [data, setData] = React.useState('');
-  const handleClick = () => {
-    setOpen(true);
-  };
 
   const handleCloses = (event, reason) => {
     if (reason === 'clickaway') {

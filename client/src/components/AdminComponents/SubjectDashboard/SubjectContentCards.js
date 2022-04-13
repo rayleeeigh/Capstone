@@ -1,39 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  Box,
   Button,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
-  Container,
-  Grid,
-  Paper,
-  Stack,
   Typography,
   TextField,
   useMediaQuery,
 } from '@mui/material';
 // import ModalProfile from "../AccountVerification/ModalProfile";
-import { db, auth, storage } from '../../../firebase';
-import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-  addDoc,
-  Timestamp,
-  orderBy,
-  setDoc,
-  doc,
-  getDocs,
-  updateDoc,
-} from 'firebase/firestore';
+import { db } from '../../../firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 
 function SubjectContentCard({ Cardcontent, subjects, getAll }) {
   const breakpoint = useMediaQuery('(min-width:550px)');
-  const [open, setOpen] = React.useState(false);
   const [subject, setSubject] = useState('');
 
   const update = async (id) => {

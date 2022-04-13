@@ -6,9 +6,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React, { useState, useContext, useEffect } from 'react';
-import AdminDashboardCard from '../adminDashboard/AdminDashboardCard';
-import AdminContentCards from '../adminDashboard/AdminContentCards';
+import React, { useState, useEffect } from 'react';
 import {
   ContentBox,
   FlexibleBox,
@@ -22,31 +20,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import StudentCardDashboard from './StudentCardDashboard';
 import StudentListDashboard from './StudentListDashboard';
 import { Link } from 'react-router-dom';
-import { db, auth, storage } from '../../../firebase';
-import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-  addDoc,
-  Timestamp,
-  orderBy,
-  setDoc,
-  doc,
-  getDocs,
-  updateDoc,
-} from 'firebase/firestore';
-import { AuthContext } from '../../../context/auth';
+import { db } from '../../../firebase';
+import { collection, getDocs } from 'firebase/firestore';
 import ModalContent from './Modal';
 
 function StudentDashboard() {
   const [dataView, setDataView] = useState(false);
   const [open, setOpen] = useState(false);
   const [students, setStudents] = useState([]);
-  const { user } = useContext(AuthContext);
-  const secRef = collection(db, 'students');
-  const q = query(secRef, orderBy('createdAt', 'asc'));
-  const aRef = collection(db, "students");
+  const aRef = collection(db, 'students');
 
   const getAll = async () => {
     const data = await getDocs(aRef);
@@ -54,18 +36,8 @@ function StudentDashboard() {
     setStudents(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
   useEffect(() => {
-    // onSnapshot(q, (querySnapshot) => {
-    //   let students = [];
-    //   querySnapshot.forEach((doc) => {
-    //     students.push(doc.data());
-    //   });
-    //   console.log(students);
-    //   setStudents(students);
-    // });
     getAll();
-  }, [])
-  
-  
+  }, []);
 
   return (
     <Container sx={{ padding: 5 }}>
@@ -133,13 +105,6 @@ function StudentDashboard() {
                 ) : (
                   <StudentListDashboard />
                 )}
-                {/* <Grid container spacing={3}>
-                  {students.map((stud) => (
-                    <Grid item key={stud}>
-                      <AdminContentCards Cardcontent={stud.firstname + ' '+ stud.id} />
-                    </Grid>
-                  ))}
-                </Grid> */}
               </Stack>
             </ContentBox>
           </MainGrid>

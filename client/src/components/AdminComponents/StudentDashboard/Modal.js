@@ -1,29 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   Modal,
   Box,
   Typography,
   Button,
   Snackbar,
-  Alert,
   IconButton,
   TextField,
 } from '@mui/material';
-import { db, auth, storage } from '../../../firebase';
-import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-  addDoc,
-  Timestamp,
-  orderBy,
-  setDoc,
-  doc,
-  getDoc,
-  updateDoc,
-} from 'firebase/firestore';
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { db, auth } from '../../../firebase';
+import { collection, addDoc, Timestamp, setDoc, doc } from 'firebase/firestore';
 import { AuthContext } from '../../../context/auth';
 import { Close } from '@mui/icons-material';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -42,10 +28,7 @@ const style = {
 function ModalContent({ open, handleClose, content, title }) {
   const { user } = useContext(AuthContext);
   const [opens, setOpen] = React.useState(false);
-  const [userData,setUserData] = React.useState('');
-  const handleClick = () => {
-    setOpen(true);
-  };
+  const [userData, setUserData] = React.useState('');
 
   const handleCloses = (event, reason) => {
     if (reason === 'clickaway') {
@@ -75,7 +58,7 @@ function ModalContent({ open, handleClose, content, title }) {
     await addDoc(collection(db, 'students'), {
       firstname: 'arnani',
       lastname: 'sayokuya',
-      email:userData,
+      email: userData,
       createdBy: user.uid,
       approvedBy: null,
       createdAt: Timestamp.fromDate(new Date()),
@@ -90,15 +73,12 @@ function ModalContent({ open, handleClose, content, title }) {
     );
     await setDoc(doc(db, 'users', result.user.uid), {
       uid: result.user.uid,
-      name:'nani',
-      email:userData,
+      name: 'nani',
+      email: userData,
       createdAt: Timestamp.fromDate(new Date()),
       isAuthenticated: false,
       userType: 0,
     });
-    // await setDoc(collection(db,'students'),{
-
-    // })
   };
   return (
     <>
@@ -114,7 +94,13 @@ function ModalContent({ open, handleClose, content, title }) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {content}
           </Typography>
-          <TextField value={userData} onChange={(e)=>{setUserData(e.target.value)}}>Email</TextField>
+          <TextField
+            value={userData}
+            onChange={(e) => {
+              setUserData(e.target.value);
+            }}>
+            Email
+          </TextField>
           <Button onClick={handleSubmit}>Add Section</Button>
         </Box>
       </Modal>
