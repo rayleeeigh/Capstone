@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import React from 'react';
-import StudentDashboard from '../../components/AdminComponents/StudentDashboard/StudentDashboard';
+import TeacherDashboard from '../../components/AdminComponents/TeacherDashboard/TeacherDashboard';
 import Navbar from '../../components/styled/Navbar';
 
 function TeacherPage() {
@@ -8,7 +8,7 @@ function TeacherPage() {
     <>
       <Navbar />
       <Box>
-        <StudentDashboard />
+        <TeacherDashboard />
       </Box>
     </>
   );
