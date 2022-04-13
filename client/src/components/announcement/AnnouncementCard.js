@@ -50,7 +50,7 @@ export default function AnnouncementCard({content,getAll}) {
             <br />
             {'"a benevolent smile"'}
           </Typography>
-          <TextField value={updated} onChange={(e)=>{setUpdated(e.target.value)}}>Update Content</TextField>
+          <TextField value={updated} onChange={(e)=>{setUpdated(e.target.value)}} label='Update Content Here' >Update Content</TextField>
         </CardContent>
         <CardActions>
           <Button size='small'>See Full Announcement</Button>

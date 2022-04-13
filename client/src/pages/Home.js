@@ -16,7 +16,6 @@ export default function Home() {
           width: '100%',
           backgroundColor: 'ghostwhite',
         }}>
-        <Typography variant={'h1'}>hello {user.email}</Typography>
         <Announcements />
       </Box>
     </>

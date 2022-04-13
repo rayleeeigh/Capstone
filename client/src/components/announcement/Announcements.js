@@ -62,11 +62,9 @@ function Announcements() {
   return (
     <Container sx={{ justifyContent: "center" }}>
       <Stack spacing={5} sx={{ padding: "20px" }}>
-        
         <Typography variant='h2' textAlign={"center"} fontWeight='bold'>
           Announcements
         </Typography>
-         
         <Stack>
           <Stack direction={'row'} display='flex'>
              <IconButton onClick={()=>{setOpen(true)}}>
