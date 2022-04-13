@@ -14,7 +14,7 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import ModalProfile from '../ModalProfile';
+import ModalProfile from './ModalProfile';
 
 function AccountCards({ user }) {
   const breakpoint = useMediaQuery('(min-width:550px)');

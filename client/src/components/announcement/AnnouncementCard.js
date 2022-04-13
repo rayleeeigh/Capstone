@@ -23,7 +23,6 @@ export default function AnnouncementCard({content,getAll}) {
     content.content=updated;
     console.log(content.content);
     await updateDoc(annUpdate,content);
-    
     getAll();
   }
 
@@ -54,8 +53,8 @@ export default function AnnouncementCard({content,getAll}) {
         </CardContent>
         <CardActions>
           <Button size='small'>See Full Announcement</Button>
-          <Button size='small' onClick={(e)=>{deleteData(content.id)}}>Delete Announcement </Button>
-          <Button size='small' onClick={(e)=>{updateData(content.id)}}>Update Announcement </Button>
+          <Button size='small' onClick={()=>{deleteData(content.id)}}>Delete Announcement </Button>
+          <Button size='small' onClick={()=>{updateData(content.id)}}>Update Announcement </Button>
         </CardActions>
       </Card>
     </Box>

@@ -13,6 +13,7 @@ import {
   Divider,
   LinearProgress,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 function AdminDashboardCard({ CardHeader, CardContents }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -49,9 +50,11 @@ function AdminDashboardCard({ CardHeader, CardContents }) {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
+          <Link to={'/admin/'+ CardHeader}><Button size="small" color="primary">
             View All
           </Button>
+          </Link>
+          
         </CardActions>
       </Card>
       <Popover

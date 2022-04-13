@@ -9,7 +9,7 @@ import {
   IconButton,
   TextField,
 } from '@mui/material';
-import { db, auth, storage } from '../../firebase';
+import { db, auth, storage } from '../../../firebase';
 import {
   collection,
   query,
@@ -24,7 +24,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
-import { AuthContext } from '../../context/auth';
+import { AuthContext } from '../../../context/auth';
 import { Close } from '@mui/icons-material';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 

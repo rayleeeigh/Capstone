@@ -7,8 +7,10 @@ import {
   Snackbar,
   Alert,
   IconButton,
+  TextField,
+  Stack,
 } from '@mui/material';
-import { db, auth, storage } from '../../firebase';
+import { db, auth, storage } from '../../../firebase';
 import {
   collection,
   query,
@@ -23,7 +25,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
-import { AuthContext } from '../../context/auth';
+import { AuthContext } from '../../../context/auth';
 import { Close } from '@mui/icons-material';
 
 const style = {
@@ -40,7 +42,8 @@ const style = {
 function ModalContent({ open, handleClose, content, title }) {
   const { user } = useContext(AuthContext);
   const [opens, setOpen] = React.useState(false);
-
+  const [sectionName,setSectionName] = useState('');
+  const [sectionYear,setSectionYear] = useState('');
   const handleClick = () => {
     setOpen(true);
   };
@@ -71,8 +74,8 @@ function ModalContent({ open, handleClose, content, title }) {
     e.preventDefault();
     // setOpen(true);
     await addDoc(collection(db, 'admin', user.uid, 'sections'), {
-      sectionName: 'sayote',
-      sectionLevel: '9',
+      sectionName: sectionName,
+      sectionLevel: sectionYear,
       createdBy: user.uid,
       createdAt: Timestamp.fromDate(new Date()),
     }).then((res) => {
@@ -94,7 +97,13 @@ function ModalContent({ open, handleClose, content, title }) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {content}
           </Typography>
-          <Button onClick={handleSubmit}>Add Section</Button>
+          <Stack>
+            <TextField label='section name' value={sectionName} onChange={(e)=>{setSectionName(e.target.value)}}>Section</TextField>
+            <TextField label='section year' value={sectionYear} onChange={(e)=>{setSectionYear(e.target.value)}}>Section</TextField>
+            <Button onClick={handleSubmit}>Add Section</Button>
+
+          </Stack>
+          
         </Box>
       </Modal>
       <Snackbar

@@ -14,7 +14,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import ModalProfile from "../ModalProfile";
+import ModalProfile from "../AccountVerification/ModalProfile";
 
 function AdminContentCards({ Cardcontent }) {
   const breakpoint = useMediaQuery("(min-width:550px)");

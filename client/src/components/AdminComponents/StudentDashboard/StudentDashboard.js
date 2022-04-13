@@ -22,7 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import StudentCardDashboard from './StudentCardDashboard';
 import StudentListDashboard from './StudentListDashboard';
 import { Link } from 'react-router-dom';
-import { db, auth, storage } from '../../firebase';
+import { db, auth, storage } from '../../../firebase';
 import {
   collection,
   query,
@@ -33,10 +33,10 @@ import {
   orderBy,
   setDoc,
   doc,
-  getDoc,
+  getDocs,
   updateDoc,
 } from 'firebase/firestore';
-import { AuthContext } from '../../context/auth';
+import { AuthContext } from '../../../context/auth';
 import ModalContent from './Modal';
 
 function StudentDashboard() {
@@ -46,16 +46,23 @@ function StudentDashboard() {
   const { user } = useContext(AuthContext);
   const secRef = collection(db, 'students');
   const q = query(secRef, orderBy('createdAt', 'asc'));
+  const aRef = collection(db, "students");
 
+  const getAll = async () => {
+    const data = await getDocs(aRef);
+    console.log(data.docs);
+    setStudents(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
   useEffect(() => {
-    onSnapshot(q, (querySnapshot) => {
-      let students = [];
-      querySnapshot.forEach((doc) => {
-        students.push(doc.data());
-      });
-      console.log(students);
-      setStudents(students);
-    });
+    // onSnapshot(q, (querySnapshot) => {
+    //   let students = [];
+    //   querySnapshot.forEach((doc) => {
+    //     students.push(doc.data());
+    //   });
+    //   console.log(students);
+    //   setStudents(students);
+    // });
+    getAll();
   }, [])
   
   
@@ -121,8 +128,8 @@ function StudentDashboard() {
                     </IconButton>
                   </Box>
                 </FlexibleBox>
-                {dataView == false ? (
-                  <StudentCardDashboard students={students} />
+                {dataView === false ? (
+                  <StudentCardDashboard students={students} getAll={getAll} />
                 ) : (
                   <StudentListDashboard />
                 )}

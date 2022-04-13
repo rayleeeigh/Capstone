@@ -7,7 +7,9 @@ import Admin from './pages/Admin';
 import About from './pages/About';
 import Grades from './pages/Grades';
 import Schedule from './pages/Schedule';
-import AdminStudents from './pages/AdminStudents';
+import Students from './pages/Admin/StudentPage';
+import Teachers from './pages/Admin/TeacherPage';
+import Subjects from './pages/Admin/SubjectPage';
 import AccountVerifications from './pages/AccountVerifications';
 import LoginTrail from './pages/LoginTrail';
 import RegisterSample from './pages/RegisterSample';
@@ -35,7 +37,9 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/grades" element={<Grades />} />
           <Route path="/schedule" element={<Schedule />} />
-          <Route path="/admin/students" element={<AdminStudents />} />
+          <Route path="/admin/students" element={<Students />} />
+          <Route path="/admin/teachers" element={<Teachers />} />
+          <Route path="/admin/subjects" element={<Subjects />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

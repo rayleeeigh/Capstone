@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React,{useEffect,useState,useContext} from "react";
 import AnnouncementCard from "./AnnouncementCard";
-import { FlexBox } from "../StudentDashboard/StudentDashboard";
+import { FlexBox } from "../AdminComponents/StudentDashboard/StudentDashboard";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { db, auth, storage } from '../../firebase';
@@ -90,7 +90,6 @@ function Announcements() {
             <AnnouncementCard content={ann} getAll={getAnn} />
           </Box>
          ))}
-          
         </Stack>
       </Stack>
     </Container>
