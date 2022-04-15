@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext,  } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -13,8 +13,6 @@ import AccountVerifications from './pages/AccountVerifications';
 import LoginTrail from './pages/LoginTrail';
 import RegisterSample from './pages/RegisterSample';
 import { AuthContext } from './context/auth';
-import { Box, Typography } from '@mui/material';
-import { auth } from './firebase';
 
 export default function App() {
 

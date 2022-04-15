@@ -16,8 +16,6 @@ import {
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { Navigations } from "../../data/Navigations";
-
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,10 +48,7 @@ const Navbar = () => {
         <span />
       </Hamburger>
       <Menus isOpen={isOpen}>
-        {Navigations.map((nav)=>(
-          <MenuLink key={nav}>{nav.navs}</MenuLink>
-        ))}
-        {/* <MenuLink href='/home'>Announcements</MenuLink>
+        <MenuLink href='/home'>Announcements</MenuLink>
         <MenuLink href='/about'>About</MenuLink>
         <MenuLink href=''>Faculty</MenuLink>
         <FormControl  sx={{ m: 1, minWidth: "9rem" }}>
@@ -75,8 +70,8 @@ const Navbar = () => {
               <MenuItem>Login Trail</MenuItem>
             </a>
           </Select>
-        </FormControl> */}
-        <Stack direction={"row"} spacing={2}>
+        </FormControl>
+        <Stack direction={"row"} spacing={3}>
           <IconButton>
             <Box>
               <Badge color='primary' badgeContent={0} showZero>

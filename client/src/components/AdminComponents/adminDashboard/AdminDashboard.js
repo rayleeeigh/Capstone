@@ -1,15 +1,8 @@
 import {
   Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
   Container,
   Grid,
   IconButton,
-  Paper,
   Stack,
   Typography,
 } from '@mui/material';
@@ -24,27 +17,17 @@ import { ContentBox, FlexibleBox, MainGrid } from './AdminDashboard.styled';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModalContent from './Modal';
-import { db, auth, storage } from '../../../firebase';
+import { db } from '../../../firebase';
 import {
   collection,
-  query,
-  where,
-  onSnapshot,
-  addDoc,
-  Timestamp,
-  orderBy,
-  setDoc,
-  doc,
   getDocs,
-  updateDoc,
 } from 'firebase/firestore';
 import { AuthContext } from '../../../context/auth';
+
 function AdminDashboard() {
   const [open, setOpen] = useState(false);
   const [sections, setSections] = useState([]);
   const { user } = useContext(AuthContext);
-  const secRef = collection(db, 'admin', user.uid, 'sections');
-  const q = query(secRef, orderBy('createdAt', 'asc'));
   const aRef = collection(db, "admin",user.uid,"sections");
 
   // useEffect(() => {

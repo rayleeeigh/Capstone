@@ -1,16 +1,10 @@
-import React, { useState } from "react";
+import React, {  } from "react";
 import {
-  Box,
   Button,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
-  Container,
-  Grid,
-  Paper,
-  Stack,
   Typography,
   useMediaQuery,
 } from "@mui/material";
