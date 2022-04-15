@@ -1,5 +1,4 @@
-import React from 'react';
-import AuthProvider from './context/auth';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -13,14 +12,22 @@ import Subjects from './pages/Admin/SubjectPage';
 import AccountVerifications from './pages/AccountVerifications';
 import LoginTrail from './pages/LoginTrail';
 import RegisterSample from './pages/RegisterSample';
+import { AuthContext } from './context/auth';
+import { Box, Typography } from '@mui/material';
+import { auth } from './firebase';
 
 export default function App() {
+
+  const {user} = useContext(AuthContext);
+
   return (
-    <AuthProvider>
+    
       <BrowserRouter>
         {/* <Navbar /> */}
         <Routes>
-          <Route path="/" element={<Login />} />
+         
+          {/* <Box variant='h2'>Waly user</Box> */}
+          <Route path="/" element={user?<Home />:<Login/>} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/register" element={<RegisterSample />} />
           <Route
@@ -42,6 +49,6 @@ export default function App() {
           <Route path="/admin/subjects" element={<Subjects />} />
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    
   );
 }

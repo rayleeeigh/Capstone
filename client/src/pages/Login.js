@@ -76,7 +76,7 @@ export default function Login() {
         loading: false,
       });
       console.log(result);
-      history('/home');
+      history('/');
     } catch (err) {
       setData({ ...data, error: err.message, loading: false });
     }
