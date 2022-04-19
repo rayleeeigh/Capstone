@@ -1,30 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   Modal,
   Box,
   Typography,
   Button,
   Snackbar,
-  Alert,
   IconButton,
   TextField,
+  Stack,
 } from '@mui/material';
-import { db, auth, storage } from '../../firebase';
-import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-  addDoc,
-  Timestamp,
-  orderBy,
-  setDoc,
-  doc,
-  getDoc,
-  updateDoc,
-} from 'firebase/firestore';
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
-import { AuthContext } from '../../context/auth';
+import { db, auth } from '../../../firebase';
+import { collection, addDoc, Timestamp, setDoc, doc } from 'firebase/firestore';
+import { AuthContext } from '../../../context/auth';
 import { Close } from '@mui/icons-material';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
@@ -42,10 +29,9 @@ const style = {
 function ModalContent({ open, handleClose, content, title }) {
   const { user } = useContext(AuthContext);
   const [opens, setOpen] = React.useState(false);
-  const [userData,setUserData] = React.useState('');
-  const handleClick = () => {
-    setOpen(true);
-  };
+  const [email, setEmail] = React.useState('');
+  const [firstname, setFirstname] = React.useState('');
+  const [lastname, setLastname] = React.useState('');
 
   const handleCloses = (event, reason) => {
     if (reason === 'clickaway') {
@@ -72,10 +58,10 @@ function ModalContent({ open, handleClose, content, title }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setOpen(true);
-    await addDoc(collection(db, 'students'), {
-      firstname: 'arnani',
-      lastname: 'sayokuya',
-      email:userData,
+    await addDoc(collection(db, 'teachers'), {
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
       createdBy: user.uid,
       approvedBy: null,
       createdAt: Timestamp.fromDate(new Date()),
@@ -85,13 +71,14 @@ function ModalContent({ open, handleClose, content, title }) {
     });
     const result = await createUserWithEmailAndPassword(
       auth,
-      userData,
+      email,
       'password',
     );
     await setDoc(doc(db, 'users', result.user.uid), {
       uid: result.user.uid,
-      name:'nani',
-      email:userData,
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
       createdAt: Timestamp.fromDate(new Date()),
       isAuthenticated: false,
       userType: 0,
@@ -114,7 +101,33 @@ function ModalContent({ open, handleClose, content, title }) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {content}
           </Typography>
-          <TextField value={userData} onChange={(e)=>{setUserData(e.target.value)}}>Email</TextField>
+          <Stack>
+            <TextField
+              label="Firstname"
+              value={firstname}
+              onChange={(e) => {
+                setFirstname(e.target.value);
+              }}>
+              Firstname
+            </TextField>
+            <TextField
+              label="Lastname"
+              value={lastname}
+              onChange={(e) => {
+                setLastname(e.target.value);
+              }}>
+              Lastname
+            </TextField>
+            <TextField
+              label="Email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}>
+              Email
+            </TextField>
+          </Stack>
+
           <Button onClick={handleSubmit}>Add Section</Button>
         </Box>
       </Modal>

@@ -1,20 +1,14 @@
-import React, { useState } from "react";
+import React, {  } from "react";
 import {
-  Box,
   Button,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
-  Container,
-  Grid,
-  Paper,
-  Stack,
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import ModalProfile from "../ModalProfile";
+import ModalProfile from "../AccountVerification/ModalProfile";
 
 function AdminContentCards({ Cardcontent }) {
   const breakpoint = useMediaQuery("(min-width:550px)");

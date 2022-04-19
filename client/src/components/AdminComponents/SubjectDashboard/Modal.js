@@ -1,29 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   Modal,
   Box,
   Typography,
   Button,
   Snackbar,
-  Alert,
   IconButton,
+  TextField,
 } from '@mui/material';
-import { db, auth, storage } from '../../firebase';
-import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-  addDoc,
-  Timestamp,
-  orderBy,
-  setDoc,
-  doc,
-  getDoc,
-  updateDoc,
-} from 'firebase/firestore';
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
-import { AuthContext } from '../../context/auth';
+import { db } from '../../../firebase';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { AuthContext } from '../../../context/auth';
 import { Close } from '@mui/icons-material';
 
 const style = {
@@ -37,13 +24,10 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-function ModalContent({ open, handleClose, content, title }) {
+function ModalContent({ open, handleClose, content, title, getAll }) {
   const { user } = useContext(AuthContext);
   const [opens, setOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setOpen(true);
-  };
+  const [data, setData] = React.useState('');
 
   const handleCloses = (event, reason) => {
     if (reason === 'clickaway') {
@@ -69,16 +53,21 @@ function ModalContent({ open, handleClose, content, title }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // setOpen(true);
-    await addDoc(collection(db, 'admin', user.uid, 'sections'), {
-      sectionName: 'sayote',
-      sectionLevel: '9',
+    setOpen(true);
+    await addDoc(collection(db, 'subjects'), {
+      name: data,
       createdBy: user.uid,
+      approvedBy: null,
       createdAt: Timestamp.fromDate(new Date()),
     }).then((res) => {
-      setOpen(true);
+      setOpen(false);
+      handleClose();
       console.log(res);
     });
+
+    // await setDoc(collection(db,'students'),{
+
+    // })
   };
   return (
     <>
@@ -94,6 +83,13 @@ function ModalContent({ open, handleClose, content, title }) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {content}
           </Typography>
+          <TextField
+            value={data}
+            onChange={(e) => {
+              setData(e.target.value);
+            }}>
+            Email
+          </TextField>
           <Button onClick={handleSubmit}>Add Section</Button>
         </Box>
       </Modal>

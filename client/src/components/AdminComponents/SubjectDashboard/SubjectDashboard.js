@@ -6,9 +6,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React, { useState, useContext, useEffect } from 'react';
-import AdminDashboardCard from '../adminDashboard/AdminDashboardCard';
-import AdminContentCards from '../adminDashboard/AdminContentCards';
+import React, { useState, useEffect } from 'react';
 import {
   ContentBox,
   FlexibleBox,
@@ -19,46 +17,37 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
-import StudentCardDashboard from './StudentCardDashboard';
-import StudentListDashboard from './StudentListDashboard';
+//   import StudentCardDashboard from './StudentCardDashboard';
+//   import StudentListDashboard from './StudentListDashboard';
+import SubjectCardDashboard from './SubjectCardDashboard';
+
 import { Link } from 'react-router-dom';
-import { db, auth, storage } from '../../firebase';
-import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-  addDoc,
-  Timestamp,
-  orderBy,
-  setDoc,
-  doc,
-  getDoc,
-  updateDoc,
-} from 'firebase/firestore';
-import { AuthContext } from '../../context/auth';
+import { db } from '../../../firebase';
+import { collection, getDocs } from 'firebase/firestore';
 import ModalContent from './Modal';
 
-function StudentDashboard() {
+function SubjectDashboard() {
   const [dataView, setDataView] = useState(false);
   const [open, setOpen] = useState(false);
-  const [students, setStudents] = useState([]);
-  const { user } = useContext(AuthContext);
-  const secRef = collection(db, 'students');
-  const q = query(secRef, orderBy('createdAt', 'asc'));
+  const [subjects, setSubjects] = useState([]);
+  const aRef = collection(db, 'subjects');
 
+  const getAll = async () => {
+    const data = await getDocs(aRef);
+    console.log(data.docs);
+    setSubjects(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
   useEffect(() => {
-    onSnapshot(q, (querySnapshot) => {
-      let students = [];
-      querySnapshot.forEach((doc) => {
-        students.push(doc.data());
-      });
-      console.log(students);
-      setStudents(students);
-    });
-  }, [])
-  
-  
+    // onSnapshot(q, (querySnapshot) => {
+    //   let students = [];
+    //   querySnapshot.forEach((doc) => {
+    //     students.push(doc.data());
+    //   });
+    //   console.log(students);
+    //   setStudents(students);
+    // });
+    getAll();
+  }, []);
 
   return (
     <Container sx={{ padding: 5 }}>
@@ -82,7 +71,7 @@ function StudentDashboard() {
                 <FlexibleBox>
                   <Box>
                     <Typography variant="h5" fontWeight={'bold'}>
-                      STUDENTS
+                      Subjects
                     </Typography>
                   </Box>
                   <Box>
@@ -109,6 +98,7 @@ function StudentDashboard() {
                       handleClose={() => {
                         setOpen(false);
                       }}
+                      getAll={getAll}
                       content={
                         <Box>
                           <Typography>Hatdog</Typography>
@@ -121,18 +111,19 @@ function StudentDashboard() {
                     </IconButton>
                   </Box>
                 </FlexibleBox>
-                {dataView == false ? (
-                  <StudentCardDashboard students={students} />
+                {dataView === false ? (
+                  <SubjectCardDashboard subjects={subjects} getAll={getAll} />
                 ) : (
-                  <StudentListDashboard />
+                  // <StudentListDashboard />
+                  <></>
                 )}
                 {/* <Grid container spacing={3}>
-                  {students.map((stud) => (
-                    <Grid item key={stud}>
-                      <AdminContentCards Cardcontent={stud.firstname + ' '+ stud.id} />
-                    </Grid>
-                  ))}
-                </Grid> */}
+                    {students.map((stud) => (
+                      <Grid item key={stud}>
+                        <AdminContentCards Cardcontent={stud.firstname + ' '+ stud.id} />
+                      </Grid>
+                    ))}
+                  </Grid> */}
               </Stack>
             </ContentBox>
           </MainGrid>
@@ -146,4 +137,4 @@ export const FlexBox = styled.div`
   display: flex;
 `;
 
-export default StudentDashboard;
+export default SubjectDashboard;

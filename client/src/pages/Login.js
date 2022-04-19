@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth, db } from '../firebase';
-import { updateDoc, doc } from 'firebase/firestore';
+import { auth} from '../firebase';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom/';
 import Avatar from '@mui/material/Avatar';
 import { PrimaryButton, Cover } from '../components/Login/Login.style';
 import {
@@ -76,7 +74,7 @@ export default function Login() {
         loading: false,
       });
       console.log(result);
-      history('/home');
+      history('/');
     } catch (err) {
       setData({ ...data, error: err.message, loading: false });
     }

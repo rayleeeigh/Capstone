@@ -11,11 +11,29 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Stack,
+  Stack,Menu
 } from "@mui/material";
+import { auth } from "../../firebase";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const history = useNavigate();
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleSignout = async () => {
+    handleClose();
+    await signOut(auth);
+    history("/");
+  };
   return (
     <Nav>
       <Logo className='Logo' href='/home'>
@@ -33,9 +51,9 @@ const Navbar = () => {
         <MenuLink href='/home'>Announcements</MenuLink>
         <MenuLink href='/about'>About</MenuLink>
         <MenuLink href=''>Faculty</MenuLink>
-        <FormControl sx={{ width: "9rem" }}>
+        <FormControl  sx={{ m: 1, minWidth: "9rem" }}>
           <InputLabel>Student Task</InputLabel>
-          <Select label='Student Task'>
+          <Select>
             <a href='/grades'>
               <MenuItem>Grades</MenuItem>
             </a>
@@ -61,7 +79,27 @@ const Navbar = () => {
               </Badge>
             </Box>
           </IconButton>
-          <Avatar />
+          <IconButton  id="basic-button"
+            aria-controls={open ? 'basic-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}>
+            <Avatar />
+          </IconButton>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleSignout}>Logout</MenuItem>
+            </Menu>
+          
         </Stack>
       </Menus>
     </Nav>
