@@ -34,10 +34,6 @@ const AuthProvider = ({ children }) => {
         })
     }, [])
 
-    useEffect(() => {
-        console.log(studentUser)
-    }, [studentUser])
-
     if (loading) {
         return <CircularProgress />
     }

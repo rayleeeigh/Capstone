@@ -19,6 +19,7 @@ import { auth } from '../../firebase'
 import { signOut } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 import ModalContent from './ModalProfile'
+import NavbarTask from './NavbarTask'
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -55,26 +56,7 @@ const Navbar = () => {
                 <MenuLink href="/home">Announcements</MenuLink>
                 <MenuLink href="/about">About</MenuLink>
                 <MenuLink href="">Faculty</MenuLink>
-                <FormControl sx={{ m: 1, minWidth: '9rem' }}>
-                    <InputLabel>Student Task</InputLabel>
-                    <Select>
-                        <a href="/grades">
-                            <MenuItem>Grades</MenuItem>
-                        </a>
-                        <a href="/schedule">
-                            <MenuItem>Schedule</MenuItem>
-                        </a>
-                        <a href="/admin">
-                            <MenuItem>Admin Dashboard</MenuItem>
-                        </a>
-                        <a href="/admin/accountverification">
-                            <MenuItem>Account Verifications</MenuItem>
-                        </a>
-                        <a href="/admin/logintrail">
-                            <MenuItem>Login Trail</MenuItem>
-                        </a>
-                    </Select>
-                </FormControl>
+                <NavbarTask />
                 <Stack direction={'row'} spacing={3}>
                     <IconButton>
                         <Box>
