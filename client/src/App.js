@@ -11,7 +11,7 @@ import Teachers from './pages/Admin/TeacherPage';
 import Subjects from './pages/Admin/SubjectPage';
 import AccountVerifications from './pages/AccountVerifications';
 import LoginTrail from './pages/LoginTrail';
-import RegisterSample from './pages/RegisterSample';
+import Signup from './pages/Signup';
 import { AuthContext } from './context/auth';
 
 export default function App() {
@@ -27,7 +27,7 @@ export default function App() {
           {/* <Box variant='h2'>Waly user</Box> */}
           <Route path="/" element={user?<Home />:<Login/>} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/register" element={<RegisterSample />} />
+          <Route path="/register" element={<Signup />} />
           <Route
             path="/admin/accountverification"
             element={<AccountVerifications />}
