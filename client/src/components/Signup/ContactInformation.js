@@ -18,59 +18,62 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
 
-export default function ContactInformation() {
+export default function ContactInformation({personal,setPersonal,handleChange}) {
     const [value, setValue] = React.useState(null)
+    React.useEffect(() => {
+        console.log(personal)
+    }, [personal])
     return (
         <>
             <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="password"
+                name="email"
                 label="Email"
-                type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChange}
             />
             <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="password"
+                name="contactNumber"
                 label="Contact Number"
-                type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChange}
             />
             <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="password"
+                name="guardianName"
                 label="Guardian Name"
-                type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChange}
             />
             <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="password"
+                name="guardianAddress"
                 label="Guardian Address"
-                type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChange}
             />
             <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="password"
+                name="guardianContactNumber"
                 label="Guardian Contact Number"
-                type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChange}
             />
         </>
     )

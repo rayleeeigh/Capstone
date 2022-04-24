@@ -8,16 +8,53 @@ import Typography from '@mui/material/Typography'
 import PersonalInformation from './PersonalInformation'
 import FamilyInformation from './FamilyInformation'
 import ContactInformation from './ContactInformation'
+import { db, storage } from '../../firebase'
+import { addDoc, doc, setDoc, Timestamp, collection } from 'firebase/firestore'
+import {
+    ref,
+    getDownloadURL,
+    uploadBytesResumable,
+    uploadBytes,
+} from 'firebase/storage'
+import FormInformation from './FormInformation'
 
 const steps = [
     'Personal Information',
     'Family Information',
     'Contact Information',
+    'Form Information',
 ]
 
 export default function StepperSignup() {
     const [activeStep, setActiveStep] = React.useState(0)
     const [skipped, setSkipped] = React.useState(new Set())
+    const [personalData, setPersonalData] = React.useState([])
+    const [personal, setPersonal] = React.useState({})
+    const [image, setImage] = React.useState('')
+    const [progresspercent, setProgresspercent] = React.useState(0)
+    const handleChange = (event) => {
+        setPersonal({ ...personal, [event.target.name]: event.target.value })
+    }
+
+    const uploadToFirebase = async () => {
+        //1.
+        if (image) {
+            //2.
+            const storageRef = ref(storage, image.name)
+            //3.
+            // const imageRef = storageRef.child(image.name)
+            //4.
+            uploadBytes(storageRef, image).then((snapshot) => {
+                console.log('Uploaded a blob or file!')
+            })
+        } else {
+            alert('Please upload an image first.')
+        }
+    }
+
+    const addData = (data) => {
+        setPersonalData([...personalData, data])
+    }
 
     const isStepOptional = (step) => {
         return step === 1
@@ -27,30 +64,78 @@ export default function StepperSignup() {
         return skipped.has(step)
     }
 
-    const handleNext = () => {
+    const handleNext = async () => {
         renderForms()
         let newSkipped = skipped
         if (isStepSkipped(activeStep)) {
             newSkipped = new Set(newSkipped.values())
             newSkipped.delete(activeStep)
         }
+        if (activeStep === steps.length - 1) {
+            uploadToFirebase()
+                .then(() => {
+                    console.log('haha')
+                })
+                .catch((err) => {
+                    console.error(err)
+                })
 
+            const result = await addDoc(collection(db, 'users'), {
+                ...personal,
+                createdAt: Timestamp.fromDate(new Date()),
+                isAuthenticated: false,
+                userType: 2,
+            })
+
+            console.log(result)
+        }
         setActiveStep((prevActiveStep) => prevActiveStep + 1)
         setSkipped(newSkipped)
     }
 
     const renderForms = () => {
-        if (activeStep == 0) {
-            return <PersonalInformation />
-        } else if (activeStep == 1) {
-            return <FamilyInformation />
-        } else if (activeStep == 2) {
-            return <ContactInformation />
+        if (activeStep === 0) {
+            return (
+                <PersonalInformation
+                    personalData={personalData}
+                    setPersonalData={setPersonalData}
+                    activeStep={activeStep}
+                    personal={personal}
+                    setPersonal={setPersonal}
+                    handleChange={handleChange}
+                />
+            )
+        } else if (activeStep === 1) {
+            return (
+                <FamilyInformation
+                    personal={personal}
+                    setPersonal={setPersonal}
+                    handleChange={handleChange}
+                />
+            )
+        } else if (activeStep === 2) {
+            return (
+                <ContactInformation
+                    personal={personal}
+                    setPersonal={setPersonal}
+                    handleChange={handleChange}
+                />
+            )
+        } else if (activeStep === 3) {
+            return (
+                <FormInformation
+                    personal={personal}
+                    setPersonal={setPersonal}
+                    handleChange={handleChange}
+                    setImage={setImage}
+                />
+            )
         }
     }
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1)
+        console.log(activeStep)
     }
 
     const handleSkip = () => {
@@ -119,7 +204,7 @@ export default function StepperSignup() {
                                 Skip
                             </Button>
                         )}
-                        <Button onClick={handleNext}>
+                        <Button onClick={handleNext} type="submit">
                             {activeStep === steps.length - 1
                                 ? 'Finish'
                                 : 'Next'}

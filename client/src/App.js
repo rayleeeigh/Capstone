@@ -14,6 +14,7 @@ import LoginTrail from './pages/LoginTrail'
 import Register from './pages/Register'
 import { AuthContext } from './context/auth'
 import SignUp from './pages/Signup'
+import Sample from './pages/SampleUpload'
 
 export default function App() {
     const { user } = useContext(AuthContext)
@@ -43,6 +44,7 @@ export default function App() {
                 <Route path="/admin/students" element={<Students />} />
                 <Route path="/admin/teachers" element={<Teachers />} />
                 <Route path="/admin/subjects" element={<Subjects />} />
+                <Route path="/sampleUpload" element={<Sample />} />
             </Routes>
         </BrowserRouter>
     )

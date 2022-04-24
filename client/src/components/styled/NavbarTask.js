@@ -8,12 +8,7 @@ const StudentData = ['Grades', 'Schedule']
 
 const TeacherData = ['Grades', 'Schedule', 'Submissions', 'Enrollment']
 
-const AdminData = [
-    'Dashboard',
-    'Announcement',
-    'Log Trail',
-    'Account Verification',
-]
+const AdminData = ['Dashboard', 'LoginTrail', 'AccountVerification']
 
 function NavbarTask() {
     const { user } = useContext(AuthContext)
@@ -37,7 +32,7 @@ function NavbarTask() {
                     <InputLabel>Admin Task</InputLabel>
                     <Select>
                         {AdminData.map((stud) => (
-                            <a href={`${stud}`} key={stud}>
+                            <a href={`/admin/${stud}`} key={stud}>
                                 <MenuItem>{stud}</MenuItem>
                             </a>
                         ))}
@@ -49,7 +44,7 @@ function NavbarTask() {
                     <InputLabel>Teacher Task</InputLabel>
                     <Select>
                         {TeacherData.map((stud) => (
-                            <a href={`${stud}`} key={stud}>
+                            <a href={`/${stud}`} key={stud}>
                                 <MenuItem>{stud}</MenuItem>
                             </a>
                         ))}
@@ -61,7 +56,7 @@ function NavbarTask() {
                     <InputLabel>Student Task</InputLabel>
                     <Select>
                         {StudentData.map((stud) => (
-                            <a href={`${stud}`} key={stud}>
+                            <a href={`/${stud}`} key={stud}>
                                 <MenuItem>{stud}</MenuItem>
                             </a>
                         ))}

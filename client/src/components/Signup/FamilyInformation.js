@@ -17,8 +17,16 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
 
-export default function FamilyInformation() {
+export default function FamilyInformation({
+    personal,
+    setPersonal,
+    handleChange,
+}) {
     const [value, setValue] = React.useState(null)
+    React.useEffect(() => {
+        console.log(personal)
+    }, [personal])
+
     return (
         <>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -27,18 +35,20 @@ export default function FamilyInformation() {
                     required
                     id="email"
                     label="Mother First Name"
-                    name="email"
+                    name="motherFirstname"
                     autoComplete="email"
                     autoFocus
+                    onChange={handleChange}
                 />
                 <PTextField
                     margin="normal"
                     required
-                    name="password"
+                    name="motherLastname"
                     label="Mother Last Name"
-                    type="password"
+                    type="text"
                     id="password"
                     autoComplete="current-password"
+                    onChange={handleChange}
                 />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -47,38 +57,41 @@ export default function FamilyInformation() {
                     required
                     id="email"
                     label="Occupation"
-                    name="email"
+                    name="motherOccupation"
                     autoComplete="email"
                     autoFocus
+                    onChange={handleChange}
                 />
                 <PTextField
                     margin="normal"
                     required
-                    name="password"
+                    name="motherContactnumber"
                     label="Contact Number"
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    onChange={handleChange}
                 />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <PTextField
                     margin="normal"
                     required
-                    id="email"
+                    id="fatherFirstname"
                     label="Father First Name"
                     name="email"
                     autoComplete="email"
                     autoFocus
+                    onChange={handleChange}
                 />
                 <PTextField
                     margin="normal"
                     required
-                    name="password"
+                    name="fatherLastname"
                     label="Father Last Name"
-                    type="password"
                     id="password"
                     autoComplete="current-password"
+                    onChange={handleChange}
                 />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -87,18 +100,19 @@ export default function FamilyInformation() {
                     required
                     id="email"
                     label="Occupation"
-                    name="email"
+                    name="fatherOccupation"
                     autoComplete="email"
                     autoFocus
+                    onChange={handleChange}
                 />
                 <PTextField
                     margin="normal"
                     required
-                    name="password"
+                    name="fatherContactnumber"
                     label="Contact Number"
-                    type="password"
                     id="password"
                     autoComplete="current-password"
+                    onChange={handleChange}
                 />
             </Box>
         </>
