@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import SchoolLogo from "../../assets/buyongLogo.png";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import MenuAvatar from "./MenuAvatar";
 import {
   Badge,
   Box,
@@ -61,7 +62,7 @@ const Navbar = () => {
               </Badge>
             </Box>
           </IconButton>
-          <Avatar />
+          <MenuAvatar />
         </Stack>
       </Menus>
     </Nav>

@@ -7,13 +7,13 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
-import AdminDashboardCard from '../AdminDashboard/AdminDashboardCard';
-import AdminContentCards from '../AdminDashboard/AdminContentCards';
+import AdminDashboardCard from '../adminDashboard/AdminDashboardCard';
+import AdminContentCards from '../adminDashboard/AdminContentCards';
 import {
   ContentBox,
   FlexibleBox,
   MainGrid,
-} from '../AdminDashboard/AdminDashboard.styled';
+} from '../adminDashboard/AdminDashboard.styled';
 import styled from 'styled-components';
 import GridViewIcon from '@mui/icons-material/GridView';
 import ViewListIcon from '@mui/icons-material/ViewList';

@@ -3,23 +3,25 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 import { CircularProgress } from "@mui/material";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    onAuthStateChanged(auth,(user) => {
+      setCurrentUser(user);
       setLoading(false);
+      console.log(user);
     });
   }, []);
+
   if (loading) {
     return <CircularProgress />;
   }
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={ currentUser }>{children}</AuthContext.Provider>
   );
 };
 

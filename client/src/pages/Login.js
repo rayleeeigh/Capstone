@@ -1,38 +1,30 @@
-import * as React from "react";
-import { Link } from "react-router-dom/";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { PrimaryButton, Cover } from "../components/Login/Login.style";
 import { CssBaseline, TextField, FormControlLabel, Checkbox, Paper, Box, Grid, Typography, Fab } from "@mui/material";
 import Links from "@mui/material/Link";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {"Copyright © "}
-      <Links color='inherit' href='https://mui.com/'>
-        E-Skwela
-      </Links>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { signInWithEmailAndPassword } from "firebase/auth";
+import AuthContext from "../context/AuthProvider"
+import { auth } from "../firebase"
 
 export default function Login() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+
+  const [email, setEmail]=useState("");
+  const [password, setPassword]=useState("");
+  const user = useContext(AuthContext);
+  let navigate = useNavigate();
+
+  const signin = async() => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password).then(()=>{
+        navigate("/Home");
+      })
+    } catch (error) {
+      alert(`${error.code}: ${error.message}`)
+    }
+  }
 
   return (
     <Grid container component='main' sx={{ height: "100vh" }}>
@@ -56,38 +48,28 @@ export default function Login() {
             Buyong High School Portal
           </Typography>
           <Box
-            component='form'
-            noValidate
-            onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
             <TextField
               margin='normal'
               required
               fullWidth
-              id='email'
-              label='Student ID'
-              name='email'
-              autoComplete='email'
               autoFocus
+              label="Email"
+              onChange={e=>setEmail(e.target.value)}
             />
             <TextField
               margin='normal'
               required
               fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
-              autoComplete='current-password'
+              label="Password"
+              onChange={e=>setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value='remember' color='primary' />}
               label='Remember me'
             />
-            <Link to={"/Home"}>
-              <PrimaryButton variant='contained'>Sign in</PrimaryButton>
-            </Link>
+              <PrimaryButton variant='contained' onClick={signin}>Sign in</PrimaryButton>
 
             <Grid container>
               <Grid item xs>
@@ -96,12 +78,11 @@ export default function Login() {
                 </Links>
               </Grid>
               <Grid item>
-                <Links href='#' variant='body2'>
+                <Links href='/signup' variant='body2'>
                   {"Don't have an account? Sign Up"}
                 </Links>
               </Grid>
             </Grid>
-            <Copyright sx={{ mt: 5 }} />
           </Box>
         </Box>
         <Box

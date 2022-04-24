@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import AccountCards from '../components/AccountVerification/AccountCards';
-import AdminContentCards from '../components/AdminDashboard/AdminContentCards';
+import AdminContentCards from '../components/adminDashboard/AdminContentCards';
 import Navbar from '../components/styled/Navbar';
 import {
   ColumnFlexBox,
