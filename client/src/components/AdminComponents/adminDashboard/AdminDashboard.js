@@ -1,15 +1,8 @@
 import {
   Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
   Container,
   Grid,
   IconButton,
-  Paper,
   Stack,
   Typography,
 } from '@mui/material';
@@ -17,14 +10,56 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AdminDashboardCard from './AdminDashboardCard';
 import AdminContentCards from './AdminContentCards';
 import { ContentBox, FlexibleBox, MainGrid } from './AdminDashboard.styled';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ModalContent from './Modal';
+import { db } from '../../../firebase';
+import {
+  collection,
+  getDocs,
+} from 'firebase/firestore';
+import { AuthContext } from '../../../context/auth';
 
 function AdminDashboard() {
+  const [open, setOpen] = useState(false);
+  const [sections, setSections] = useState([]);
+  const { user } = useContext(AuthContext);
+  const aRef = collection(db, "admin",user.uid,"sections");
+
+  // useEffect(() => {
+  //   onSnapshot(q, (querySnapshot) => {
+  //     let sections = [];
+  //     querySnapshot.forEach((doc) => {
+  //       sections.push(doc.data());
+  //     });
+  //     setSections(sections);
+  //   });
+  // }, [])
+  useEffect(() => {
+    // onSnapshot(q, (querySnapshot) => {
+    //   let announcements = [];
+    //   querySnapshot.forEach((doc) => {
+    //     announcements.push(doc.data());
+    //   });
+    //   console.log(announcements);
+    //   setAnnouncements(announcements);
+    // });
+    getSections();
+  }, [])
+
+
+  const getSections = async () => {
+    const data = await getDocs(aRef);
+    console.log("haha");
+    console.log(data.docs);
+    setSections(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
+
+
   return (
     <Container sx={{ padding: 5 }}>
       <Grid container spacing={5}>
@@ -35,19 +70,19 @@ function AdminDashboard() {
           <Grid container justifyContent={'center'} spacing={4}>
             <Grid item>
               <AdminDashboardCard
-                CardHeader={'Students'}
+                CardHeader={'students'}
                 CardContents={'200 students'}
               />
             </Grid>
             <Grid item>
               <AdminDashboardCard
-                CardHeader={'Teachers'}
+                CardHeader={'teachers'}
                 CardContents={'20 teachers'}
               />
             </Grid>
             <Grid item>
               <AdminDashboardCard
-                CardHeader={'Subjects'}
+                CardHeader={'subjects'}
                 CardContents={'8 subjects'}
               />
             </Grid>
@@ -60,9 +95,24 @@ function AdminDashboard() {
                 <FlexibleBox>
                   <Typography variant="h5">Year Levels</Typography>
                   <Box>
-                    <IconButton>
+                    <IconButton
+                      onClick={() => {
+                        setOpen(true);
+                      }}>
                       <AddCircleOutlineIcon />
                     </IconButton>
+                    <ModalContent
+                      open={open}
+                      handleClose={() => {
+                        setOpen(false);
+                      }}
+                      content={
+                        <Box>
+                          <Typography>Hatdog</Typography>
+                        </Box>
+                      }
+                      title="Add a section"
+                    />
                     <IconButton>
                       <DeleteIcon />
                     </IconButton>
@@ -88,12 +138,13 @@ function AdminDashboard() {
                     </AccordionSummary>
                     <AccordionDetails>
                       <Grid container spacing={5} justifyContent="center">
-                        <Grid item>
-                          <AdminContentCards Cardcontent={'Rayl ni oh'} />
-                        </Grid>
-                        <Grid item>
-                          <AdminContentCards Cardcontent={'Cloya ni oh'} />
-                        </Grid>
+                        {sections.map((section) => (
+                          <Grid item key={section}>
+                            <AdminContentCards
+                              Cardcontent={section.sectionLevel +' '+section.sectionName}
+                            />
+                          </Grid>
+                        ))}
                       </Grid>
                     </AccordionDetails>
                   </Accordion>

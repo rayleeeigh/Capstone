@@ -6,9 +6,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
-import AdminDashboardCard from '../adminDashboard/AdminDashboardCard';
-import AdminContentCards from '../adminDashboard/AdminContentCards';
+import React, { useState, useEffect } from 'react';
 import {
   ContentBox,
   FlexibleBox,
@@ -19,13 +17,37 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
-import StudentCardDashboard from './StudentCardDashboard';
-import StudentListDashboard from './StudentListDashboard';
-import { Link } from 'react-router-dom';
+//   import StudentCardDashboard from './StudentCardDashboard';
+//   import StudentListDashboard from './StudentListDashboard';
+import SubjectCardDashboard from './SubjectCardDashboard';
 
-function StudentDashboard() {
+import { Link } from 'react-router-dom';
+import { db } from '../../../firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import ModalContent from './Modal';
+
+function SubjectDashboard() {
   const [dataView, setDataView] = useState(false);
   const [open, setOpen] = useState(false);
+  const [subjects, setSubjects] = useState([]);
+  const aRef = collection(db, 'subjects');
+
+  const getAll = async () => {
+    const data = await getDocs(aRef);
+    console.log(data.docs);
+    setSubjects(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
+  useEffect(() => {
+    // onSnapshot(q, (querySnapshot) => {
+    //   let students = [];
+    //   querySnapshot.forEach((doc) => {
+    //     students.push(doc.data());
+    //   });
+    //   console.log(students);
+    //   setStudents(students);
+    // });
+    getAll();
+  }, []);
 
   return (
     <Container sx={{ padding: 5 }}>
@@ -49,7 +71,7 @@ function StudentDashboard() {
                 <FlexibleBox>
                   <Box>
                     <Typography variant="h5" fontWeight={'bold'}>
-                      STUDENTS
+                      Subjects
                     </Typography>
                   </Box>
                   <Box>
@@ -65,19 +87,43 @@ function StudentDashboard() {
                       }}>
                       <ViewListIcon />
                     </IconButton>
-                    <IconButton>
+                    <IconButton
+                      onClick={() => {
+                        setOpen(true);
+                      }}>
                       <AddCircleOutlineIcon />
                     </IconButton>
+                    <ModalContent
+                      open={open}
+                      handleClose={() => {
+                        setOpen(false);
+                      }}
+                      getAll={getAll}
+                      content={
+                        <Box>
+                          <Typography>Hatdog</Typography>
+                        </Box>
+                      }
+                      title="Add a section"
+                    />
                     <IconButton>
                       <DeleteIcon />
                     </IconButton>
                   </Box>
                 </FlexibleBox>
-                {dataView == false ? (
-                  <StudentCardDashboard />
+                {dataView === false ? (
+                  <SubjectCardDashboard subjects={subjects} getAll={getAll} />
                 ) : (
-                  <StudentListDashboard />
+                  // <StudentListDashboard />
+                  <></>
                 )}
+                {/* <Grid container spacing={3}>
+                    {students.map((stud) => (
+                      <Grid item key={stud}>
+                        <AdminContentCards Cardcontent={stud.firstname + ' '+ stud.id} />
+                      </Grid>
+                    ))}
+                  </Grid> */}
               </Stack>
             </ContentBox>
           </MainGrid>
@@ -91,4 +137,4 @@ export const FlexBox = styled.div`
   display: flex;
 `;
 
-export default StudentDashboard;
+export default SubjectDashboard;

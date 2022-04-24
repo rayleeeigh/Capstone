@@ -16,11 +16,10 @@ export default function Home() {
       <Navbar />
       <Box
         sx={{
-          height: "100vh",
-          width: "100%",
-          backgroundColor: "ghostwhite",
-        }}
-      >
+          height: '100vh',
+          width: '100%',
+          backgroundColor: 'ghostwhite',
+        }}>
         <Announcements />
       </Box>
     </>

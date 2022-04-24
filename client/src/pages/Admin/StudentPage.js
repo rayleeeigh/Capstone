@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import React from 'react';
-import StudentDashboard from '../components/StudentDashboard/StudentDashboard';
-import Navbar from '../components/styled/Navbar';
+import StudentDashboard from '../../components/AdminComponents/StudentDashboard/StudentDashboard';
+import Navbar from '../../components/styled/Navbar';
 
 function AdminStudents() {
   return (

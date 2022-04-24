@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import AuthProvider from './context/auth';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AuthProvider from './context/AuthProvider';
 
@@ -11,7 +12,7 @@ const theme = createTheme();
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>
     </AuthProvider>
