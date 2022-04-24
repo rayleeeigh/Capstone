@@ -13,6 +13,7 @@ import AccountVerifications from './pages/AccountVerifications'
 import LoginTrail from './pages/LoginTrail'
 import Register from './pages/Register'
 import { AuthContext } from './context/auth'
+import SignUp from './pages/Signup'
 
 export default function App() {
     const { user } = useContext(AuthContext)
@@ -24,7 +25,7 @@ export default function App() {
                 {/* <Box variant='h2'>Waly user</Box> */}
                 <Route path="/" element={user ? <Home /> : <Login />} />
                 <Route path="/admin" element={<Admin />} />
-                <Route path="/register" element={<Register />} />
+                <Route path="/register" element={<SignUp />} />
                 <Route
                     path="/admin/accountverification"
                     element={<AccountVerifications />}
