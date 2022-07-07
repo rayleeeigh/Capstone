@@ -1,13 +1,13 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Layout from "../layouts/layout";
 
 export default function Announcement() {
-  const [announcements, setAnnouncements] = useState([]);
+  const [announcements, setAnnouncements] = useState([{id:1},{id:1},{id:1}]);
   useEffect(() => {
-    axios.get('http://localhost:4000').then(function (response) {
-      setAnnouncements(response.data)
+    axios.get('api/get').then(function (response) {
+      console.log(response.data)
     })
   }, [])
 
@@ -17,11 +17,6 @@ export default function Announcement() {
   <Layout>
       <Flex mt='4vh' w='80vw' h='80vh' bg='white' boxShadow='lg' alignItems='center' flexDirection='column'>
         <Heading py='4vh'>Announcements</Heading>
-          {announcements.map((res)=>(
-            <Flex my='2vh' w='64vw' bg='gray.100' h='12vh'>
-              {res.id}
-            </Flex>
-          ))}
       </Flex>
   </Layout>
 }
