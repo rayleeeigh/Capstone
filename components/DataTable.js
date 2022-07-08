@@ -1,7 +1,7 @@
 import { Table, TableCaption, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 
 
-export default function DataTable(){
+export default function DataTable({subjects, grades}){
     return(
         <Table variant='simple' my='4vh'>
             <TableCaption>Rayl's Grades</TableCaption>
@@ -16,30 +16,14 @@ export default function DataTable(){
             </Tr>
             </Thead>
             <Tbody>
-            <Tr>
-                <Td>English</Td>
-                <Td>80</Td>
-                <Td>80</Td>
-                <Td>80</Td>
-                <Td>80</Td>
-                <Td>80</Td>
-            </Tr>
-            <Tr>
-                <Td>Math</Td>
-                <Td>80</Td>
-                <Td>80</Td>
-                <Td>80</Td>
-                <Td>80</Td>
-                <Td>80</Td>
-            </Tr>
-            <Tr>
-                <Td>Filipino</Td>
-                <Td>80</Td>
-                <Td>80</Td>
-                <Td>80</Td>
-                <Td>80</Td>
-                <Td>80</Td>
-            </Tr>
+            {subjects.map(subject=>(
+                <Tr key={subject.subject_id}>
+                    <Td>{subject.name}</Td>
+                    {grades.map((grade)=>(
+                        <Td key={grade.grade_id}>{grade.value}</Td>
+                    ))}
+                </Tr>
+            ))}
             </Tbody>
         </Table>
     )
