@@ -1,4 +1,4 @@
-import { getGrades } from "../../../../lib/grades";
+import { getGrades } from '../../../../lib/grades';
 
 export default async function handler(req, res) {
   const { subject_id } = req.query;

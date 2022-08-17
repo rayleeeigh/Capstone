@@ -1,4 +1,4 @@
-import { getSubjects } from "../../../lib/subjects";
+import { getSubjects } from '../../../lib/subjects';
 
 export default async function handler(req, res) {
   const subjects = await getSubjects();
