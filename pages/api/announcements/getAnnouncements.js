@@ -1,4 +1,4 @@
-import { getAnnouncements } from "../../../lib/announcements";
+import { getAnnouncements } from '../../../lib/announcements';
 
 export default async function handler(req, res) {
   const announcements = await getAnnouncements();
