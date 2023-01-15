@@ -2,6 +2,7 @@ import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Layout from '../layouts/layout';
+import React from 'react';
 
 export default function Announcement() {
   return (

@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { MdAccountCircle, MdCircleNotifications } from 'react-icons/md';
 import Link from 'next/link';
+import React from 'react';
 
 export default function Navbar() {
   return (

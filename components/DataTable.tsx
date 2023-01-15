@@ -7,6 +7,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import React from 'react';
 
 export default function DataTable({ subjects, grades }) {
   return (

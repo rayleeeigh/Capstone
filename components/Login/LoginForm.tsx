@@ -16,9 +16,10 @@ function LoginForm() {
       <Text mb="4vh">Login to your account</Text>
       <Input w="24vw" mb="4vh" placeholder="Student ID" />
       <Input w="24vw" mb="4vh" placeholder="Password" />
-      <a href="/api/auth/login">
+      <Link href="/api/auth/login">
         <Button w="24vw">Login</Button>
-      </a>
+      </Link>
+
       <Button
         onClick={toggleColorMode}
         color="white"

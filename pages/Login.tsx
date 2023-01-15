@@ -1,5 +1,6 @@
 import { Button, Flex, Image, Text, Input } from '@chakra-ui/react';
 import Link from 'next/link';
+import React from 'react';
 import LoginForm from '../components/Login/LoginForm';
 
 export default function Login() {

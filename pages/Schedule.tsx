@@ -1,4 +1,5 @@
 import { Flex, Heading } from '@chakra-ui/react';
+import React from 'react';
 import Layout from '../layouts/layout';
 
 export default function Schedule() {
