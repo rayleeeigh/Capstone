@@ -1,8 +1,9 @@
-import { Avatar, Flex, Heading, Text } from '@chakra-ui/react';
+import { Avatar, Button, Flex, Heading, Text } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Layout from '../layouts/layout';
 import React from 'react';
+import AnnouncementCard from '../components/Announcements/AnnouncementCard';
 
 export default function Announcement() {
   const [announcements, setAnnouncements] = useState([]);
@@ -11,6 +12,17 @@ export default function Announcement() {
       setAnnouncements(response.data);
     });
   }, []);
+
+  const addAnnouncement = async () => {
+    axios
+      .post('api/announcements/postAnnouncements')
+      .then(() => {
+        console.log('success');
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   return (
     <Layout>
@@ -24,6 +36,7 @@ export default function Announcement() {
         flexDirection="column"
       >
         <Heading py="4vh">Announcements</Heading>
+        <Button onClick={addAnnouncement}>Add Announcement</Button>
         <Flex flexDirection="column" w="70vw" h="54vh" overflowY="auto">
           {announcements.map((res: any) => (
             <Flex
@@ -35,11 +48,7 @@ export default function Announcement() {
               h="12vh"
               flexDirection="column"
             >
-              <Flex alignItems="center">
-                <Avatar size="sm" mr="1vw" />
-                <Text fontWeight="bold">{res.title}</Text>
-              </Flex>
-              <Text>{res.content}</Text>
+              <AnnouncementCard announcement={res} />
             </Flex>
           ))}
         </Flex>
