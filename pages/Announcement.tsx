@@ -4,18 +4,27 @@ import { useEffect, useState } from 'react';
 import Layout from '../layouts/layout';
 import React from 'react';
 import AnnouncementCard from '../components/Announcements/AnnouncementCard';
-
+interface Test {
+  test: string;
+}
 export default function Announcement() {
   const [announcements, setAnnouncements] = useState([]);
+  const request = {
+    params: {
+      foo: [5, 2, 11],
+    },
+  };
   useEffect(() => {
-    axios.get('api/announcements/getAnnouncements').then(function (response) {
-      setAnnouncements(response.data);
-    });
+    axios
+      .get('api/announcements/getAnnouncements', { params: { hello: 'test' } })
+      .then((response) => {
+        setAnnouncements(response.data);
+      });
   }, []);
 
   const addAnnouncement = async () => {
     axios
-      .post('api/announcements/postAnnouncements')
+      .post('api/announcements/postAnnouncements', { test: 'heelllo' })
       .then(() => {
         console.log('success');
       })
