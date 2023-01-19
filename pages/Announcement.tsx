@@ -1,16 +1,22 @@
 import { Avatar, Button, Flex, Heading, Text } from '@chakra-ui/react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Layout from '../layouts/layout';
 import React from 'react';
 import AnnouncementCard from '../components/Announcements/AnnouncementCard';
+import { AuthContext } from '../AuthContext/AuthContext';
+import parseCookies from '../lib/auth'
 
-export default function Announcement() {
+export default function Announcement({cookies}) {
   const [announcements, setAnnouncements] = useState([]);
+  const authContext = useContext(AuthContext);
+  const { setUser } = authContext;
+
   useEffect(() => {
     axios.get('api/announcements/getAnnouncements').then(function (response) {
       setAnnouncements(response.data);
     });
+    setUser(JSON.parse(cookies.user))
   }, []);
 
   const addAnnouncement = async () => {
@@ -55,4 +61,21 @@ export default function Announcement() {
       </Flex>
     </Layout>
   );
+}
+
+export async function getServerSideProps({ req }) {
+  const cookies = await parseCookies(req);
+
+  if (Object.keys(cookies).length === 0) {
+    return {
+      redirect: {
+        destination: '/Login',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {cookies}
+  }
 }

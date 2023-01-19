@@ -11,9 +11,22 @@ import {
 } from '@chakra-ui/react';
 import { MdAccountCircle, MdCircleNotifications } from 'react-icons/md';
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../AuthContext/AuthContext';
+import { useCookies } from 'react-cookie';
+import Router from 'next/router'
 
 export default function Navbar() {
+  const authContext = useContext(AuthContext);
+  const { user, setUser } = authContext;
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
+
+  const logout =()=>{
+    removeCookie('user')
+    setUser({})
+    Router.push('/Login')
+  }
+
   return (
     <Flex
       px="12"
@@ -50,7 +63,7 @@ export default function Navbar() {
             _hover={{ background: 'white' }}
             _active={{ background: 'white' }}
           >
-            Student Tasks
+            {user.type === 1? 'Student': 'Teacher'}'s Tasks
           </MenuButton>
           <MenuList>
             <Link href="/Grades">
@@ -62,6 +75,9 @@ export default function Navbar() {
           </MenuList>
         </Menu>
         <Flex ml="1vw">
+          <MdCircleNotifications size="32" />
+        </Flex>
+        <Flex ml="1vw">
           <Menu>
             <MenuButton
               as={Button}
@@ -70,17 +86,15 @@ export default function Navbar() {
               _hover={{ background: 'white' }}
               _active={{ background: 'white' }}
             >
-              <MdCircleNotifications size="32" />
+              <MdAccountCircle size="32" />
             </MenuButton>
             <MenuList>
+              <Text ml="12px">Hello {`${user.first_name} ${user.last_name}`}</Text>
               <Link href="/Login">
-                <MenuItem>Logout</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
               </Link>
             </MenuList>
           </Menu>
-        </Flex>
-        <Flex mx="1vw">
-          <MdAccountCircle size="32" />
         </Flex>
       </Flex>
     </Flex>

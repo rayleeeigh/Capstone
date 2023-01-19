@@ -1,8 +1,7 @@
-import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { Flex, Image } from '@chakra-ui/react';
 import Layout from '../layouts/layout';
 import React from 'react';
+import parseCookies from '../lib/auth';
 
 export default function Announcement() {
   return (
@@ -55,4 +54,21 @@ export default function Announcement() {
       </Flex>
     </Layout>
   );
+}
+
+export async function getServerSideProps({ req }) {
+  const cookies = await parseCookies(req);
+
+  if (Object.keys(cookies).length === 0) {
+    return {
+      redirect: {
+        destination: '/Login',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {cookies}
+  }
 }

@@ -1,16 +1,20 @@
-import { UserProvider } from '@auth0/nextjs-auth0';
 import { ChakraProvider } from '@chakra-ui/react';
 import { AppProps } from 'next/app';
-import React from 'react';
+import React, { useState } from 'react';
+import { AuthContext } from '../AuthContext/AuthContext';
+import { AccountInterface } from '../interfaces/AccountInterface';
+import { CookiesProvider } from "react-cookie"
+import parseCookies from '../lib/auth'
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
+  const [user, setUser] = useState<AccountInterface>({} as AccountInterface)
   return (
-    <UserProvider>
-      <ChakraProvider>
-        <Component {...pageProps} />
-      </ChakraProvider>
-    </UserProvider>
+    <ChakraProvider>
+      <CookiesProvider>
+        <AuthContext.Provider value={{user, setUser}}>
+          <Component {...pageProps} />
+        </AuthContext.Provider>
+      </CookiesProvider>
+    </ChakraProvider>
   );
 }
-
-export default MyApp;
