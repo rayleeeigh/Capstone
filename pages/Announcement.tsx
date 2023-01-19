@@ -21,7 +21,7 @@ export default function Announcement({cookies}) {
 
   const addAnnouncement = async () => {
     axios
-      .post('api/announcements/postAnnouncements')
+      .post('api/announcements/postAnnouncements', { test: 'heelllo' })
       .then(() => {
         console.log('success');
       })
