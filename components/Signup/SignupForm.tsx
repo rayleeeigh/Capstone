@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Text, Button, Input, Flex, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
+import { Text, Button, Input, Flex, Tabs, TabList, Tab, TabPanels, TabPanel, Select } from '@chakra-ui/react';
 import axios from 'axios';
 import { AuthContext } from '../../AuthContext/AuthContext';
 import { useCookies } from "react-cookie"
@@ -12,6 +12,7 @@ export default function SignupForm() {
 	const [firstname, setFirstname] = useState("");
 	const [lastname, setLastname] = useState("");
 	const [birthdate, setBirthdate] = useState("");
+	const [type, setType] = useState("1");
   const [error, setError] = useState("")
   const authContext = useContext(AuthContext)
   const { setUser } = authContext;
@@ -20,7 +21,7 @@ export default function SignupForm() {
   const login = () => {
 		let salt = bcrypt.genSaltSync(10);
 		let hash = bcrypt.hashSync(password, salt);
-    axios.post('api/auth/signup', {username: username , password: hash, firstname: firstname, lastname: lastname, birthdate: birthdate, created_by: new Date(), updated_at: new Date()}).then((res) => {
+    axios.post('api/auth/signup', {username: username , password: hash, firstname: firstname, lastname: lastname, birthdate: birthdate, type: type, created_by: new Date(), updated_at: new Date()}).then((res) => {
       Router.push('/Login')
     });
   }
@@ -41,7 +42,7 @@ export default function SignupForm() {
 				<TabList>
 					<Tab>Account Credentials</Tab>
 					<Tab>Basic Information</Tab>
-					{/* <Tab>Contact Information</Tab> */}
+					<Tab>Other Information</Tab>
 				</TabList>
 
 				<TabPanels>
@@ -54,10 +55,12 @@ export default function SignupForm() {
 						<Input w="24vw" mb="2vh" placeholder="Last Name" onChange={(e)=>setLastname(e.target.value)}/>
 						<Input type="date" w="24vw" mb="2vh" onChange={(e)=>setBirthdate(e.target.value)}/>
 					</TabPanel>
-					{/* <TabPanel textAlign="center">
-						<Input w="24vw" mb="2vh" placeholder="Student ID" onChange={(e)=>setUsername(e.target.value)}/>
-						<Input type="password" w="24vw" mb="2vh" placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
-					</TabPanel> */}
+					<TabPanel textAlign="center">
+						<Select w="24vw" mb="2vh" onChange={(e)=>setType(e.target.value)}>
+							<option value="1">Student</option>
+							<option value="2">Teacher</option>
+						</Select>
+					</TabPanel>
 				</TabPanels>
 			</Tabs>
       <Button onClick={login} w="24vw">Signup</Button>
