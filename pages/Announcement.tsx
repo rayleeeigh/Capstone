@@ -1,4 +1,4 @@
-import { Avatar, Button, Flex, Heading, Text } from '@chakra-ui/react';
+import { Avatar, Button, Flex, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import Layout from '../layouts/layout';
@@ -6,11 +6,13 @@ import React from 'react';
 import AnnouncementCard from '../components/Announcements/AnnouncementCard';
 import { AuthContext } from '../AuthContext/AuthContext';
 import parseCookies from '../lib/auth'
+import AnnouncementAddModal from '../components/Announcements/AnnouncementAddModal';
 
 export default function Announcement({cookies}) {
   const [announcements, setAnnouncements] = useState([]);
   const authContext = useContext(AuthContext);
-  const { setUser } = authContext;
+  const { setUser,user } = authContext;
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   useEffect(() => {
     axios.get('api/announcements/getAnnouncements').then(function (response) {
@@ -19,16 +21,7 @@ export default function Announcement({cookies}) {
     setUser(JSON.parse(cookies.user))
   }, []);
 
-  const addAnnouncement = async () => {
-    axios
-      .post('api/announcements/postAnnouncements', { test: 'heelllo' })
-      .then(() => {
-        console.log('success');
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
+
 
   return (
     <Layout>
@@ -42,7 +35,7 @@ export default function Announcement({cookies}) {
         flexDirection="column"
       >
         <Heading py="4vh">Announcements</Heading>
-        <Button onClick={addAnnouncement}>Add Announcement</Button>
+        <AnnouncementAddModal/>
         <Flex flexDirection="column" w="70vw" h="54vh" overflowY="auto">
           {announcements.map((res: any) => (
             <Flex

@@ -5,6 +5,7 @@ import Router from 'next/router'
 import { AccountInterface } from '../../interfaces/AccountInterface';
 import { AuthContext } from '../../AuthContext/AuthContext';
 import { useCookies } from "react-cookie"
+import Link from 'next/link';
 
 function LoginForm() {
   const [username, setUsername] = useState(""); 
@@ -45,6 +46,10 @@ function LoginForm() {
       <Input w="24vw" mb="4vh" placeholder="Student ID" onChange={(e)=>setUsername(e.target.value)}/>
       <Input type="password" w="24vw" mb="4vh" placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
       <Button onClick={login} w="24vw">Login</Button>
+      <Link href="/Signup">
+       <Button>Register here</Button>
+      </Link>
+     
     </Flex>
   );
 }
