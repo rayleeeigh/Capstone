@@ -3,18 +3,22 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import Layout from '../layouts/layout';
 import React from 'react';
-import AnnouncementCard from '../components/Announcements/AnnouncementCard';
 import { AuthContext } from '../AuthContext/AuthContext';
 import parseCookies from '../lib/auth'
+import SubjectInterface from '../interfaces/SubjectInterface'
 
-export default function Announcement({cookies}) {
-  const [announcements, setAnnouncements] = useState([]);
+export default function Subjects({cookies}) {
+  const [subjects, setSubjects] = useState<SubjectInterface[]>([]);
   const authContext = useContext(AuthContext);
   const { setUser } = authContext;
 
   useEffect(() => {
-    axios.get('api/announcements/getAnnouncements').then(function (response) {
-      setAnnouncements(response.data);
+    axios.get('api/subjects/getSubjects',{
+        params: {
+          year: 7
+        }
+      }).then(function (response) {
+      setSubjects(response.data);
     });
     setUser(JSON.parse(cookies.user))
   }, []);
@@ -41,21 +45,10 @@ export default function Announcement({cookies}) {
         alignItems="center"
         flexDirection="column"
       >
-        <Heading py="4vh">Announcements</Heading>
-        <Button onClick={addAnnouncement}>Add Announcement</Button>
+        <Heading py="4vh">Subjects</Heading>
         <Flex flexDirection="column" w="70vw" h="54vh" overflowY="auto">
-          {announcements.map((res: any) => (
-            <Flex
-              key={res.announcement_id}
-              p="4"
-              my="2vh"
-              w="68vw"
-              bg="gray.100"
-              h="12vh"
-              flexDirection="column"
-            >
-              <AnnouncementCard announcement={res} />
-            </Flex>
+          {subjects.map((subject) => (
+            <Text>{subject.name}</Text>
           ))}
         </Flex>
       </Flex>

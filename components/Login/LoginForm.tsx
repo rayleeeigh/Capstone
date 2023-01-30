@@ -26,7 +26,7 @@ function LoginForm() {
           maxAge: 3600,
           sameSite: false,
         })
-        Router.push('/Announcement')
+        Router.push('/Announcements')
       }
     });
   }

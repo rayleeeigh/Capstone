@@ -11,14 +11,15 @@ import {
 } from '@chakra-ui/react';
 import { MdAccountCircle, MdCircleNotifications } from 'react-icons/md';
 import Link from 'next/link';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../AuthContext/AuthContext';
 import { useCookies } from 'react-cookie';
 import Router from 'next/router'
+import axios from 'axios';
 
 export default function Navbar() {
   const authContext = useContext(AuthContext);
-  const { user, setUser } = authContext;
+  const { user, setUser, userInfo, setUserInfo } = authContext;
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
   const logout =()=>{
@@ -26,6 +27,18 @@ export default function Navbar() {
     setUser({})
     Router.push('/Login')
   }
+
+  useEffect(() => { 
+    axios.get('api/auth/getCurrentUser',{
+      params: {
+        accountID: cookies.user.account_id,
+        type: cookies.user.type
+      }
+    }).then(function (res) {
+    setUserInfo(res.data[0])
+  });
+  }, [])
+  
 
   return (
     <Flex
@@ -50,7 +63,7 @@ export default function Navbar() {
       <Spacer />
       <Flex alignItems="center">
         <Text mx="1vw">
-          <Link href="/Announcement">Home</Link>
+          <Link href="/Announcements">Home</Link>
         </Text>
         <Text mx="1vw">
           <Link href="/About">About Us</Link>
@@ -89,7 +102,7 @@ export default function Navbar() {
               <MdAccountCircle size="32" />
             </MenuButton>
             <MenuList>
-              <Text ml="12px">Hello {`${user.first_name} ${user.last_name}`}</Text>
+              <Text ml="12px">Hello {`${userInfo.first_name} ${userInfo.last_name}`}</Text>
               <Link href="/Login">
                 <MenuItem onClick={logout}>Logout</MenuItem>
               </Link>

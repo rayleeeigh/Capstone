@@ -32,7 +32,7 @@ export async function getServerSideProps({ req }) {
   if (Object.keys(cookies).length > 0) {
     return {
       redirect: {
-        destination: '/Announcement',
+        destination: '/Announcements',
         permanent: false,
       },
     }

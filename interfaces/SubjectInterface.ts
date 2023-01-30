@@ -1,4 +1,4 @@
-export interface SubjectInterface {
+export default interface SubjectInterface {
     subject_id: number;
     name:string;
     year:number;
