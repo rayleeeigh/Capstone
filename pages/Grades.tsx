@@ -33,8 +33,7 @@ export default function Grades() {
         flexDirection="column"
       >
         <>
-          <Heading py="4vh">Grades</Heading>
-          {console.log(grades)}
+          <Heading py="4vh">Grades</Heading
           <DataTable subjects={subjects} grades={grades} />
         </>
       </Flex>

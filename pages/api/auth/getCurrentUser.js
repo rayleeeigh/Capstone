@@ -11,7 +11,5 @@ export default async function handler(req, res) {
     user = await getCurrentTeacherUser(accountID);
   }
 
-  console.log(user)
-
   return res.status(200).json(user);
 }

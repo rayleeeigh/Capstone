@@ -48,7 +48,7 @@ export default function Subjects({cookies}) {
         <Heading py="4vh">Subjects</Heading>
         <Flex flexDirection="column" w="70vw" h="54vh" overflowY="auto">
           {subjects.map((subject) => (
-            <Text>{subject.name}</Text>
+            <Text key={subject.subject_id}>{subject.name}</Text>
           ))}
         </Flex>
       </Flex>
