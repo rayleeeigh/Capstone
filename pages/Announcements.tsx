@@ -7,14 +7,14 @@ import AnnouncementCard from '../components/Announcements/AnnouncementCard';
 import { AuthContext } from '../AuthContext/AuthContext';
 import parseCookies from '../lib/auth'
 
-export default function Announcement({cookies}) {
+export default function Announcement({cookies, userInfo}) {
   const [announcements, setAnnouncements] = useState([]);
   const authContext = useContext(AuthContext);
-  const { setUser } = authContext;
+  const { setUser, setUserInfo } = authContext;
 
   useEffect(() => {
-    axios.get('api/announcements/getAnnouncements').then(function (response) {
-      setAnnouncements(response.data);
+    axios.get('api/announcements/getAnnouncements').then(res => {
+      setAnnouncements(res.data);
     });
     setUser(JSON.parse(cookies.user))
   }, []);

@@ -3,9 +3,6 @@ export interface AccountInterface {
     school_id:string;
     username:string;
     password:string;
-    first_name:string;
-    last_name:string;
-    birthdate:string;
     type: number;
     status: string;
     created_by: string;
