@@ -28,15 +28,15 @@ export default function Navbar() {
     Router.push('/Login')
   }
 
-  useEffect(() => { 
+  useEffect(() => {
     axios.get('api/auth/getCurrentUser',{
       params: {
         accountID: cookies.user.account_id,
         type: cookies.user.type
       }
     }).then(function (res) {
-    setUserInfo(res.data[0])
-  });
+      setUserInfo(res.data[0])
+    });
   }, [])
   
 

@@ -1,4 +1,4 @@
-import { Avatar, Button, Flex, Heading, Text } from '@chakra-ui/react';
+import { Avatar, Button, Flex, Heading, Text, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import Layout from '../layouts/layout';
@@ -10,7 +10,8 @@ import parseCookies from '../lib/auth'
 export default function Announcement({cookies, userInfo}) {
   const [announcements, setAnnouncements] = useState([]);
   const authContext = useContext(AuthContext);
-  const { setUser, setUserInfo } = authContext;
+  const { user, setUser } = authContext;
+  const toast = useToast();
 
   useEffect(() => {
     axios.get('api/announcements/getAnnouncements').then(res => {
@@ -23,7 +24,13 @@ export default function Announcement({cookies, userInfo}) {
     axios
       .post('api/announcements/postAnnouncements', { test: 'heelllo' })
       .then(() => {
-        console.log('success');
+        toast({
+          title: 'Success',
+          description: "Announcement Successfully created.",
+          status: 'success',
+          duration: 5000,
+          position: 'top'
+        })
       })
       .catch((err) => {
         console.error(err);
@@ -42,7 +49,7 @@ export default function Announcement({cookies, userInfo}) {
         flexDirection="column"
       >
         <Heading py="4vh">Announcements</Heading>
-        <Button onClick={addAnnouncement}>Add Announcement</Button>
+        {user.type === 1? <></> : <Button onClick={addAnnouncement}>Add Announcement</Button>}
         <Flex flexDirection="column" w="70vw" h="54vh" overflowY="auto">
           {announcements.map((res: any) => (
             <Flex
