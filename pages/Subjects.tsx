@@ -1,4 +1,4 @@
-import { Avatar, Button, Flex, Heading, Text } from '@chakra-ui/react';
+import { Avatar, Button, Flex, Heading, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import Layout from '../layouts/layout';
@@ -23,7 +23,7 @@ export default function Subjects({cookies}) {
     setUser(JSON.parse(cookies.user))
   }, []);
 
-  const addAnnouncement = async () => {
+  const addSubject = async () => {
     axios
       .post('api/announcements/postAnnouncements', { test: 'heelllo' })
       .then(() => {
@@ -44,13 +44,33 @@ export default function Subjects({cookies}) {
         boxShadow="lg"
         alignItems="center"
         flexDirection="column"
+        px="8vw"
       >
         <Heading py="4vh">Subjects</Heading>
-        <Flex flexDirection="column" w="70vw" h="54vh" overflowY="auto">
-          {subjects.map((subject) => (
-            <Text key={subject.subject_id}>{subject.name}</Text>
-          ))}
-        </Flex>
+        <Table variant='striped' colorScheme='gray'>
+          <Thead>
+            <Tr>
+              <Th>Subject Name</Th>
+              <Th>Subject Teacher</Th>
+              <Th>Subject Year</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {subjects.map((subject) => (
+              <Tr>
+                <Td>
+                  <Text>{subject.name}</Text>
+                </Td>
+                <Td>
+                  <Text>Ms. Cañares</Text>
+                </Td>
+                <Td>
+                  <Text>{subject.year}</Text>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
       </Flex>
     </Layout>
   );

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Text, Button, Input, Flex, Tabs, TabList, Tab, TabPanels, TabPanel, Select } from '@chakra-ui/react';
+import { Text, Button, Input, Flex, Tabs, TabList, Tab, TabPanels, TabPanel, Select, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { AuthContext } from '../../AuthContext/AuthContext';
 import bcrypt from 'bcryptjs'
@@ -17,11 +17,19 @@ export default function SignupForm() {
 	const [position, setPosition] = useState("")
   const [error, setError] = useState("")
   const authContext = useContext(AuthContext)
+  const toast = useToast();
 
   const login = () => {
 		let salt = bcrypt.genSaltSync(10);
 		let hash = bcrypt.hashSync(password, salt);
 		axios.post('api/auth/signup', {username: username , password: hash, firstname: firstname, lastname: lastname, birthdate: birthdate, type: type, created_by: new Date(), updated_at: new Date(), gender: gender, contactNumber: contactNumber, position: position}).then((res) => {
+			toast({
+				title: 'Success',
+				description: "Account Successfully created.",
+				status: 'success',
+				duration: 5000,
+				position: 'top'
+			})
 			Router.push('/Login')
 		});
   }

@@ -8,6 +8,7 @@ import {
   MenuList,
   MenuItem,
   Button,
+  useToast,
 } from '@chakra-ui/react';
 import { MdAccountCircle, MdCircleNotifications } from 'react-icons/md';
 import Link from 'next/link';
@@ -21,10 +22,18 @@ export default function Navbar() {
   const authContext = useContext(AuthContext);
   const { user, setUser, userInfo, setUserInfo } = authContext;
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
+  const toast = useToast()
 
   const logout =()=>{
     removeCookie('user')
     setUser({})
+    toast({
+      title: 'Success',
+      description: "Account Successfully logged out.",
+      status: 'success',
+      duration: 5000,
+      position: 'top'
+    })
     Router.push('/Login')
   }
 
@@ -81,6 +90,9 @@ export default function Navbar() {
           <MenuList>
             <Link href="/Grades">
               <MenuItem>Grades</MenuItem>
+            </Link>
+            <Link href="/Subjects">
+              <MenuItem>Subjects</MenuItem>
             </Link>
             <Link href="/Schedule">
               <MenuItem>Schedule</MenuItem>

@@ -32,10 +32,8 @@ export default function Grades() {
         alignItems="center"
         flexDirection="column"
       >
-        <>
-          <Heading py="4vh">Grades</Heading
-          <DataTable subjects={subjects} grades={grades} />
-        </>
+        <Heading py="4vh">Grades</Heading>
+        <DataTable subjects={subjects} grades={grades} />
       </Flex>
     </Layout>
   );
