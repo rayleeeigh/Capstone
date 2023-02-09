@@ -11,6 +11,7 @@ export default function SignupForm() {
 	const [firstname, setFirstname] = useState("");
 	const [lastname, setLastname] = useState("");
 	const [birthdate, setBirthdate] = useState("");
+	const [yearLevel, setYearLevel] = useState("")
 	const [type, setType] = useState("1");
 	const [gender, setGender] = useState("0");
 	const [contactNumber, setContactNumber] = useState("")
@@ -22,7 +23,7 @@ export default function SignupForm() {
   const login = () => {
 		let salt = bcrypt.genSaltSync(10);
 		let hash = bcrypt.hashSync(password, salt);
-		axios.post('api/auth/signup', {username: username , password: hash, firstname: firstname, lastname: lastname, birthdate: birthdate, type: type, created_by: new Date(), updated_at: new Date(), gender: gender, contactNumber: contactNumber, position: position}).then((res) => {
+		axios.post('api/auth/signup', {username: username , password: hash, firstname: firstname, lastname: lastname, birthdate: birthdate, yearLevel: yearLevel, type: type, created_by: new Date(), updated_at: new Date(), gender: gender, contactNumber: contactNumber, position: position}).then((res) => {
 			toast({
 				title: 'Success',
 				description: "Account Successfully created.",
@@ -58,10 +59,16 @@ export default function SignupForm() {
 						<Input w="24vw" mb="2vh" placeholder="Student ID" onChange={(e)=>setUsername(e.target.value)}/>
 						<Input type="password" w="24vw" mb="2vh" placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
 					</TabPanel>
-					<TabPanel textAlign="center">
+					<TabPanel px="5vw" textAlign="center">
 						<Input w="24vw" mb="2vh" placeholder="First Name" onChange={(e)=>setFirstname(e.target.value)}/>
 						<Input w="24vw" mb="2vh" placeholder="Last Name" onChange={(e)=>setLastname(e.target.value)}/>
 						<Input type="date" w="24vw" mb="2vh" onChange={(e)=>setBirthdate(e.target.value)}/>
+						<Select w="24vw" display={type === "1"? '' : 'none'} mb="2vh" onChange={(e)=>setYearLevel(e.target.value)}>
+							<option value="7">Grade 7</option>
+							<option value="8">Grade 8</option>
+							<option value="9">Grade 9</option>
+							<option value="10">Grade 10</option>
+						</Select>
 					</TabPanel>
 					<TabPanel px="5vw" textAlign="center">
 						<Select mb="2vh" onChange={(e)=>setGender(e.target.value)}>

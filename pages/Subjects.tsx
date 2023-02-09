@@ -10,12 +10,12 @@ import SubjectInterface from '../interfaces/SubjectInterface'
 export default function Subjects({cookies}) {
   const [subjects, setSubjects] = useState<SubjectInterface[]>([]);
   const authContext = useContext(AuthContext);
-  const { setUser } = authContext;
+  const { setUser, userInfo } = authContext;
 
   useEffect(() => {
     axios.get('api/subjects/getSubjects',{
         params: {
-          year: 7
+          year: userInfo.year_level
         }
       }).then(function (response) {
       setSubjects(response.data);
