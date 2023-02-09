@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { Text, Button, Input, Flex, Tabs, TabList, Tab, TabPanels, TabPanel, Select } from '@chakra-ui/react';
+import { Text, Button, Input, Flex, Tabs, TabList, Tab, TabPanels, TabPanel, Select, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { AuthContext } from '../../AuthContext/AuthContext';
-import { useCookies } from "react-cookie"
 import bcrypt from 'bcryptjs'
 import Router from 'next/router'
 
@@ -13,17 +12,26 @@ export default function SignupForm() {
 	const [lastname, setLastname] = useState("");
 	const [birthdate, setBirthdate] = useState("");
 	const [type, setType] = useState("1");
+	const [gender, setGender] = useState("0");
+	const [contactNumber, setContactNumber] = useState("")
+	const [position, setPosition] = useState("")
   const [error, setError] = useState("")
   const authContext = useContext(AuthContext)
-  const { setUser } = authContext;
-  const [cookies, setCookie] = useCookies(['user']);
+  const toast = useToast();
 
   const login = () => {
 		let salt = bcrypt.genSaltSync(10);
 		let hash = bcrypt.hashSync(password, salt);
-    axios.post('api/auth/signup', {username: username , password: hash, firstname: firstname, lastname: lastname, birthdate: birthdate, type: type, created_by: new Date(), updated_at: new Date()}).then((res) => {
-      Router.push('/Login')
-    });
+		axios.post('api/auth/signup', {username: username , password: hash, firstname: firstname, lastname: lastname, birthdate: birthdate, type: type, created_by: new Date(), updated_at: new Date(), gender: gender, contactNumber: contactNumber, position: position}).then((res) => {
+			toast({
+				title: 'Success',
+				description: "Account Successfully created.",
+				status: 'success',
+				duration: 5000,
+				position: 'top'
+			})
+			Router.push('/Login')
+		});
   }
 
   return (
@@ -55,11 +63,17 @@ export default function SignupForm() {
 						<Input w="24vw" mb="2vh" placeholder="Last Name" onChange={(e)=>setLastname(e.target.value)}/>
 						<Input type="date" w="24vw" mb="2vh" onChange={(e)=>setBirthdate(e.target.value)}/>
 					</TabPanel>
-					<TabPanel textAlign="center">
-						<Select w="24vw" mb="2vh" onChange={(e)=>setType(e.target.value)}>
+					<TabPanel px="5vw" textAlign="center">
+						<Select mb="2vh" onChange={(e)=>setGender(e.target.value)}>
+							<option value="0">Male</option>
+							<option value="1">Female</option>
+						</Select>
+						<Select mb="2vh" onChange={(e)=>setType(e.target.value)}>
 							<option value="1">Student</option>
 							<option value="2">Teacher</option>
 						</Select>
+						<Input display={type === "2"? "block": "none"} w="24vw" mb="2vh" placeholder="Position" onChange={(e)=>setPosition(e.target.value)}/>
+						<Input w="24vw" mb="2vh" placeholder="Contact Number" onChange={(e)=>setContactNumber(e.target.value)}/>
 					</TabPanel>
 				</TabPanels>
 			</Tabs>
