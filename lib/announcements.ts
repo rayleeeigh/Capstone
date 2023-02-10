@@ -4,17 +4,27 @@ import executeQuery from '../modules/sql';
 import { PHTime } from '../utils/momentCustomFormat';
 
 export const getAnnouncements = async () => {
-  const query = 'SELECT * FROM announcements a INNER JOIN accounts acc ON acc.account_id = a.created_by';
+  const query =
+    'SELECT * FROM announcements a INNER JOIN accounts acc ON acc.account_id = a.created_by';
   const results = await executeQuery({ query: query, values: [] });
   return results;
 };
 
-export const postAnnouncement = async (announcementData : AnnouncementInterface , user:AccountInterface) => {
+export const postAnnouncement = async (
+  announcementData: AnnouncementInterface,
+  user: AccountInterface
+) => {
   const query =
     'INSERT INTO announcements(title,content,type,created_by,created_at) VALUES(?,?,?,?,?)';
   const results = await executeQuery({
     query: query,
-    values: [announcementData.title, announcementData.content, announcementData.type, user.account_id , PHTime().format()],
+    values: [
+      announcementData.title,
+      announcementData.content,
+      announcementData.type,
+      user.account_id,
+      PHTime().format(),
+    ],
   });
 };
 

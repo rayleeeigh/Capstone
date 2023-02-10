@@ -14,20 +14,27 @@ import {
   FormLabel,
   Input,
   Select,
+  useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction, useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../AuthContext/AuthContext';
 import { announcementType } from '../../constants/announcementType';
 import { AnnouncementInterface } from '../../interfaces/AnnouncementInterface';
 
-export default function AnnouncementAddModal() {
+interface Props{
+  refreshList : boolean;
+  setRefreshList : Dispatch<SetStateAction<boolean>>;
+}
+
+export const AnnouncementAddModal:FC<Props> = ({refreshList,setRefreshList}) => {
   const [announcement, setAnnouncement] = useState<AnnouncementInterface>({
     type: announcementType.everyone,
   } as AnnouncementInterface);
   const [isError, setError] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useContext(AuthContext);
+  const toast = useToast();
 
   useEffect(() => {
     if(isOpen){
@@ -52,7 +59,14 @@ export default function AnnouncementAddModal() {
     axios
       .post('api/announcements/postAnnouncements', { announcement, user })
       .then(() => {
-        console.log('success');
+        setRefreshList(!refreshList)
+        toast({
+          title: 'Success',
+          description: 'Announcement Successfully created.',
+          status: 'success',
+          duration: 5000,
+          position: 'top',
+        });
         onClose();
       })
       .catch((err) => {

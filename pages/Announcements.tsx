@@ -1,43 +1,61 @@
-import { Avatar, Button, Flex, Heading, Text, useDisclosure ,useToast} from '@chakra-ui/react';
+import {
+  Avatar,
+  Button,
+  Flex,
+  Heading,
+  Text,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import Layout from '../layouts/layout';
 import React from 'react';
 import AnnouncementCard from '../components/Announcements/AnnouncementCard';
 import { AuthContext } from '../AuthContext/AuthContext';
-import parseCookies from '../lib/auth'
-import AnnouncementAddModal from '../components/Announcements/AnnouncementAddModal';
+import parseCookies from '../lib/auth';
+import { AnnouncementAddModal } from '../components/Announcements/AnnouncementAddModal';
 
-export default function Announcement({cookies, userInfo}) {
+export default function Announcement({ cookies, userInfo }) {
   const [announcements, setAnnouncements] = useState([]);
   const authContext = useContext(AuthContext);
-  const { setUser,user } = authContext;
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { setUser, user } = authContext;
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+  const [refreshList, setRefreshList] = useState<boolean>(false);
 
   useEffect(() => {
-    axios.get('api/announcements/getAnnouncements').then(res => {
+    setUser(JSON.parse(cookies.user));
+  }, [cookies.user, setUser])
+  
+
+  useEffect(() => {
+    axios.get('api/announcements/getAnnouncements').then((res) => {
       setAnnouncements(res.data);
     });
-    setUser(JSON.parse(cookies.user))
-  }, []);
-
+  }, [refreshList]);
 
   const addAnnouncement = async () => {
-    axios
-      .post('api/announcements/postAnnouncements', { test: 'heelllo' })
-      .then(() => {
-        toast({
-          title: 'Success',
-          description: "Announcement Successfully created.",
-          status: 'success',
-          duration: 5000,
-          position: 'top'
+    try {
+      axios
+        .post('api/announcements/postAnnouncements')
+        .then((data) => {
+          toast({
+            title: 'Success',
+            description: 'Announcement Successfully created.',
+            status: 'success',
+            duration: 5000,
+            position: 'top',
+          });
+          setRefreshList(!refreshList);
+          console.log(data);
         })
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+        .catch((err) => {
+          console.error(err);
+        });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -52,8 +70,12 @@ export default function Announcement({cookies, userInfo}) {
         flexDirection="column"
       >
         <Heading py="4vh">Announcements</Heading>
-        <AnnouncementAddModal/>
-        {user.type === 1? <></> : <Button onClick={addAnnouncement}>Add Announcement</Button>}
+        <AnnouncementAddModal refreshList={refreshList} setRefreshList={setRefreshList}/>
+        {user.type === 1 ? (
+          <></>
+        ) : (
+          <Button onClick={addAnnouncement}>Add Announcement</Button>
+        )}
         <Flex flexDirection="column" w="70vw" h="54vh" overflowY="auto">
           {announcements.map((res: any) => (
             <Flex
@@ -83,10 +105,10 @@ export async function getServerSideProps({ req }) {
         destination: '/Login',
         permanent: false,
       },
-    }
+    };
   }
 
   return {
-    props: {cookies}
-  }
+    props: { cookies },
+  };
 }
