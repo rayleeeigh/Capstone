@@ -1,4 +1,4 @@
-import { Avatar, Button, Flex, Heading, Text, useToast } from '@chakra-ui/react';
+import { Avatar, Button, Flex, Heading, Text, useDisclosure ,useToast} from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import Layout from '../layouts/layout';
@@ -6,11 +6,13 @@ import React from 'react';
 import AnnouncementCard from '../components/Announcements/AnnouncementCard';
 import { AuthContext } from '../AuthContext/AuthContext';
 import parseCookies from '../lib/auth'
+import AnnouncementAddModal from '../components/Announcements/AnnouncementAddModal';
 
 export default function Announcement({cookies, userInfo}) {
   const [announcements, setAnnouncements] = useState([]);
   const authContext = useContext(AuthContext);
-  const { user, setUser } = authContext;
+  const { setUser,user } = authContext;
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast();
 
   useEffect(() => {
@@ -19,6 +21,7 @@ export default function Announcement({cookies, userInfo}) {
     });
     setUser(JSON.parse(cookies.user))
   }, []);
+
 
   const addAnnouncement = async () => {
     axios
@@ -49,6 +52,7 @@ export default function Announcement({cookies, userInfo}) {
         flexDirection="column"
       >
         <Heading py="4vh">Announcements</Heading>
+        <AnnouncementAddModal/>
         {user.type === 1? <></> : <Button onClick={addAnnouncement}>Add Announcement</Button>}
         <Flex flexDirection="column" w="70vw" h="54vh" overflowY="auto">
           {announcements.map((res: any) => (
