@@ -1,26 +1,40 @@
-import { Avatar, Button, Flex, Heading, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
+import {
+  Avatar,
+  Button,
+  Flex,
+  Heading,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import Layout from '../layouts/layout';
 import React from 'react';
 import { AuthContext } from '../AuthContext/AuthContext';
-import parseCookies from '../lib/auth'
-import SubjectInterface from '../interfaces/SubjectInterface'
+import parseCookies from '../lib/auth';
+import SubjectInterface from '../interfaces/SubjectInterface';
 
-export default function Subjects({cookies}) {
+export default function Subjects({ cookies }) {
   const [subjects, setSubjects] = useState<SubjectInterface[]>([]);
   const authContext = useContext(AuthContext);
   const { setUser, userInfo } = authContext;
 
   useEffect(() => {
-    axios.get('api/subjects/getSubjects',{
+    axios
+      .get('api/subjects/getSubjects', {
         params: {
-          year: userInfo.year_level
-        }
-      }).then(function (response) {
-      setSubjects(response.data);
-    });
-    setUser(JSON.parse(cookies.user))
+          year: userInfo.year_level,
+        },
+      })
+      .then(function (response) {
+        setSubjects(response.data);
+      });
+    setUser(JSON.parse(cookies.user));
   }, []);
 
   const addSubject = async () => {
@@ -47,7 +61,7 @@ export default function Subjects({cookies}) {
         px="8vw"
       >
         <Heading py="4vh">Subjects</Heading>
-        <Table variant='striped' colorScheme='gray'>
+        <Table variant="striped" colorScheme="gray">
           <Thead>
             <Tr>
               <Th>Subject Name</Th>
@@ -57,7 +71,7 @@ export default function Subjects({cookies}) {
           </Thead>
           <Tbody>
             {subjects.map((subject) => (
-              <Tr>
+              <Tr key={subject.subject_id}>
                 <Td>
                   <Text>{subject.name}</Text>
                 </Td>
@@ -85,10 +99,10 @@ export async function getServerSideProps({ req }) {
         destination: '/Login',
         permanent: false,
       },
-    }
+    };
   }
 
   return {
-    props: {cookies}
-  }
+    props: { cookies },
+  };
 }

@@ -50,6 +50,15 @@ export default function Schedule() {
                 allDay: false,
               },
             ]}
+            slotMinTime = {{
+              hour:6
+            }}
+            slotMaxTime = {{
+              hour:18
+            }}
+            dayHeaderFormat={{
+              weekday:'long'
+            }}
           />
         </Box>
       </Flex>
