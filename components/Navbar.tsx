@@ -38,7 +38,8 @@ export default function Navbar() {
   }
 
   useEffect(() => {
-    axios.get('api/auth/getCurrentUser',{
+    if(cookies?.user.account_id){
+      axios.get('api/auth/getCurrentUser',{
       params: {
         accountID: cookies.user.account_id,
         type: cookies.user.type
@@ -46,7 +47,11 @@ export default function Navbar() {
     }).then(function (res) {
       setUserInfo(res.data[0])
     });
-  }, [])
+    } else{
+       Router.push('/Login')
+    }
+    
+  }, [cookies, setUserInfo])
   
 
   return (
@@ -85,7 +90,7 @@ export default function Navbar() {
             _hover={{ background: 'white' }}
             _active={{ background: 'white' }}
           >
-            {user.type === 1? 'Student': 'Teacher'}'s Tasks
+            {user.type === 1? `Student'`: `Teacher'`}s Tasks
           </MenuButton>
           <MenuList>
             <Link href="/Grades">
