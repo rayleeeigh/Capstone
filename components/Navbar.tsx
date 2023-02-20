@@ -38,7 +38,7 @@ export default function Navbar() {
   }
 
   useEffect(() => {
-    if(cookies?.user.account_id){
+    if(cookies?.user?.account_id){
       axios.get('api/auth/getCurrentUser',{
       params: {
         accountID: cookies.user.account_id,
