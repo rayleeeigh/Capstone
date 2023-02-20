@@ -1,7 +1,7 @@
 import { Flex, Image } from '@chakra-ui/react';
 import React from 'react';
 import SignupForm from '../components/Signup/SignupForm';
-import parseCookies from '../lib/auth'
+import parseCookies from '../lib/auth';
 
 export default function Signup() {
   return (
@@ -13,7 +13,7 @@ export default function Signup() {
         alignItems="center"
         justifyContent="center"
       >
-        <SignupForm/>
+        <SignupForm />
       </Flex>
       <Flex w="50vw" h="100vh" alignItems="center" justifyContent="center">
         <Image
@@ -25,7 +25,6 @@ export default function Signup() {
   );
 }
 
-
 export async function getServerSideProps({ req }) {
   const cookies = await parseCookies(req);
 
@@ -35,10 +34,10 @@ export async function getServerSideProps({ req }) {
         destination: '/Announcement',
         permanent: false,
       },
-    }
+    };
   }
 
   return {
-    props: {}
-  }
+    props: {},
+  };
 }

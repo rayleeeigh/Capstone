@@ -13,46 +13,47 @@ import {
 import { MdAccountCircle, MdCircleNotifications } from 'react-icons/md';
 import Link from 'next/link';
 import React, { useContext, useEffect } from 'react';
-import { AuthContext } from '../AuthContext/AuthContext';
+import { AuthContext } from '../../AuthContext/AuthContext';
 import { useCookies } from 'react-cookie';
-import Router from 'next/router'
+import Router from 'next/router';
 import axios from 'axios';
 
-export default function Navbar() {
+export default function AdminNavbar() {
   const authContext = useContext(AuthContext);
   const { user, setUser, userInfo, setUserInfo } = authContext;
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
-  const toast = useToast()
+  const toast = useToast();
 
-  const logout =()=>{
-    removeCookie('user')
-    setUser({})
+  const logout = () => {
+    removeCookie('user');
+    setUser({});
     toast({
       title: 'Success',
-      description: "Account Successfully logged out.",
+      description: 'Account Successfully logged out.',
       status: 'success',
       duration: 5000,
-      position: 'top'
-    })
-    Router.push('/Login')
-  }
+      position: 'top',
+    });
+    Router.push('/Login');
+  };
 
   useEffect(() => {
-    if(cookies?.user?.account_id){
-      axios.get('api/auth/getCurrentUser',{
-      params: {
-        accountID: cookies.user.account_id,
-        type: cookies.user.type
-      }
-    }).then(function (res) {
-      setUserInfo(res.data[0])
-    });
-    } else{
-       Router.push('/Login')
+    if (cookies?.user?.account_id) {
+      axios
+        .get(
+          `api/auth/getCurrentUser?accountID=${cookies.user.account_id}&type=${cookies.user.type}`
+        )
+        .then(function (res) {
+          setUserInfo(res.data[0]);
+          console.log(res.data[0], 'hi');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      Router.push('/Login');
     }
-    
-  }, [cookies, setUserInfo])
-  
+  }, [cookies, setUserInfo]);
 
   return (
     <Flex
@@ -90,17 +91,17 @@ export default function Navbar() {
             _hover={{ background: 'white' }}
             _active={{ background: 'white' }}
           >
-            {user.type === 1? `Student'`: `Teacher'`}s Tasks
+            Admin Task
           </MenuButton>
           <MenuList>
-            <Link href="/Grades">
-              <MenuItem>Grades</MenuItem>
+            <Link href="/admin/Dashboard">
+              <MenuItem>DASHBOARD</MenuItem>
             </Link>
-            <Link href="/Subjects">
-              <MenuItem>Subjects</MenuItem>
+            <Link href="/admin/Announcements">
+              <MenuItem>ANNOUNCEMENTS</MenuItem>
             </Link>
-            <Link href="/Schedule">
-              <MenuItem>Schedule</MenuItem>
+            <Link href="/admin/Accounts">
+              <MenuItem>ACCOUNTS</MenuItem>
             </Link>
           </MenuList>
         </Menu>
@@ -119,7 +120,9 @@ export default function Navbar() {
               <MdAccountCircle size="32" />
             </MenuButton>
             <MenuList>
-              <Text ml="12px">Hello {`${userInfo.first_name} ${userInfo.last_name}`}</Text>
+              <Text ml="12px" color="black">
+                Hello {`${userInfo.first_name} ${userInfo.last_name}`}
+              </Text>
               <Link href="/Login">
                 <MenuItem onClick={logout}>Logout</MenuItem>
               </Link>

@@ -41,23 +41,25 @@ export default function Schedule() {
                   .startOf('week')
                   .add(1, 'days')
                   .hour(6)
-                  .minutes(30).toISOString(),
+                  .minutes(30)
+                  .toISOString(),
                 end: moment()
                   .startOf('week')
                   .add(1, 'days')
                   .hour(9)
-                  .minutes(30).toISOString(),
+                  .minutes(30)
+                  .toISOString(),
                 allDay: false,
               },
             ]}
-            slotMinTime = {{
-              hour:6
+            slotMinTime={{
+              hour: 6,
             }}
-            slotMaxTime = {{
-              hour:18
+            slotMaxTime={{
+              hour: 18,
             }}
             dayHeaderFormat={{
-              weekday:'long'
+              weekday: 'long',
             }}
           />
         </Box>
