@@ -1,4 +1,4 @@
-import { Flex, Heading } from '@chakra-ui/react';
+import { Flex, Heading, Select } from '@chakra-ui/react';
 import axios from 'axios';
 import React from 'react';
 import { useEffect, useState } from 'react';
@@ -33,6 +33,15 @@ export default function Grades() {
         flexDirection="column"
       >
         <Heading py="4vh">Grades</Heading>
+        <Flex flexDirection="column">
+          <Select placeholder="Select Grade Level">
+            <option>Grade 7</option>
+            <option>Grade 8</option>
+            <option>Grade 9</option>
+            <option>Grade 10</option>
+          </Select>
+        </Flex>
+
         <DataTable subjects={subjects} grades={grades} />
       </Flex>
     </Layout>
