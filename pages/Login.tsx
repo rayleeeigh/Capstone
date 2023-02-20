@@ -1,7 +1,7 @@
 import { Flex, Image } from '@chakra-ui/react';
 import React from 'react';
 import LoginForm from '../components/Login/LoginForm';
-import parseCookies from '../lib/auth'
+import parseCookies from '../lib/auth';
 
 export default function Login() {
   return (
@@ -25,7 +25,6 @@ export default function Login() {
   );
 }
 
-
 export async function getServerSideProps({ req }) {
   const cookies = await parseCookies(req);
 
@@ -35,10 +34,10 @@ export async function getServerSideProps({ req }) {
         destination: '/Announcements',
         permanent: false,
       },
-    }
+    };
   }
 
   return {
-    props: {}
-  }
+    props: {},
+  };
 }

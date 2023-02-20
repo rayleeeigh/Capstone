@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.9.2",
-    "@chakra-ui/react": "^2.2.1",
+    "@chakra-ui/react": "2.5.1",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@fullcalendar/common": "^5.11.4",
