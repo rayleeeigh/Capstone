@@ -6,6 +6,12 @@ export const getGrades = async(subject_id) => {
     return results;
 }
 
+export const getGradesOfStudent = async(student_id) => {
+  const query = 'SELECT * FROM grades WHERE student_id = ?';
+  const results = await executeQuery({query: query, values:[student_id]})
+  return results;
+}
+
 export const postAnnouncement = async () => {
     const query =
       'INSERT INTO grades(value,created_at,created_by) VALUES(?,?,?)';
