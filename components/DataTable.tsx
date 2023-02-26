@@ -27,7 +27,6 @@ export default function DataTable({ grades }) {
         },
       })
       .then(function (response) {
-        console.log(response.data)
         setSubjects(response.data)
       });
   }, [userInfo]);
@@ -58,10 +57,10 @@ export default function DataTable({ grades }) {
             (<Td>{(subjects.find(subject => subject.subject_id === grade.subject_id).name)}</Td>)
             :
             (<Td>haha</Td>)}
-              <Td>{grade.firstGrading}</Td>
-              <Td>{grade.secondGrading}</Td>
-              <Td>{grade.thirdGrading}</Td>
-              <Td>{grade.fourthGrading}</Td>
+              <Td color={grade.firstGrading < 75? "red":""}>{grade.firstGrading}</Td>
+              <Td color={grade.secondGrading < 75? "red":""}>{grade.secondGrading}</Td>
+              <Td color={grade.thirdGrading < 75? "red":""}>{grade.thirdGrading}</Td>
+              <Td color={grade.fourthGrading < 75? "red":""}>{grade.fourthGrading}</Td>
               <Td>{computeAverage(grade.firstGrading+grade.secondGrading+grade.thirdGrading+grade.fourthGrading)}</Td>
           </Tr>
         ))}
