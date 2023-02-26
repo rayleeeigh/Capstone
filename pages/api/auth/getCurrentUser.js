@@ -9,8 +9,6 @@ export default async function handler(req, res) {
   const { accountID, type } = req.query;
   var user;
 
-  console.log(accountID, type);
-
   if (type === '1') {
     user = await getCurrentStudentUser(accountID);
   } else if (type === '2') {

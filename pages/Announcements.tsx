@@ -47,7 +47,6 @@ export default function Announcement({ cookies, userInfo }) {
             position: 'top',
           });
           setRefreshList(!refreshList);
-          console.log(data);
         })
         .catch((err) => {
           console.error(err);

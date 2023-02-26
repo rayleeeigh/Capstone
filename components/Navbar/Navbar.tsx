@@ -45,7 +45,6 @@ export default function Navbar() {
         )
         .then(function (res) {
           setUserInfo(res.data[0]);
-          console.log(res.data[0], 'hi');
         })
         .catch((err) => {
           console.log(err);
