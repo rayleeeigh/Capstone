@@ -26,8 +26,7 @@ export default function Announcement({ cookies, userInfo }) {
 
   useEffect(() => {
     setUser(JSON.parse(cookies.user));
-  }, [cookies.user, setUser])
-  
+  }, [cookies.user, setUser]);
 
   useEffect(() => {
     axios.get('api/announcements/getAnnouncements').then((res) => {
@@ -70,7 +69,10 @@ export default function Announcement({ cookies, userInfo }) {
         flexDirection="column"
       >
         <Heading py="4vh">Announcements</Heading>
-        <AnnouncementAddModal refreshList={refreshList} setRefreshList={setRefreshList}/>
+        <AnnouncementAddModal
+          refreshList={refreshList}
+          setRefreshList={setRefreshList}
+        />
         {user.type === 1 ? (
           <></>
         ) : (

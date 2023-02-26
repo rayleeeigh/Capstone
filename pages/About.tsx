@@ -65,10 +65,10 @@ export async function getServerSideProps({ req }) {
         destination: '/Login',
         permanent: false,
       },
-    }
+    };
   }
 
   return {
-    props: {cookies}
-  }
+    props: { cookies },
+  };
 }

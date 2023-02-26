@@ -35,7 +35,7 @@ export default function Subjects({ cookies }) {
         setSubjects(response.data);
       });
     setUser(JSON.parse(cookies.user));
-  }, []);
+  }, [cookies, setUser, userInfo.year_level]);
 
   const addSubject = async () => {
     axios
