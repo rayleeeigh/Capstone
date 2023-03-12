@@ -92,7 +92,9 @@ export default function Navbar() {
           >
             {user.type === 1 ? `Student'` : `Teacher'`}s Tasks
           </MenuButton>
-          <MenuList>
+          {user.type ===1 ?
+            (
+              <MenuList>
             <Link href="/Grades">
               <MenuItem>Grades</MenuItem>
             </Link>
@@ -103,6 +105,16 @@ export default function Navbar() {
               <MenuItem>Schedule</MenuItem>
             </Link>
           </MenuList>
+            )
+            :
+            (
+              <MenuList>
+                <Link href="/Students">
+                  <MenuItem>Students</MenuItem>
+                </Link>
+              </MenuList>
+            )
+          }
         </Menu>
         <Flex ml="1vw">
           <MdCircleNotifications size="32" />

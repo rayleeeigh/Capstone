@@ -7,6 +7,7 @@ export default interface StudentInterface {
     year_level: number;
     contact_no: string;
     status: number;
+    enrolled: number;
     created_by: string;
     created_at: string;
     updated_at:string;
