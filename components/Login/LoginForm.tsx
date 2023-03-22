@@ -11,7 +11,7 @@ import { userType } from '../../constants/userType';
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState(['']);
   const authContext = useContext(AuthContext);
   const { setUser } = authContext;
   const [cookies, setCookie] = useCookies(['user']);
@@ -48,14 +48,20 @@ function LoginForm() {
       flexDirection="column"
     >
       <Text mb="4vh">Login to your account</Text>
-      <Text mb="4vh" color="red">
-        {error}
-      </Text>
+        {error.map((data, index)=>{
+          return (
+            <Text color="red">
+              {data}
+            </Text>
+          );
+        })}
       <Input
         w="24vw"
-        mb="4vh"
-        placeholder="Student ID"
+        mb="2vh"
+        mt="4vh"
+        placeholder="School ID"
         onChange={(e) => setUsername(e.target.value)}
+        isRequired
       />
       <Input
         type="password"
@@ -63,6 +69,7 @@ function LoginForm() {
         mb="4vh"
         placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
+        isRequired
       />
       <Button onClick={login} w="24vw">
         Login
