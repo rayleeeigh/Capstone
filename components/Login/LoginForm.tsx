@@ -50,7 +50,7 @@ function LoginForm() {
       <Text mb="4vh">Login to your account</Text>
         {error.map((data, index)=>{
           return (
-            <Text color="red">
+            <Text key={index} color="red">
               {data}
             </Text>
           );
