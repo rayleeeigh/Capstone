@@ -132,7 +132,7 @@ export default function Navbar() {
             </MenuButton>
             <MenuList>
               <Text ml="12px" color="black">
-                Hello {`${userInfo.first_name} ${userInfo.last_name}`}
+                Hello {`${userInfo?.first_name} ${userInfo?.last_name}`}
               </Text>
               <Link href="/Login">
                 <MenuItem onClick={logout}>Logout</MenuItem>

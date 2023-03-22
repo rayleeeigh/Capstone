@@ -9,14 +9,12 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../../AuthContext/AuthContext';
-import { AnnouncementAddModal } from '../../components/Announcements/AnnouncementAddModal';
-import AdminLayout from '../../layouts/adminLayout';
-import Layout from '../../layouts/layout';
-import parseCookies from '../../lib/auth';
-import DashboardScreen from '../../screens/Admin/Dashboard';
+import { AuthContext } from '../../../AuthContext/AuthContext';
+import AdminLayout from '../../../layouts/adminLayout';
+import parseCookies from '../../../lib/auth';
+import DashboardScreen from '../../../screens/Admin/Dashboard';
 
-export default function DashboardPage({ cookies, userInfo }) {
+export default function StudentsPage({ cookies, userInfo }) {
   const [announcements, setAnnouncements] = useState([]);
   const authContext = useContext(AuthContext);
   const { setUser, user } = authContext;
