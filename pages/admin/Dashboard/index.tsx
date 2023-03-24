@@ -10,9 +10,10 @@ import {
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../AuthContext/AuthContext';
+import AdminDashboardLayout from '../../../layouts/adminDashboardLayout';
 import AdminLayout from '../../../layouts/adminLayout';
 import parseCookies from '../../../lib/auth';
-import DashboardScreen from '../../../screens/Admin/Dashboard';
+import DashboardScreen from '../../../screens/Admin/Dashboard/Sections';
 
 export default function DashboardPage({ cookies, userInfo }) {
   const [announcements, setAnnouncements] = useState([]);
@@ -40,7 +41,9 @@ export default function DashboardPage({ cookies, userInfo }) {
         p="1rem"
       >
         <Heading py="4vh"> ADMIN DASHBOARD</Heading>
-        <DashboardScreen />
+        <AdminDashboardLayout>
+          <DashboardScreen />
+        </AdminDashboardLayout>
       </Flex>
     </AdminLayout>
   );

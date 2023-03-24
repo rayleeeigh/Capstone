@@ -14,7 +14,7 @@ import { AnnouncementAddModal } from '../../components/Announcements/Announcemen
 import AdminLayout from '../../layouts/adminLayout';
 import Layout from '../../layouts/layout';
 import parseCookies from '../../lib/auth';
-import AdminAccountPage from '../../screens/Admin/Accounts';
+import AdminAccountPage from '../../screens/Admin/Dashboard/Students';
 
 export default function AccountsPage({ cookies, userInfo }) {
   const [announcements, setAnnouncements] = useState([]);
@@ -40,7 +40,7 @@ export default function AccountsPage({ cookies, userInfo }) {
         flexDirection="column"
       >
         <Heading py="4vh"> ADMIN ACCOUNTS</Heading>
-        <AdminAccountPage/>
+        <AdminAccountPage />
       </Flex>
     </AdminLayout>
   );
