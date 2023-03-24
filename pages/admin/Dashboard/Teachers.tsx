@@ -10,9 +10,11 @@ import {
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../AuthContext/AuthContext';
+import AdminDashboardLayout from '../../../layouts/adminDashboardLayout';
 import AdminLayout from '../../../layouts/adminLayout';
 import parseCookies from '../../../lib/auth';
 import DashboardScreen from '../../../screens/Admin/Dashboard/Sections';
+import TeacherScreen from '../../../screens/Admin/Dashboard/Teachers';
 
 export default function TeachersPage({ cookies, userInfo }) {
   const [announcements, setAnnouncements] = useState([]);
@@ -39,8 +41,9 @@ export default function TeachersPage({ cookies, userInfo }) {
         overflowY="scroll"
         p="1rem"
       >
-        <Heading py="4vh"> ADMIN DASHBOARD</Heading>
-        <DashboardScreen />
+        <AdminDashboardLayout>
+          <TeacherScreen />
+        </AdminDashboardLayout>
       </Flex>
     </AdminLayout>
   );

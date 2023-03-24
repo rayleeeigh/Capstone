@@ -30,20 +30,15 @@ function DashboardScreen() {
 
   const handleFileChange = async (file) => {
     let { url } = await uploadToS3(file);
-    console.log(url);
     setImageUrl(url);
   };
 
   return (
-    <>
+    <Flex flexDir="column" w="60vw" alignItems="center">
       <FileInput onChange={handleFileChange} />
       <button onClick={openFileDialog}>Upload file</button>
 
       {imageUrl && <img src={imageUrl} />}
-      <Image
-        src=" https://eskwela-image-uploads.s3.ap-southeast-2.amazonaws.com/next-s3-uploads/f1b2e5ef-7777-4f00-9fe5-63ca8be035e4/dogs-exercise.jpg"
-        alt="s3-upload"
-      />
       <Flex
         borderWidth="1px"
         padding="1rem"
@@ -123,7 +118,7 @@ function DashboardScreen() {
           </AccordionItem>
         </Accordion>
       </Flex>
-    </>
+    </Flex>
   );
 }
 

@@ -21,14 +21,9 @@ import CardComponent from '../../../../components/Admin/CardComponent';
 import AddStudentsModal from './components/AddStudentModal';
 import StudentCard from './components/StudentCard';
 
-function DashboardScreen() {
+function StudentsScreen() {
   return (
     <Flex flexDir="column" w="60vw" alignItems="center">
-      <Flex>
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-      </Flex>
       <Flex
         borderWidth="1px"
         padding="1rem"
@@ -37,7 +32,7 @@ function DashboardScreen() {
         w="60vw"
       >
         <Flex>
-          <Heading size="md">YEAR LEVELS</Heading>
+          <Heading size="md">STUDENTS</Heading>
           <Spacer />
           <Flex gap="1rem">
             <AddStudentsModal />
@@ -112,4 +107,4 @@ function DashboardScreen() {
   );
 }
 
-export default DashboardScreen;
+export default StudentsScreen;

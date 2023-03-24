@@ -10,9 +10,11 @@ import {
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../AuthContext/AuthContext';
+import AdminDashboardLayout from '../../../layouts/adminDashboardLayout';
 import AdminLayout from '../../../layouts/adminLayout';
 import parseCookies from '../../../lib/auth';
 import DashboardScreen from '../../../screens/Admin/Dashboard/Sections';
+import SubjectsScreen from '../../../screens/Admin/Dashboard/Subjects';
 
 export default function SubjectsPage({ cookies, userInfo }) {
   const [announcements, setAnnouncements] = useState([]);
@@ -39,8 +41,9 @@ export default function SubjectsPage({ cookies, userInfo }) {
         overflowY="scroll"
         p="1rem"
       >
-        <Heading py="4vh"> ADMIN DASHBOARD</Heading>
-        <DashboardScreen />
+         <AdminDashboardLayout>
+          <SubjectsScreen />
+        </AdminDashboardLayout>
       </Flex>
     </AdminLayout>
   );

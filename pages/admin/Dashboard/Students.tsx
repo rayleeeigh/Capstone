@@ -14,6 +14,7 @@ import AdminDashboardLayout from '../../../layouts/adminDashboardLayout';
 import AdminLayout from '../../../layouts/adminLayout';
 import parseCookies from '../../../lib/auth';
 import DashboardScreen from '../../../screens/Admin/Dashboard/Sections';
+import StudentsScreen from '../../../screens/Admin/Dashboard/Students';
 
 export default function StudentsPage({ cookies, userInfo }) {
   const [announcements, setAnnouncements] = useState([]);
@@ -40,9 +41,8 @@ export default function StudentsPage({ cookies, userInfo }) {
         overflowY="scroll"
         p="1rem"
       >
-        <Heading py="4vh"> ADMIN DASHBOARD</Heading>
         <AdminDashboardLayout>
-          <DashboardScreen />
+          <StudentsScreen />
         </AdminDashboardLayout>
       </Flex>
     </AdminLayout>
