@@ -16,9 +16,9 @@ import {
   FormControl,
 } from '@chakra-ui/react';
 import React from 'react';
-import FormInput from '../../../../components/Input/FormInput';
+import FormInput from '../../../../../components/Input/FormInput';
 
-function AddSectionModal() {
+function AddStudentsModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -28,7 +28,7 @@ function AddSectionModal() {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add A Section</ModalHeader>
+          <ModalHeader>Add A Students</ModalHeader>
           <ModalBody>
             <Flex flexDirection="column" gap="1rem">
               <FormInput
@@ -64,4 +64,4 @@ function AddSectionModal() {
   );
 }
 
-export default AddSectionModal;
+export default AddStudentsModal;
