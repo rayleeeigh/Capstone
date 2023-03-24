@@ -40,7 +40,6 @@ export default function DashboardPage({ cookies, userInfo }) {
         overflowY="scroll"
         p="1rem"
       >
-        <Heading py="4vh"> ADMIN DASHBOARD</Heading>
         <AdminDashboardLayout>
           <DashboardScreen />
         </AdminDashboardLayout>

@@ -22,6 +22,7 @@
     "@fullcalendar/resource-timegrid": "^6.1.4",
     "@fullcalendar/timegrid": "^6.1.4",
     "array-shuffle": "^3.0.0",
+    "aws-sdk": "^2.1342.0",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "cookie": "^0.5.0",
