@@ -7,6 +7,12 @@ export const getSubjects = async (year) => {
   return results;
 };
 
+export const getAllSubjects = async () => {
+    const query = 'SELECT * FROM subjects';
+    const results = await executeQuery({ query: query, values: [] });
+    return results;
+  };
+
 export const postSubject = async (subject: SubjectInterface) => {
   const query = 'INSERT INTO subjects(name,year) VALUES(?,?)';
   const results = await executeQuery({

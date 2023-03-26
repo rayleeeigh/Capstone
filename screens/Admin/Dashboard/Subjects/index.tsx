@@ -18,12 +18,23 @@ import {
   Text,
 } from '@chakra-ui/layout';
 import { Grid, GridItem } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import CardComponent from '../../../../components/Admin/CardComponent';
+import SubjectInterface from '../../../../interfaces/SubjectInterface';
 import AddSubjectModal from './components/AddSubjectModal';
 import SubjectCard from './components/SubjectCard';
 
 function SubjectsScreen() {
+  const [refreshList, setRefreshList] = useState<boolean>(false);
+  const [subjects, setSubjects] = useState<SubjectInterface[]>([]);
+
+  useEffect(() => {
+    axios.get('/api/subjects').then((res) => {
+      setSubjects(res.data);
+    });
+  }, [refreshList]);
+
   return (
     <Flex flexDir="column" w="60vw" alignItems="center">
       <Flex
@@ -37,21 +48,17 @@ function SubjectsScreen() {
           <Flex>
             <Heading size="md">SUBJECTS</Heading>
             <Spacer />
-            <AddSubjectModal />
+            <AddSubjectModal
+              setRefreshList={setRefreshList}
+              refreshList={refreshList}
+            />
           </Flex>
 
           <SimpleGrid columns={3} spacing={10}>
-            <SubjectCard />
-            <SubjectCard />
-            <SubjectCard />
-            <SubjectCard />
-            <SubjectCard />
+            {subjects.map((data) => (
+              <SubjectCard key={data.subject_id} subject={data} />
+            ))}
           </SimpleGrid>
-          {/* <Flex gap="1rem">
-            
-            <SubjectCard />
-            <SubjectCard /> <SubjectCard /> <SubjectCard />
-          </Flex> */}
         </Flex>
       </Flex>
     </Flex>

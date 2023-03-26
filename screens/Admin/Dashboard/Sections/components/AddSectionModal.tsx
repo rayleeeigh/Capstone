@@ -18,11 +18,17 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import FormInput from '../../../../../components/Input/FormInput';
 
-function AddSectionModal() {
+function AddSectionModal({
+  setRefreshList,
+  refreshList,
+}: {
+  setRefreshList: Dispatch<SetStateAction<boolean>>;
+  refreshList: boolean;
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const {
@@ -46,12 +52,13 @@ function AddSectionModal() {
         .then(() => {
           toast({
             title: 'Success',
-            description: 'Announcement Successfully created.',
+            description: 'Section Successfully created.',
             status: 'success',
             duration: 5000,
             position: 'top',
           });
           onClose();
+          setRefreshList(!refreshList);
         })
         .catch((err) => {
           console.error(err);
