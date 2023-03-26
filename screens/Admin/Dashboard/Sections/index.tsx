@@ -12,14 +12,17 @@ import {
   Divider,
   Flex,
   Heading,
+  SimpleGrid,
   Spacer,
   Stack,
   Text,
 } from '@chakra-ui/layout';
 import { CardFooter, ButtonGroup, Button } from '@chakra-ui/react';
+import axios from 'axios';
 import { useS3Upload } from 'next-s3-upload';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CardComponent from '../../../../components/Admin/CardComponent';
+import { SectionInterface } from '../../../../interfaces/SectionInterface';
 import AddSectionModal from './components/AddSectionModal';
 import AddYearModal from './components/AddYearModal';
 import SectionCard from './components/SectionCard';
@@ -27,6 +30,14 @@ import SectionCard from './components/SectionCard';
 function DashboardScreen() {
   const [imageUrl, setImageUrl] = useState('');
   const { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
+  const [refreshList, setRefreshList] = useState<boolean>(false);
+  const [sections, setSections] = useState<SectionInterface[]>([]);
+
+  useEffect(() => {
+    axios.get('/api/sections').then((res) => {
+      setSections(res.data);
+    });
+  }, [refreshList]);
 
   const handleFileChange = async (file) => {
     let { url } = await uploadToS3(file);
@@ -50,7 +61,7 @@ function DashboardScreen() {
           <Heading size="md">YEAR LEVELS</Heading>
           <Spacer />
           <Flex gap="1rem">
-            <AddSectionModal />
+            <AddSectionModal setRefreshList={setRefreshList} refreshList = {refreshList} />
           </Flex>
         </Flex>
         <Accordion defaultIndex={[0]} allowMultiple>
@@ -64,9 +75,14 @@ function DashboardScreen() {
               </AccordionButton>
             </h2>
             <AccordionPanel>
-              <Flex>
-                <SectionCard />
-              </Flex>
+              <SimpleGrid columns={3} spacing={10}>
+                {sections.filter((data) => data.section_year === 10).length ===
+                0
+                  ? 'NO SECTIONS'
+                  : sections
+                      .filter((data) => data.section_year === 10)
+                      .map((data) => <SectionCard key={data.section_id} />)}
+              </SimpleGrid>
             </AccordionPanel>
           </AccordionItem>
 
@@ -80,9 +96,13 @@ function DashboardScreen() {
               </AccordionButton>
             </h2>
             <AccordionPanel>
-              <Flex gap="1rem">
-                <SectionCard />
-              </Flex>
+              <SimpleGrid columns={3} spacing={10}>
+                {sections.filter((data) => data.section_year === 9).length === 0
+                  ? 'NO SECTIONS'
+                  : sections
+                      .filter((data) => data.section_year === 9)
+                      .map((data) => <SectionCard key={data.section_id} />)}
+              </SimpleGrid>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>
@@ -95,10 +115,13 @@ function DashboardScreen() {
               </AccordionButton>
             </h2>
             <AccordionPanel>
-              <Flex gap="1rem">
-                <SectionCard />
-                <SectionCard />
-              </Flex>
+              <SimpleGrid columns={3} spacing={10}>
+                {sections
+                  .filter((data) => data.section_year === 8)
+                  .map((data) => (
+                    <SectionCard key={data.section_id} />
+                  ))}
+              </SimpleGrid>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>
@@ -111,9 +134,13 @@ function DashboardScreen() {
               </AccordionButton>
             </h2>
             <AccordionPanel>
-              <Flex>
-                <SectionCard />
-              </Flex>
+              <SimpleGrid columns={3} spacing={10}>
+                {sections
+                  .filter((data) => data.section_year === 7)
+                  .map((data) => (
+                    <SectionCard key={data.section_id} />
+                  ))}
+              </SimpleGrid>
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
