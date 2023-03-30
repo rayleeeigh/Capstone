@@ -11,9 +11,12 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../AuthContext/AuthContext';
 import AdminDashboardLayout from '../../../layouts/adminDashboardLayout';
-import AdminLayout from '../../../layouts/adminLayout';
+import Layout from '../../../layouts/layout';
 import parseCookies from '../../../lib/auth';
 import DashboardScreen from '../../../screens/Admin/Dashboard/Sections';
+import { userType } from '../../../constants/userType';
+import { hasAccess } from '../../../constants/routes';
+
 
 export default function DashboardPage({ cookies, userInfo }) {
   const [announcements, setAnnouncements] = useState([]);
@@ -28,7 +31,7 @@ export default function DashboardPage({ cookies, userInfo }) {
   }, [cookies.user, setUser]);
 
   return (
-    <AdminLayout>
+    <Layout>
       <Flex
         mt="4vh"
         w="80vw"
@@ -44,11 +47,11 @@ export default function DashboardPage({ cookies, userInfo }) {
           <DashboardScreen />
         </AdminDashboardLayout>
       </Flex>
-    </AdminLayout>
+    </Layout>
   );
 }
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req, resolvedUrl }) {
   const cookies = await parseCookies(req);
 
   if (Object.keys(cookies).length === 0) {
@@ -58,6 +61,17 @@ export async function getServerSideProps({ req }) {
         permanent: false,
       },
     };
+  }else{
+    const user = JSON.parse(cookies.user);
+    const res = hasAccess(resolvedUrl, user.type)
+    if(!res.hasAccess){
+      return {
+        redirect: {
+          destination: res.path,
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {

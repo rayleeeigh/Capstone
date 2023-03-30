@@ -6,6 +6,11 @@ import StudentInterface from '../interfaces/StudentInterface';
 import Layout from '../layouts/layout';
 import arrayShuffle from 'array-shuffle';
 import { assignSection } from '../lib/students';
+import { userType } from '../constants/userType';
+import parseCookies from '../lib/auth';
+import { hasAccess } from '../constants/routes';
+
+
 
 export default function Schedule() {
 const [enrolled, setEnrolled] = useState(1);
@@ -123,4 +128,33 @@ useEffect(() => {
       </Modal>
     </Layout>
   );
+}
+
+
+export async function getServerSideProps({ req, resolvedUrl }) {
+  const cookies = await parseCookies(req);
+
+  if (Object.keys(cookies).length === 0) {
+    return {
+      redirect: {
+        destination: '/Login',
+        permanent: false,
+      },
+    };
+  }else{
+    const user = JSON.parse(cookies.user);
+    const res = hasAccess(resolvedUrl, user.type)
+    if(!res.hasAccess){
+      return {
+        redirect: {
+          destination: res.path,
+          permanent: false,
+        },
+      };
+    }
+  }
+
+  return {
+    props: { cookies },
+  };
 }

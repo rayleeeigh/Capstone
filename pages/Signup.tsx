@@ -2,6 +2,9 @@ import { Flex, Image } from '@chakra-ui/react';
 import React from 'react';
 import SignupForm from '../components/Signup/SignupForm';
 import parseCookies from '../lib/auth';
+import { userType } from '../constants/userType';
+import { hasAccess } from '../constants/routes';
+
 
 export default function Signup() {
   return (
@@ -25,16 +28,20 @@ export default function Signup() {
   );
 }
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req, resolvedUrl }) {
   const cookies = await parseCookies(req);
 
   if (Object.keys(cookies).length > 0) {
-    return {
-      redirect: {
-        destination: '/Announcement',
-        permanent: false,
-      },
-    };
+    const user = JSON.parse(cookies.user);
+    const res = hasAccess(resolvedUrl, user.type)
+    if(!res.hasAccess){
+      return {
+        redirect: {
+          destination: res.path,
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {

@@ -11,9 +11,11 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../AuthContext/AuthContext';
 import { AnnouncementAddModal } from '../../components/Announcements/AnnouncementAddModal';
-import AdminLayout from '../../layouts/adminLayout';
 import Layout from '../../layouts/layout';
 import parseCookies from '../../lib/auth';
+import { userType } from '../../constants/userType';
+import { hasAccess } from '../../constants/routes';
+
 
 export default function HomePage({ cookies, userInfo }) {
   const [announcements, setAnnouncements] = useState([]);
@@ -28,7 +30,7 @@ export default function HomePage({ cookies, userInfo }) {
   }, [cookies.user, setUser]);
 
   return (
-    <AdminLayout>
+    <Layout>
       <Flex
         mt="4vh"
         w="80vw"
@@ -40,11 +42,11 @@ export default function HomePage({ cookies, userInfo }) {
       >
         <Heading py="4vh">ADMIN HOME</Heading>
       </Flex>
-    </AdminLayout>
+    </Layout>
   );
 }
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req, resolvedUrl }) {
   const cookies = await parseCookies(req);
 
   if (Object.keys(cookies).length === 0) {
@@ -54,6 +56,17 @@ export async function getServerSideProps({ req }) {
         permanent: false,
       },
     };
+  }else{
+    const user = JSON.parse(cookies.user);
+    const res = hasAccess(resolvedUrl, user.type)
+    if(!res.hasAccess){
+      return {
+        redirect: {
+          destination: res.path,
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {
