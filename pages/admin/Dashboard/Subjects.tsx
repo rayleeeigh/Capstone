@@ -16,6 +16,7 @@ import parseCookies from '../../../lib/auth';
 import DashboardScreen from '../../../screens/Admin/Dashboard/Sections';
 import SubjectsScreen from '../../../screens/Admin/Dashboard/Subjects';
 import { userType } from '../../../constants/userType';
+import { hasAccess } from '../../../constants/routes';
 
 
 export default function SubjectsPage({ cookies, userInfo }) {
@@ -51,7 +52,7 @@ export default function SubjectsPage({ cookies, userInfo }) {
   );
 }
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req, resolvedUrl }) {
   const cookies = await parseCookies(req);
 
   if (Object.keys(cookies).length === 0) {
@@ -63,11 +64,11 @@ export async function getServerSideProps({ req }) {
     };
   }else{
     const user = JSON.parse(cookies.user);
-
-    if(user.type !== userType.admin){
+    const res = hasAccess(resolvedUrl, user.type)
+    if(!res.hasAccess){
       return {
         redirect: {
-          destination: '/Login',
+          destination: res.path,
           permanent: false,
         },
       };

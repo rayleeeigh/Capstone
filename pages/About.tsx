@@ -2,6 +2,8 @@ import { Flex, Image } from '@chakra-ui/react';
 import Layout from '../layouts/layout';
 import React from 'react';
 import parseCookies from '../lib/auth';
+import { hasAccess } from '../constants/routes';
+
 
 export default function Announcement() {
   return (
@@ -56,7 +58,7 @@ export default function Announcement() {
   );
 }
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req, resolvedUrl }) {
   const cookies = await parseCookies(req);
 
   if (Object.keys(cookies).length === 0) {
@@ -66,6 +68,17 @@ export async function getServerSideProps({ req }) {
         permanent: false,
       },
     };
+  }else{
+    const user = JSON.parse(cookies.user);
+    const res = hasAccess(resolvedUrl, user.type)
+    if(!res.hasAccess){
+      return {
+        redirect: {
+          destination: res.path,
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {

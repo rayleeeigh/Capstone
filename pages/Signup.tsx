@@ -3,6 +3,7 @@ import React from 'react';
 import SignupForm from '../components/Signup/SignupForm';
 import parseCookies from '../lib/auth';
 import { userType } from '../constants/userType';
+import { hasAccess } from '../constants/routes';
 
 
 export default function Signup() {
@@ -27,18 +28,20 @@ export default function Signup() {
   );
 }
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req, resolvedUrl }) {
   const cookies = await parseCookies(req);
 
   if (Object.keys(cookies).length > 0) {
     const user = JSON.parse(cookies.user);
-
-    return {
-      redirect: {
-        destination: user.type === userType.admin? '/admin/Announcements' : '/Announcements',
-        permanent: false,
-      },
-    };
+    const res = hasAccess(resolvedUrl, user.type)
+    if(!res.hasAccess){
+      return {
+        redirect: {
+          destination: res.path,
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {

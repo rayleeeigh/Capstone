@@ -16,6 +16,7 @@ import { AuthContext } from '../AuthContext/AuthContext';
 import parseCookies from '../lib/auth';
 import { AnnouncementAddModal } from '../components/Announcements/AnnouncementAddModal';
 import { userType } from '../constants/userType';
+import { hasAccess } from '../constants/routes';
 
 
 export default function Announcement({ cookies, userInfo }) {
@@ -99,7 +100,7 @@ export default function Announcement({ cookies, userInfo }) {
   );
 }
 
-export async function getServerSideProps({ req}) {
+export async function getServerSideProps({ req, resolvedUrl}) {
   const cookies = await parseCookies(req);
 
   if (Object.keys(cookies).length === 0) {
@@ -111,11 +112,11 @@ export async function getServerSideProps({ req}) {
     };
   }else{
     const user = JSON.parse(cookies.user);
-
-    if(user.type === userType.admin){
+    const res = hasAccess(resolvedUrl, user.type)
+    if(!res.hasAccess){
       return {
         redirect: {
-          destination: '/Login',
+          destination: res.path,
           permanent: false,
         },
       };
