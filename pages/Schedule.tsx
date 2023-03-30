@@ -77,7 +77,7 @@ export default function Schedule() {
 export async function getServerSideProps({ req, resolvedUrl }) {
   const cookies = await parseCookies(req);
 
-  if (Object.keys(cookies).length === 0) {
+  if (cookies.user == null) {
     return {
       redirect: {
         destination: '/Login',
