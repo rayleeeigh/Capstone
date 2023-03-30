@@ -31,7 +31,7 @@ export default function Signup() {
 export async function getServerSideProps({ req, resolvedUrl }) {
   const cookies = await parseCookies(req);
 
-  if (Object.keys(cookies).length > 0) {
+  if (cookies.user != null) {
     const user = JSON.parse(cookies.user);
     const res = hasAccess(resolvedUrl, user.type)
     if(!res.hasAccess){
