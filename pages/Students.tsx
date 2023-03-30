@@ -6,6 +6,10 @@ import StudentInterface from '../interfaces/StudentInterface';
 import Layout from '../layouts/layout';
 import arrayShuffle from 'array-shuffle';
 import { assignSection } from '../lib/students';
+import { userType } from '../constants/userType';
+import parseCookies from '../lib/auth';
+
+
 
 export default function Schedule() {
 const [enrolled, setEnrolled] = useState(1);
@@ -123,4 +127,33 @@ useEffect(() => {
       </Modal>
     </Layout>
   );
+}
+
+
+export async function getServerSideProps({ req }) {
+  const cookies = await parseCookies(req);
+
+  if (Object.keys(cookies).length === 0) {
+    return {
+      redirect: {
+        destination: '/Login',
+        permanent: false,
+      },
+    };
+  }else{
+    const user = JSON.parse(cookies.user);
+
+    if(user.type === userType.admin){
+      return {
+        redirect: {
+          destination: '/Login',
+          permanent: false,
+        },
+      };
+    }
+  }
+
+  return {
+    props: { cookies },
+  };
 }

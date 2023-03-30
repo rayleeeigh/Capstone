@@ -11,10 +11,12 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../AuthContext/AuthContext';
 import AdminDashboardLayout from '../../../layouts/adminDashboardLayout';
-import AdminLayout from '../../../layouts/adminLayout';
+import Layout from '../../../layouts/layout';
 import parseCookies from '../../../lib/auth';
 import DashboardScreen from '../../../screens/Admin/Dashboard/Sections';
 import StudentsScreen from '../../../screens/Admin/Dashboard/Students';
+import { userType } from '../../../constants/userType';
+
 
 export default function StudentsPage({ cookies, userInfo }) {
   const [announcements, setAnnouncements] = useState([]);
@@ -29,7 +31,7 @@ export default function StudentsPage({ cookies, userInfo }) {
   }, [cookies.user, setUser]);
 
   return (
-    <AdminLayout>
+    <Layout>
       <Flex
         mt="4vh"
         w="80vw"
@@ -45,7 +47,7 @@ export default function StudentsPage({ cookies, userInfo }) {
           <StudentsScreen />
         </AdminDashboardLayout>
       </Flex>
-    </AdminLayout>
+    </Layout>
   );
 }
 
@@ -59,6 +61,17 @@ export async function getServerSideProps({ req }) {
         permanent: false,
       },
     };
+  }else{
+    const user = JSON.parse(cookies.user);
+
+    if(user.type !== userType.admin){
+      return {
+        redirect: {
+          destination: '/Login',
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {

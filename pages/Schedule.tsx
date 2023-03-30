@@ -4,6 +4,10 @@ import Layout from '../layouts/layout';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import moment from 'moment';
+import { userType } from '../constants/userType';
+import parseCookies from '../lib/auth';
+
+
 
 export default function Schedule() {
   return (
@@ -66,4 +70,33 @@ export default function Schedule() {
       </Flex>
     </Layout>
   );
+}
+
+
+export async function getServerSideProps({ req }) {
+  const cookies = await parseCookies(req);
+
+  if (Object.keys(cookies).length === 0) {
+    return {
+      redirect: {
+        destination: '/Login',
+        permanent: false,
+      },
+    };
+  }else{
+    const user = JSON.parse(cookies.user);
+
+    if(user.type === userType.admin){
+      return {
+        redirect: {
+          destination: '/Login',
+          permanent: false,
+        },
+      };
+    }
+  }
+
+  return {
+    props: { cookies },
+  };
 }

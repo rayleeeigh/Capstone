@@ -18,6 +18,8 @@ import React from 'react';
 import { AuthContext } from '../AuthContext/AuthContext';
 import parseCookies from '../lib/auth';
 import SubjectInterface from '../interfaces/SubjectInterface';
+import { userType } from '../constants/userType';
+
 
 export default function Subjects({ cookies }) {
   const [subjects, setSubjects] = useState<SubjectInterface[]>([]);
@@ -100,6 +102,17 @@ export async function getServerSideProps({ req }) {
         permanent: false,
       },
     };
+  }else{
+    const user = JSON.parse(cookies.user);
+
+    if(user.type === userType.admin){
+      return {
+        redirect: {
+          destination: '/Login',
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {

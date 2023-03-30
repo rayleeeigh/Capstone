@@ -4,6 +4,10 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import DataTable from '../components/DataTable';
 import Layout from '../layouts/layout';
+import { userType } from '../constants/userType';
+import parseCookies from '../lib/auth';
+
+
 
 export default function Grades() {
   const [grades, setGrades] = useState([] as any[]);
@@ -40,4 +44,33 @@ export default function Grades() {
       </Flex>
     </Layout>
   );
+}
+
+
+export async function getServerSideProps({ req }) {
+  const cookies = await parseCookies(req);
+
+  if (Object.keys(cookies).length === 0) {
+    return {
+      redirect: {
+        destination: '/Login',
+        permanent: false,
+      },
+    };
+  }else{
+    const user = JSON.parse(cookies.user);
+
+    if(user.type === userType.admin){
+      return {
+        redirect: {
+          destination: '/Login',
+          permanent: false,
+        },
+      };
+    }
+  }
+
+  return {
+    props: { cookies },
+  };
 }

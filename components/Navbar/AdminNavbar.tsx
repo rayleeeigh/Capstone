@@ -154,7 +154,7 @@ export default function AdminNavbar() {
           <Spacer />
           <Flex alignItems="center">
             <Text mx="1vw">
-              <Link href="/Announcements">Home</Link>
+              <Link href="/admin/Home">Home</Link>
             </Text>
             <Text mx="1vw">
               <Link href="/About">About Us</Link>

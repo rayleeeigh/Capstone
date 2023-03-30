@@ -15,6 +15,8 @@ import AnnouncementCard from '../components/Announcements/AnnouncementCard';
 import { AuthContext } from '../AuthContext/AuthContext';
 import parseCookies from '../lib/auth';
 import { AnnouncementAddModal } from '../components/Announcements/AnnouncementAddModal';
+import { userType } from '../constants/userType';
+
 
 export default function Announcement({ cookies, userInfo }) {
   const [announcements, setAnnouncements] = useState([]);
@@ -97,7 +99,7 @@ export default function Announcement({ cookies, userInfo }) {
   );
 }
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req}) {
   const cookies = await parseCookies(req);
 
   if (Object.keys(cookies).length === 0) {
@@ -107,6 +109,17 @@ export async function getServerSideProps({ req }) {
         permanent: false,
       },
     };
+  }else{
+    const user = JSON.parse(cookies.user);
+
+    if(user.type === userType.admin){
+      return {
+        redirect: {
+          destination: '/Login',
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {

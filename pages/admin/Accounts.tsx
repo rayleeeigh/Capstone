@@ -11,10 +11,11 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../AuthContext/AuthContext';
 import { AnnouncementAddModal } from '../../components/Announcements/AnnouncementAddModal';
-import AdminLayout from '../../layouts/adminLayout';
 import Layout from '../../layouts/layout';
 import parseCookies from '../../lib/auth';
 import AdminAccountPage from '../../screens/Admin/Dashboard/Students';
+import { userType } from '../../constants/userType';
+
 
 export default function AccountsPage({ cookies, userInfo }) {
   const [announcements, setAnnouncements] = useState([]);
@@ -29,7 +30,7 @@ export default function AccountsPage({ cookies, userInfo }) {
   }, [cookies.user, setUser]);
 
   return (
-    <AdminLayout>
+    <Layout>
       <Flex
         mt="4vh"
         w="80vw"
@@ -42,7 +43,7 @@ export default function AccountsPage({ cookies, userInfo }) {
         <Heading py="4vh"> ADMIN ACCOUNTS</Heading>
         <AdminAccountPage />
       </Flex>
-    </AdminLayout>
+    </Layout>
   );
 }
 
@@ -56,6 +57,17 @@ export async function getServerSideProps({ req }) {
         permanent: false,
       },
     };
+  }else{
+    const user = JSON.parse(cookies.user);
+
+    if(user.type !== userType.admin){
+      return {
+        redirect: {
+          destination: '/Login',
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {

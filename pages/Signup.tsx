@@ -2,6 +2,8 @@ import { Flex, Image } from '@chakra-ui/react';
 import React from 'react';
 import SignupForm from '../components/Signup/SignupForm';
 import parseCookies from '../lib/auth';
+import { userType } from '../constants/userType';
+
 
 export default function Signup() {
   return (
@@ -29,9 +31,11 @@ export async function getServerSideProps({ req }) {
   const cookies = await parseCookies(req);
 
   if (Object.keys(cookies).length > 0) {
+    const user = JSON.parse(cookies.user);
+
     return {
       redirect: {
-        destination: '/Announcement',
+        destination: user.type === userType.admin? '/admin/Announcements' : '/Announcements',
         permanent: false,
       },
     };
