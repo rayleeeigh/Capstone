@@ -21,6 +21,7 @@ import React, { Dispatch, FC, SetStateAction, useContext, useEffect, useState } 
 import { AuthContext } from '../../AuthContext/AuthContext';
 import { announcementType } from '../../constants/announcementType';
 import { AnnouncementInterface } from '../../interfaces/AnnouncementInterface';
+import { userType } from '../../constants/userType';
 
 interface Props{
   refreshList : boolean;
@@ -76,8 +77,11 @@ export const AnnouncementAddModal:FC<Props> = ({refreshList,setRefreshList}) => 
 
   return (
     <>
+    {user.type === userType.student ? (
+          <></>
+        ) : (
       <Button onClick={onOpen}>Add Announcement</Button>
-
+      )}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

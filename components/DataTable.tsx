@@ -16,24 +16,11 @@ import SubjectInterface from '../interfaces/SubjectInterface';
 export default function DataTable({ grades }) {
   const authContext = useContext(AuthContext);
   const { userInfo } = authContext;
-  const [subjects, setSubjects] = useState<SubjectInterface[]>([]);
   let finalAverage = 0;
 
-  useEffect(() => {
-    axios
-      .get('api/subjects/getSubjects', {
-        params: {
-          year: userInfo.year_level,
-        },
-      })
-      .then(function (response) {
-        setSubjects(response.data)
-      });
-  }, [userInfo]);
-
-  function computeAverage(sum){
-    finalAverage+=sum/4;
-    return sum/4;
+  function computeAverage(sum,count){
+    finalAverage+=sum/count;
+    return sum/count;
   }
 
   return (
@@ -53,20 +40,17 @@ export default function DataTable({ grades }) {
       <Tbody>
         {grades.map((grade) => (
           <Tr key={grade.subject_id}>
-            {subjects.length !== 0?
-            (<Td>{(subjects.find(subject => subject.subject_id === grade.subject_id).name)}</Td>)
-            :
-            (<Td>haha</Td>)}
-              <Td color={grade.firstGrading < 75? "red":""}>{grade.firstGrading}</Td>
-              <Td color={grade.secondGrading < 75? "red":""}>{grade.secondGrading}</Td>
-              <Td color={grade.thirdGrading < 75? "red":""}>{grade.thirdGrading}</Td>
-              <Td color={grade.fourthGrading < 75? "red":""}>{grade.fourthGrading}</Td>
-              <Td>{computeAverage(grade.firstGrading+grade.secondGrading+grade.thirdGrading+grade.fourthGrading)}</Td>
+            <Td>{grade.name}</Td>
+              <Td color={grade.first_grading < 75? "red":""}>{grade.first_grading}</Td>
+              <Td color={grade.second_grading < 75? "red":""}>{grade.second_grading}</Td>
+              <Td color={grade.third_grading < 75? "red":""}>{grade.third_grading}</Td>
+              <Td color={grade.fourth_grading < 75? "red":""}>{grade.fourth_grading}</Td>
+              <Td>{computeAverage(grade.first_grading+grade.second_grading+grade.third_grading+grade.fourth_grading,4)}</Td>
           </Tr>
         ))}
       </Tbody>
     </Table>
-    <Text>Final Average: {Number(finalAverage/subjects.length).toFixed(2)}</Text>
+    <Text>Final Average: {Number(finalAverage/grades.length).toFixed(2)}</Text>
     </>
   );
 }

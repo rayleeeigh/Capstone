@@ -1,13 +1,13 @@
 import executeQuery from "../modules/sql"
 
 export const getGrades = async(subject_id) => {
-    const query = 'SELECT * FROM grades ';
+    const query = 'SELECT * FROM grades';
     const results = await executeQuery({query: query, values:[]})
     return results;
 }
 
 export const getGradesOfStudent = async(student_id) => {
-  const query = 'SELECT * FROM grades WHERE student_id = ?';
+  const query = 'SELECT * FROM grades g inner join subject_assignment sa on g.subject_assignment_id = sa.subject_assignment_id inner join subjects sub on sa.subject_id = sub.subject_id WHERE g.student_id = ?';
   const results = await executeQuery({query: query, values:[student_id]})
   return results;
 }

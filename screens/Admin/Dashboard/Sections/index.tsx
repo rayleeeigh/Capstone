@@ -37,6 +37,7 @@ function DashboardScreen() {
     axios.get('/api/sections').then((res) => {
       setSections(res.data);
     });
+    console.log(sections)
   }, [refreshList]);
 
   const handleFileChange = async (file) => {
@@ -76,11 +77,11 @@ function DashboardScreen() {
             </h2>
             <AccordionPanel>
               <SimpleGrid columns={3} spacing={10}>
-                {sections.filter((data) => data.section_year === 10).length ===
+                {sections.filter((data) => data.year_level === 10).length ===
                 0
                   ? 'NO SECTIONS'
                   : sections
-                      .filter((data) => data.section_year === 10)
+                      .filter((data) => data.year_level === 10)
                       .map((data) => <SectionCard key={data.section_id} />)}
               </SimpleGrid>
             </AccordionPanel>
@@ -97,10 +98,10 @@ function DashboardScreen() {
             </h2>
             <AccordionPanel>
               <SimpleGrid columns={3} spacing={10}>
-                {sections.filter((data) => data.section_year === 9).length === 0
+                {sections.filter((data) => data.year_level === 9).length === 0
                   ? 'NO SECTIONS'
                   : sections
-                      .filter((data) => data.section_year === 9)
+                      .filter((data) => data.year_level === 9)
                       .map((data) => <SectionCard key={data.section_id} />)}
               </SimpleGrid>
             </AccordionPanel>
@@ -117,7 +118,7 @@ function DashboardScreen() {
             <AccordionPanel>
               <SimpleGrid columns={3} spacing={10}>
                 {sections
-                  .filter((data) => data.section_year === 8)
+                  .filter((data) => data.year_level === 8)
                   .map((data) => (
                     <SectionCard key={data.section_id} />
                   ))}
@@ -136,7 +137,7 @@ function DashboardScreen() {
             <AccordionPanel>
               <SimpleGrid columns={3} spacing={10}>
                 {sections
-                  .filter((data) => data.section_year === 7)
+                  .filter((data) => data.year_level === 7)
                   .map((data) => (
                     <SectionCard key={data.section_id} />
                   ))}

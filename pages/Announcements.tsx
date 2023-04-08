@@ -75,11 +75,6 @@ export default function Announcement({ cookies, userInfo }) {
           refreshList={refreshList}
           setRefreshList={setRefreshList}
         />
-        {user.type === 1 ? (
-          <></>
-        ) : (
-          <Button onClick={addAnnouncement}>Add Announcement</Button>
-        )}
         <Flex flexDirection="column" w="70vw" h="54vh" overflowY="auto">
           {announcements.map((res: any) => (
             <Flex
