@@ -16,6 +16,7 @@ export default function Schedule() {
 const [enrolled, setEnrolled] = useState(1);
 const [gradeLevel, setGradeLevel] = useState(0)
 const [selectedSection, setSelectedSection] = useState(0)
+const [selectedYear, setSelectedYear] = useState(0)
 const [students, setStudents] = useState<StudentInterface[]>([])
 const [sections, setSections] = useState<SectionInterface[]>([])
 const [array, setArray] = useState([])
@@ -35,14 +36,16 @@ function getStudents(){
         },
       })
       .then(function (response) {
+        console.log(response.data)
         setStudents(response.data)
         setArray(arrayShuffle(Array.from(Array(response.data.length).keys())))
       });
 }
 
 function assignSection(){
+  console.log(selectedYear)
   axios
-      .post('api/students/assignSection', {array, students})
+      .post('api/students/assignSection', {array: arrayShuffle(Array.from(Array(students.filter(student => student.year_level === selectedYear).length).keys())), students: students.filter(student => student.year_level === selectedYear) ?? students, sections: sections.filter(section => section.year_level === 8)})
       .then(function (response) {
         console.log('')
       });
@@ -84,7 +87,7 @@ useEffect(() => {
                         <Text size="2xl" mb="4">Section</Text>
                         <Select w="80" placeholder='All Sections' onChange={(e)=>setSelectedSection(+e.target.value)}>
                             {sections.map((section)=>{
-                                if (section.year_level === gradeLevel){
+                                if (section.section_year === gradeLevel){
                                     return (
                                         <option value={section.section_id}>{section.section_name}</option>
                                     )
@@ -99,7 +102,7 @@ useEffect(() => {
             </Box>
             <Box bg="red.100" w="40vw" h="80vh" p="8">
                 {students.map((student)=>(
-                    <p key={student.student_id}>{`${student.first_name} ${student.last_name} - ${student.section_name != null? student.section_name : 'Not Enrolled'}`}</p>
+                    <p key={student.student_id}>{`${student.first_name} ${student.last_name} (Grade ${student.year_level}) - ${sections.find(section=> section.section_id === student.is_enrolled)? sections.find(section=> section.section_id === student.section).section_name : 'Unenrolled'}`}</p>
                 ))}
             </Box>
         </Flex> 
@@ -110,10 +113,16 @@ useEffect(() => {
           <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <Select my="4" w="80" placeholder='Select Grade Level' onChange={(e)=>{setSelectedYear(+e.target.value)}}>
+                <option value="7">Grade 7</option>
+                <option value="8">Grade 8</option>
+                <option value="9">Grade 9</option>
+                <option value="10">Grade 10</option>
+            </Select>
             <p>Assign these unenrolled students to a section?</p>
             <UnorderedList>
-            {students.map(student=>(
-                <li key={student.student_id}>{`${student.first_name} ${student.last_name}`}</li>
+            {students.filter(student => student.year_level === selectedYear).map(student=>(
+                <li key={student.student_id}>{`${student.first_name} ${student.last_name} (Grade ${student.year_level})`}</li>
             ))}
             </UnorderedList>
           </ModalBody>

@@ -18,6 +18,7 @@ export const getStudentsByEnrollStatus = async(enrolled, gradeLevel, section) =>
         return results;
     }
     else {
+        console.log(query)
         return await executeQuery({query: query, values: []});
     }
 }
@@ -27,7 +28,7 @@ export const assignSection = async(array: Array<number>,students : StudentInterf
         let query = 'Insert into sectioning (section_id,student_id) values (?,?)';
         await executeQuery({query: query, values: [sections[y].section_id, students[array[x]].student_id]});
         query = 'UPDATE students SET is_enrolled = ?, section = ? WHERE student_id = ?';
-        await executeQuery({query: query, values: [1, sections[y].section_id,students[array[x]].student_id]});
+        await executeQuery({query: query, values: [1, sections[y].section_id,students[array[x]]?.student_id]});
         y++
     }
 }
