@@ -84,7 +84,7 @@ useEffect(() => {
                         <Text size="2xl" mb="4">Section</Text>
                         <Select w="80" placeholder='All Sections' onChange={(e)=>setSelectedSection(+e.target.value)}>
                             {sections.map((section)=>{
-                                if (section.section_year === gradeLevel){
+                                if (section.year_level === gradeLevel){
                                     return (
                                         <option value={section.section_id}>{section.section_name}</option>
                                     )
@@ -99,7 +99,7 @@ useEffect(() => {
             </Box>
             <Box bg="red.100" w="40vw" h="80vh" p="8">
                 {students.map((student)=>(
-                    <p key={student.student_id}>{`${student.first_name} ${student.last_name} - ${sections.find(section=> section.section_id === student.enrolled)? sections.find(section=> section.section_id === student.enrolled).section_name : 'Unenrolled'}`}</p>
+                    <p key={student.student_id}>{`${student.first_name} ${student.last_name} - ${student.section_name != null? student.section_name : 'Not Enrolled'}`}</p>
                 ))}
             </Box>
         </Flex> 

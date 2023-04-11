@@ -7,7 +7,7 @@ const routes = [
     },
     {
         role: userType.teacher,
-        access: ['/Announcements','/About','/Students','/Grades','/Schedule','/Subjects']
+        access: ['/Announcements','/About','/Students']
     },
     {
         role: userType.student,

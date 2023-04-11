@@ -2,7 +2,7 @@ import SubjectInterface from '../interfaces/SubjectInterface';
 import executeQuery from '../modules/sql';
 
 export const getSubjects = async (year) => {
-  const query = 'SELECT * FROM subjects WHERE year = ?';
+  const query = 'SELECT * FROM subjects WHERE year_level = ?';
   const results = await executeQuery({ query: query, values: [year] });
   return results;
 };
