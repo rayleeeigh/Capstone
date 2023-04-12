@@ -11,8 +11,9 @@ import {
   Text,
 } from '@chakra-ui/react';
 import React from 'react';
+import { SectionInterface } from '../../../../../interfaces/SectionInterface';
 
-function SectionCard() {
+function SectionCard({ section }: { section: SectionInterface }) {
   return (
     <Card maxW="sm">
       <CardBody>
@@ -22,8 +23,10 @@ function SectionCard() {
           borderRadius="lg"
         />
         <Stack mt="6" spacing="3">
-          <Heading size="md">SECTION KAMUNGGAY</Heading>
-          <Text>Population:10</Text>
+          <Heading size="md">
+            Grade {section.year_level} - {section.section_name}
+          </Heading>
+          <Text>Population:{section.population ?? 0}</Text>
         </Stack>
       </CardBody>
       <Divider />

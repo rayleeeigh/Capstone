@@ -6,6 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { section } = req.body;
+  console.log(section)
   const announcements = await postSection(section);
   return res.status(200).end();
 }

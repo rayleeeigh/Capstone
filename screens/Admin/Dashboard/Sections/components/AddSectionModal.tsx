@@ -110,7 +110,7 @@ function AddSectionModal({
                 />
 
                 <Controller
-                  name="section_year"
+                  name="year_level"
                   control={control}
                   defaultValue="7"
                   rules={{ required: true }}

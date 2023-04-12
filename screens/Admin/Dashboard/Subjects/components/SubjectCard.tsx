@@ -23,7 +23,7 @@ function SubjectCard({ subject }: { subject: SubjectInterface }) {
           borderRadius="lg"
         />
         <Stack mt="6" spacing="3">
-          <Heading size="md">Grade - {subject.year}</Heading>
+          <Heading size="md">Grade - {subject.year_level}</Heading>
           <Text color="blue.600" fontSize="2xl">
             {subject.name}
           </Text>

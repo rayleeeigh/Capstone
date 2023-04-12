@@ -10,12 +10,12 @@ export const getSections = async () => {
 };
 
 export const postSection = async (section: SectionInterface) => {
-  const query = 'INSERT INTO sections(section_name,section_year) VALUES(?,?)';
+  const query = 'INSERT INTO sections(section_name,year_level) VALUES(?,?)';
   const results = await executeQuery({
     query: query,
     values: [
       section.section_name,
-      section.section_year,
+      section.year_level,
       // user.account_id,
       // PHTime().format(),
     ],
@@ -24,10 +24,10 @@ export const postSection = async (section: SectionInterface) => {
 
 export const updateSection = async (section: SectionInterface) => {
   const query =
-    'UPDATE sections SET section_name=?, section_year=? WHERE section_id = ?';
+    'UPDATE sections SET section_name=?, year_level=? WHERE section_id = ?';
   const results = await executeQuery({
     query: query,
-    values: [section.section_name, section.section_year, section.section_id],
+    values: [section.section_name, section.year_level, section.section_id],
   });
   return results;
 };
