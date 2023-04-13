@@ -82,7 +82,7 @@ function DashboardScreen() {
                   ? 'NO SECTIONS'
                   : sections
                       .filter((data) => data.year_level === 10)
-                      .map((data) => <SectionCard key={data.section_id} />)}
+                      .map((data) => <SectionCard key={data.section_id} section={data} />)}
               </SimpleGrid>
             </AccordionPanel>
           </AccordionItem>
@@ -102,7 +102,7 @@ function DashboardScreen() {
                   ? 'NO SECTIONS'
                   : sections
                       .filter((data) => data.year_level === 9)
-                      .map((data) => <SectionCard key={data.section_id} />)}
+                      .map((data) => <SectionCard key={data.section_id} section={data} />)}
               </SimpleGrid>
             </AccordionPanel>
           </AccordionItem>
@@ -120,7 +120,7 @@ function DashboardScreen() {
                 {sections
                   .filter((data) => data.year_level === 8)
                   .map((data) => (
-                    <SectionCard key={data.section_id} />
+                    <SectionCard key={data.section_id} section={data} />
                   ))}
               </SimpleGrid>
             </AccordionPanel>
@@ -139,7 +139,7 @@ function DashboardScreen() {
                 {sections
                   .filter((data) => data.year_level === 7)
                   .map((data) => (
-                    <SectionCard key={data.section_id} />
+                    <SectionCard key={data.section_id} section={data} />
                   ))}
               </SimpleGrid>
             </AccordionPanel>

@@ -12,16 +12,34 @@ import {
   Divider,
   Flex,
   Heading,
+  SimpleGrid,
   Spacer,
   Stack,
   Text,
 } from '@chakra-ui/layout';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import CardComponent from '../../../../components/Admin/CardComponent';
+import { AccountInterface } from '../../../../interfaces/AccountInterface';
+import StudentInterface from '../../../../interfaces/StudentInterface';
 import AddStudentsModal from './components/AddStudentModal';
 import StudentCard from './components/StudentCard';
 
+interface StudentAccount extends AccountInterface, StudentInterface {
+  dummy: 0;
+}
+
 function StudentsScreen() {
+  const [refreshList, setRefreshList] = useState<boolean>(false);
+  const [students, setStudents] = useState<StudentAccount[]>([]);
+
+  useEffect(() => {
+    axios.get('/api/students/getAllStudents').then((res) => {
+      console.log(res.data);
+      setStudents(res.data);
+    });
+  }, [refreshList]);
+
   return (
     <Flex flexDir="column" w="60vw" alignItems="center">
       <Flex
@@ -31,77 +49,22 @@ function StudentsScreen() {
         gap="1rem"
         w="60vw"
       >
-        <Flex>
-          <Heading size="md">STUDENTS</Heading>
-          <Spacer />
-          <Flex gap="1rem">
-            <AddStudentsModal />
+        <Flex flexDirection="column" gap="1rem">
+          <Flex>
+            <Heading size="md">STUDENTS</Heading>
+            <Spacer />
+            <AddStudentsModal
+              setRefreshList={setRefreshList}
+              refreshList={refreshList}
+            />
           </Flex>
-        </Flex>
-        <Accordion defaultIndex={[0]} allowMultiple>
-          <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
-                  Grade 10
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel>
-              <Flex>
-                <StudentCard />
-              </Flex>
-            </AccordionPanel>
-          </AccordionItem>
 
-          <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
-                  Grade 9
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel>
-              <Flex gap="1rem">
-                <StudentCard />
-              </Flex>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
-                  Grade 8
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel>
-              <Flex gap="1rem">
-                <StudentCard />
-                <StudentCard />
-              </Flex>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
-                  Grade 7
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel>
-              <Flex>
-                <StudentCard />
-              </Flex>
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
+          <SimpleGrid columns={3} spacing={10}>
+            {students.map((data) => (
+              <StudentCard key={data.account_id} student={data} />
+            ))}
+          </SimpleGrid>
+        </Flex>
       </Flex>
     </Flex>
   );

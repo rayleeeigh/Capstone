@@ -32,3 +32,10 @@ export const assignSection = async(array: Array<number>,students : StudentInterf
         y++
     }
 }
+
+export const getAllStudents = async () => {
+    const query = 'SELECT * FROM accounts a JOIN students s ON a.account_id = s.account_id';
+    const results = await executeQuery({ query: query, values: [] });
+    return results;
+  };
+  

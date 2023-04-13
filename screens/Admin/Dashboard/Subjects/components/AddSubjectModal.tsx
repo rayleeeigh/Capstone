@@ -14,7 +14,8 @@ import {
   FormLabel,
   FormHelperText,
   FormControl,
-  useToast,Text
+  useToast,
+  Text,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { Dispatch, SetStateAction } from 'react';
@@ -60,7 +61,7 @@ function AddSubjectModal({
       console.error(err);
     }
   };
-  
+
   return (
     <>
       <Button onClick={onOpen}>Add Subject</Button>
@@ -68,7 +69,7 @@ function AddSubjectModal({
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <ModalHeader>Add a Section</ModalHeader>
             <ModalBody>
               <Flex flexDirection="column" gap="1rem">
@@ -90,9 +91,8 @@ function AddSubjectModal({
                     </FormInput>
                   )}
                 />
-
                 <Controller
-                  name="year"
+                  name="year_level"
                   control={control}
                   defaultValue="7"
                   rules={{ required: true }}

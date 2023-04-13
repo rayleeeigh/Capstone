@@ -8,18 +8,18 @@ export const getSubjects = async (year) => {
 };
 
 export const getAllSubjects = async () => {
-    const query = 'SELECT * FROM subjects';
-    const results = await executeQuery({ query: query, values: [] });
-    return results;
-  };
+  const query = 'SELECT * FROM subjects';
+  const results = await executeQuery({ query: query, values: [] });
+  return results;
+};
 
 export const postSubject = async (subject: SubjectInterface) => {
-  const query = 'INSERT INTO subjects(name,year) VALUES(?,?)';
+  const query = 'INSERT INTO subjects(name,year_level) VALUES(?,?)';
   const results = await executeQuery({
     query: query,
     values: [
       subject.name,
-      subject.year,
+      subject.year_level,
       // user.account_id,
       // PHTime().format(),
     ],
@@ -30,7 +30,7 @@ export const updateSubject = async (subject: SubjectInterface) => {
   const query = 'UPDATE sections SET name=?, year=? WHERE subject_id = ?';
   const results = await executeQuery({
     query: query,
-    values: [subject.name, subject.year, subject.subject_id],
+    values: [subject.name, subject.year_level, subject.subject_id],
   });
   return results;
 };
