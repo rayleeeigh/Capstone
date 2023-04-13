@@ -8,12 +8,12 @@ import { userType } from '../../../constants/userType';
 export default async function handler(req, res) {
   const { accountID, type } = req.query;
   var user;
-
-  if (type === '1') {
+  
+  if (type == userType.student) {
     user = await getCurrentStudentUser(accountID);
-  } else if (type === '2') {
+  } else if (type == userType.teacher) {
     user = await getCurrentTeacherUser(accountID);
-  } else if (type === '3') {
+  } else if (type == userType.admin) {
     user = await getAdmin(accountID);
   }
 
