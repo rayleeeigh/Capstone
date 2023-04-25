@@ -64,17 +64,17 @@ function AddTeacherModal({
 
   return (
     <>
-      <Button onClick={onOpen}>Add Subject</Button>
+      <Button onClick={onOpen}>Add Teacher</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <ModalHeader>Add a Section</ModalHeader>
+            <ModalHeader>Add a Teacher</ModalHeader>
             <ModalBody>
               <Flex flexDirection="column" gap="1rem">
                 <Controller
-                  name="name"
+                  name="first_name"
                   control={control}
                   defaultValue=""
                   rules={{ required: true }}
@@ -82,7 +82,25 @@ function AddTeacherModal({
                     <FormInput
                       formControlProps={null}
                       formLabelProps={null}
-                      title="Name of Section"
+                      title="Firstname"
+                    >
+                      <Input {...field} placeholder="Name" />
+                      {errors.name && (
+                        <Text color="red">This field is required</Text>
+                      )}
+                    </FormInput>
+                  )}
+                />
+                {/* <Controller
+                  name="middle_name"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <FormInput
+                      formControlProps={null}
+                      formLabelProps={null}
+                      title="Middlename"
                     >
                       <Input {...field} placeholder="Name" />
                       {errors.name && (
@@ -92,7 +110,7 @@ function AddTeacherModal({
                   )}
                 />
                 <Controller
-                  name="name"
+                  name="last_name"
                   control={control}
                   defaultValue=""
                   rules={{ required: true }}
@@ -100,7 +118,7 @@ function AddTeacherModal({
                     <FormInput
                       formControlProps={null}
                       formLabelProps={null}
-                      title="Name of Section"
+                      title="Lastname"
                     >
                       <Input {...field} placeholder="Name" />
                       {errors.name && (
@@ -110,7 +128,7 @@ function AddTeacherModal({
                   )}
                 />
                 <Controller
-                  name="name"
+                  name="suffix"
                   control={control}
                   defaultValue=""
                   rules={{ required: true }}
@@ -118,7 +136,7 @@ function AddTeacherModal({
                     <FormInput
                       formControlProps={null}
                       formLabelProps={null}
-                      title="Name of Section"
+                      title="Suffix"
                     >
                       <Input {...field} placeholder="Name" />
                       {errors.name && (
@@ -127,6 +145,114 @@ function AddTeacherModal({
                     </FormInput>
                   )}
                 />
+                <Controller
+                  name="gender"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <FormInput
+                      formControlProps={null}
+                      formLabelProps={null}
+                      title="Gender"
+                    >
+                      <Input {...field} placeholder="Name" />
+                      {errors.name && (
+                        <Text color="red">This field is required</Text>
+                      )}
+                    </FormInput>
+                  )}
+                />
+                <Controller
+                  name="birthdate"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <FormInput
+                      formControlProps={null}
+                      formLabelProps={null}
+                      title="Birthdate"
+                    >
+                      <Input {...field} placeholder="Name" />
+                      {errors.name && (
+                        <Text color="red">This field is required</Text>
+                      )}
+                    </FormInput>
+                  )}
+                />
+                <Controller
+                  name="age"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <FormInput
+                      formControlProps={null}
+                      formLabelProps={null}
+                      title="Age"
+                    >
+                      <Input {...field} placeholder="Name" />
+                      {errors.name && (
+                        <Text color="red">This field is required</Text>
+                      )}
+                    </FormInput>
+                  )}
+                />
+                <Controller
+                  name="contact_no"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <FormInput
+                      formControlProps={null}
+                      formLabelProps={null}
+                      title="Contact No."
+                    >
+                      <Input {...field} placeholder="Name" />
+                      {errors.name && (
+                        <Text color="red">This field is required</Text>
+                      )}
+                    </FormInput>
+                  )}
+                />
+                <Controller
+                  name="marital_status"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <FormInput
+                      formControlProps={null}
+                      formLabelProps={null}
+                      title="Marital Status"
+                    >
+                      <Input {...field} placeholder="Name" />
+                      {errors.name && (
+                        <Text color="red">This field is required</Text>
+                      )}
+                    </FormInput>
+                  )}
+                />
+                <Controller
+                  name="position"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <FormInput
+                      formControlProps={null}
+                      formLabelProps={null}
+                      title="Position"
+                    >
+                      <Input {...field} placeholder="Name" />
+                      {errors.name && (
+                        <Text color="red">This field is required</Text>
+                      )}
+                    </FormInput>
+                  )}
+                /> */}
               </Flex>
             </ModalBody>
 
