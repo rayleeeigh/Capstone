@@ -58,7 +58,7 @@ function TeacherScreen() {
           <Flex>
             <Heading size="md">TEACHERS</Heading>
             <Spacer />
-            <AddSubjectModal
+            <AddTeacherModal
               setRefreshList={setRefreshList}
               refreshList={refreshList}
             />

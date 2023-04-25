@@ -92,6 +92,24 @@ function AddSubjectModal({
                   )}
                 />
                 <Controller
+                  name="name_section"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <FormInput
+                      formControlProps={null}
+                      formLabelProps={null}
+                      title="Name of Sections"
+                    >
+                      <Input {...field} placeholder="name_section" />
+                      {errors.name && (
+                        <Text color="red">This field is required</Text>
+                      )}
+                    </FormInput>
+                  )}
+                />
+                <Controller
                   name="year_level"
                   control={control}
                   defaultValue="7"
