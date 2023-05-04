@@ -1,7 +1,6 @@
 import {
   Button,
   Flex,
-  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -9,7 +8,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Select,
   useDisclosure,
   FormLabel,
   FormHelperText,
@@ -17,10 +15,14 @@ import {
   useToast,
   Text,
 } from '@chakra-ui/react';
+import { DatePicker, Form, InputNumber, Select } from 'antd';
 import axios from 'axios';
-import React, { Dispatch, SetStateAction } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import FormInput from '../../../../../components/Input/FormInput';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Input } from '../../../../../components/Input/FormInput';
+import TeacherInterface from '../../../../../interfaces/TeacherInterface';
+import { validateInput } from '../../../../../utils/validateInput';
+
+const { Option } = Select;
 
 function AddTeacherModal({
   setRefreshList,
@@ -30,36 +32,34 @@ function AddTeacherModal({
   refreshList: boolean;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [teacher, setTeacher] = useState<TeacherInterface>(
+    {} as TeacherInterface
+  );
   const toast = useToast();
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const [form] = Form.useForm();
 
-  const onSubmit = (values) => {
-    console.log(values);
-    try {
-      axios
-        .post('/api/subjects/addSubject', { subject: values })
-        .then(() => {
-          toast({
-            title: 'Success',
-            description: 'Subject Successfully created.',
-            status: 'success',
-            duration: 5000,
-            position: 'top',
-          });
-          onClose();
-          setRefreshList(!refreshList);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } catch (err) {
-      console.error(err);
-    }
+  const onSubmit = () => {
+    console.log(teacher);
+    // try {
+    //   axios
+    //     .post('/api/subjects/addSubject', { subject })
+    //     .then(() => {
+    //       toast({
+    //         title: 'Success',
+    //         description: 'Subject Successfully created.',
+    //         status: 'success',
+    //         duration: 5000,
+    //         position: 'top',
+    //       });
+    //       onClose();
+    //       setRefreshList(!refreshList);
+    //     })
+    //     .catch((err) => {
+    //       console.error(err);
+    //     });
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   return (
@@ -69,190 +69,244 @@ function AddTeacherModal({
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <Form form={form} onFinish={onSubmit} layout="vertical">
             <ModalHeader>Add a Teacher</ModalHeader>
             <ModalBody>
-              <Flex flexDirection="column" gap="1rem">
-                <Controller
-                  name="first_name"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <FormInput
-                      formControlProps={null}
-                      formLabelProps={null}
-                      title="Firstname"
-                    >
-                      <Input {...field} placeholder="Name" />
-                      {errors.name && (
-                        <Text color="red">This field is required</Text>
-                      )}
-                    </FormInput>
-                  )}
+              <Flex flexDirection="column" gap="0.5rem">
+                <Input.Admin
+                  formItemProps={{
+                    name: 'first_name',
+                    label: 'First Name',
+                    rules: [
+                      {
+                        required: true,
+                        validator: (_, value) => {
+                          return validateInput(value, 'First name');
+                        },
+                      },
+                    ],
+                  }}
+                  inputProps={{
+                    onChange: (e) => {
+                      setTeacher((prevState) => ({
+                        ...prevState,
+                        first_name: e.target.value,
+                      }));
+                    },
+                  }}
                 />
-                {/* <Controller
-                  name="middle_name"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <FormInput
-                      formControlProps={null}
-                      formLabelProps={null}
-                      title="Middlename"
-                    >
-                      <Input {...field} placeholder="Name" />
-                      {errors.name && (
-                        <Text color="red">This field is required</Text>
-                      )}
-                    </FormInput>
-                  )}
+                <Input.Admin
+                  formItemProps={{
+                    name: 'middle_name',
+                    label: 'Middle Name',
+                    rules: [],
+                  }}
+                  inputProps={{
+                    onChange: (e) => {
+                      setTeacher((prevState) => ({
+                        ...prevState,
+                        middle_name: e.target.value,
+                      }));
+                    },
+                  }}
                 />
-                <Controller
-                  name="last_name"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <FormInput
-                      formControlProps={null}
-                      formLabelProps={null}
-                      title="Lastname"
-                    >
-                      <Input {...field} placeholder="Name" />
-                      {errors.name && (
-                        <Text color="red">This field is required</Text>
-                      )}
-                    </FormInput>
-                  )}
+                <Input.Admin
+                  formItemProps={{
+                    name: 'last_name',
+                    label: 'Last Name',
+                    rules: [
+                      {
+                        required: true,
+                        validator: (_, value) => {
+                          return validateInput(value, 'Last name');
+                        },
+                      },
+                    ],
+                  }}
+                  inputProps={{
+                    onChange: (e) => {
+                      setTeacher((prevState) => ({
+                        ...prevState,
+                        last_name: e.target.value,
+                      }));
+                    },
+                  }}
                 />
-                <Controller
-                  name="suffix"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <FormInput
-                      formControlProps={null}
-                      formLabelProps={null}
-                      title="Suffix"
-                    >
-                      <Input {...field} placeholder="Name" />
-                      {errors.name && (
-                        <Text color="red">This field is required</Text>
-                      )}
-                    </FormInput>
-                  )}
+                <Input.Admin
+                  formItemProps={{
+                    name: 'suffix',
+                    label: 'Suffix',
+                    rules: [],
+                  }}
+                  inputProps={{
+                    onChange: (e) => {
+                      setTeacher((prevState) => ({
+                        ...prevState,
+                        suffix: e.target.value,
+                      }));
+                    },
+                  }}
                 />
-                <Controller
-                  name="gender"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <FormInput
-                      formControlProps={null}
-                      formLabelProps={null}
-                      title="Gender"
-                    >
-                      <Input {...field} placeholder="Name" />
-                      {errors.name && (
-                        <Text color="red">This field is required</Text>
-                      )}
-                    </FormInput>
-                  )}
+                <Input.Admin
+                  formItemProps={{
+                    name: 'gender',
+                    label: 'Gender',
+                    initialValue: '',
+                    rules: [
+                      {
+                        required: true,
+                        validator: (_, value) => {
+                          return validateInput(value, 'Gender');
+                        },
+                      },
+                    ],
+                    children: (
+                      <>
+                        <Select
+                          placeholder="Select Gender"
+                          onChange={(e) => {
+                            setTeacher((prevState) => ({
+                              ...prevState,
+                              gender: e.target.value,
+                            }));
+                          }}
+                        >
+                          <Option value="male">Male</Option>
+                          <Option value="female">Female</Option>
+                        </Select>
+                      </>
+                    ),
+                  }}
                 />
-                <Controller
-                  name="birthdate"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <FormInput
-                      formControlProps={null}
-                      formLabelProps={null}
-                      title="Birthdate"
-                    >
-                      <Input {...field} placeholder="Name" />
-                      {errors.name && (
-                        <Text color="red">This field is required</Text>
-                      )}
-                    </FormInput>
-                  )}
+                <Input.Admin
+                  formItemProps={{
+                    name: 'birthdate',
+                    label: 'Birthdate',
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Birthdate is required',
+                      },
+                    ],
+                    children: (
+                      <DatePicker
+                        popupStyle={{
+                          zIndex: 2000,
+                        }}
+                        inputReadOnly={true}
+                        style={{ width: '100%' }}
+                        onChange={(e) => {
+                          setTeacher((prevState) => ({
+                            ...prevState,
+                            birthdate: e?.toISOString() as string,
+                          }));
+                        }}
+                      />
+                    ),
+                  }}
                 />
-                <Controller
-                  name="age"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <FormInput
-                      formControlProps={null}
-                      formLabelProps={null}
-                      title="Age"
-                    >
-                      <Input {...field} placeholder="Name" />
-                      {errors.name && (
-                        <Text color="red">This field is required</Text>
-                      )}
-                    </FormInput>
-                  )}
+
+                <Input.Admin
+                  formItemProps={{
+                    name: 'age',
+                    label: 'Age',
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Age is required',
+                      },
+                    ],
+                    children: (
+                      <InputNumber
+                        style={{ width: '100%' }}
+                        onChange={(e: number) => {
+                          setTeacher((prevState) => ({
+                            ...prevState,
+                            age: e,
+                          }));
+                        }}
+                      />
+                    ),
+                  }}
                 />
-                <Controller
-                  name="contact_no"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <FormInput
-                      formControlProps={null}
-                      formLabelProps={null}
-                      title="Contact No."
-                    >
-                      <Input {...field} placeholder="Name" />
-                      {errors.name && (
-                        <Text color="red">This field is required</Text>
-                      )}
-                    </FormInput>
-                  )}
+                <Input.Admin
+                  formItemProps={{
+                    name: 'contact_no',
+                    label: 'Contact',
+                    rules: [
+                      {
+                        required: true,
+                        validator: (_, value) => {
+                          return validateInput(value, 'Contact');
+                        },
+                      },
+                    ],
+                  }}
+                  inputProps={{
+                    onChange: (e) => {
+                      setTeacher((prevState) => ({
+                        ...prevState,
+                        contact_no: e.target.value,
+                      }));
+                    },
+                  }}
                 />
-                <Controller
-                  name="marital_status"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <FormInput
-                      formControlProps={null}
-                      formLabelProps={null}
-                      title="Marital Status"
-                    >
-                      <Input {...field} placeholder="Name" />
-                      {errors.name && (
-                        <Text color="red">This field is required</Text>
-                      )}
-                    </FormInput>
-                  )}
+                <Input.Admin
+                  formItemProps={{
+                    name: 'marital_status',
+                    label: 'Marital Status',
+                    initialValue: '',
+                    rules: [
+                      {
+                        required: true,
+                        validator: (_, value) => {
+                          return validateInput(value, 'Marital Status');
+                        },
+                      },
+                    ],
+                    children: (
+                      <>
+                        <Select
+                          placeholder="Select Marital Status"
+                          onChange={(e) => {
+                            setTeacher((prevState) => ({
+                              ...prevState,
+                              marital_status: e.target.value,
+                            }));
+                          }}
+                        >
+                          <Option value="single">Single</Option>
+                          <Option value="married">Married</Option>
+                          <Option value="separated">Separated</Option>
+                          <Option value="divorced">Divorced</Option>
+                          <Option value="windowed">Widowed</Option>
+                        </Select>
+                      </>
+                    ),
+                  }}
                 />
-                <Controller
-                  name="position"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <FormInput
-                      formControlProps={null}
-                      formLabelProps={null}
-                      title="Position"
-                    >
-                      <Input {...field} placeholder="Name" />
-                      {errors.name && (
-                        <Text color="red">This field is required</Text>
-                      )}
-                    </FormInput>
-                  )}
-                /> */}
+                <Input.Admin
+                  formItemProps={{
+                    name: 'position',
+                    label: 'Position',
+                    rules: [
+                      {
+                        required: true,
+                        validator: (_, value) => {
+                          return validateInput(value, 'Position');
+                        },
+                      },
+                    ],
+                  }}
+                  inputProps={{
+                    onChange: (e) => {
+                      setTeacher((prevState) => ({
+                        ...prevState,
+                        position: e.target.value,
+                      }));
+                    },
+                  }}
+                />
               </Flex>
             </ModalBody>
 
@@ -264,7 +318,7 @@ function AddTeacherModal({
                 Add
               </Button>
             </ModalFooter>
-          </form>
+          </Form>
         </ModalContent>
       </Modal>
     </>
